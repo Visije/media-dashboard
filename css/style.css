@@ -48,4 +48,35 @@ table, th, td {
 th, td {
   padding: 10px;
   text-align: center;
+
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  max-width: 500px;
+  margin: auto;
+}
+
+.task-list li {
+  background: white;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.task-list input {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.progress-box {
+  text-align: center;
+  margin-top: 20px;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
 }
