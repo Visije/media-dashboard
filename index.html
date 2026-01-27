@@ -10,6 +10,7 @@
 <header>
   <h1>📊 Media Command Center</h1>
   <p>All Channels • All Content • One Place</p>
+  <button onclick="toggleDark()">🌙 Dark Mode</button>
 </header>
 
 <nav>
@@ -39,5 +40,12 @@
 </footer>
 
 <script src="js/main.js"></script>
+
+  <script>
+function toggleDark() {
+  document.body.classList.toggle("dark");
+}
+</script>
 </body>
+
 </html>
