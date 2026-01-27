@@ -1,18 +1,13 @@
 // -----------------------------
-// ROLE-BASED ACCESS CONTROL
+// READ ROLE FROM LOCAL STORAGE
 // -----------------------------
 
-let role = localStorage.getItem("role");
+const role = localStorage.getItem("role");
 
-if (!role) {
-  role = prompt("Enter role: admin / writer / editor");
-  localStorage.setItem("role", role);
-}
-
-// Redirect non-admin users
+// Redirect based on role
 if (role === "writer") {
   window.location.href = "writer.html";
-} 
+}
 else if (role === "editor") {
   window.location.href = "editor.html";
 }
@@ -26,7 +21,6 @@ const weeklyEl = document.getElementById("weeklyUploads");
 const monthlyEl = document.getElementById("monthlyUploads");
 const pendingEl = document.getElementById("pendingScripts");
 
-// Only run if admin elements exist
 if (weeklyEl && monthlyEl && pendingEl) {
 
   fetch("https://docs.google.com/spreadsheets/d/e/1fbeWgceLfW_9Nxa7yRQwak-Zuu8q0kw8HOLqIFFfFP4/pub?gid=2143528718&single=true&output=csv")
