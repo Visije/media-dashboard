@@ -81,6 +81,16 @@ progress {
   height: 20px;
 }
 
+.dark-btn {
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #222;
+  color: white;
+}
+
 body.dark {
   background: #121212;
   color: #e0e0e0;
@@ -91,3 +101,4 @@ body.dark table {
   background: #1e1e1e;
   color: white;
 }
+
