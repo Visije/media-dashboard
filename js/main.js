@@ -1,30 +1,31 @@
 // -----------------------------
-// ROLE BASED REDIRECT (ONLY ON DASHBOARD)
-// -----------------------------
-
-const role = localStorage.getItem("role");
-const currentPage = window.location.pathname;
-
-// Redirect ONLY if user is on index.html
-if (currentPage.endsWith("index.html") || currentPage === "/" || currentPage.endsWith("/")) {
-  if (role === "writer") {
-    window.location.href = "writer.html";
-  }
-  else if (role === "editor") {
-    window.location.href = "editor.html";
-  }
-}
-
-// -----------------------------
-// ADMIN DASHBOARD ONLY
-// (Google Sheets Stats Fetch)
+// ADMIN DASHBOARD CHECK
+// (Only index.html has these IDs)
 // -----------------------------
 
 const weeklyEl = document.getElementById("weeklyUploads");
 const monthlyEl = document.getElementById("monthlyUploads");
 const pendingEl = document.getElementById("pendingScripts");
 
+// -----------------------------
+// ROLE BASED REDIRECT
+// (ONLY if admin dashboard exists)
+// -----------------------------
+
 if (weeklyEl && monthlyEl && pendingEl) {
+
+  const role = localStorage.getItem("role");
+
+  if (role === "writer") {
+    window.location.href = "writer.html";
+  }
+  else if (role === "editor") {
+    window.location.href = "editor.html";
+  }
+
+  // -----------------------------
+  // GOOGLE SHEETS STATS FETCH
+  // -----------------------------
 
   fetch("https://docs.google.com/spreadsheets/d/e/1fbeWgceLfW_9Nxa7yRQwak-Zuu8q0kw8HOLqIFFfFP4/pub?gid=2143528718&single=true&output=csv")
     .then(res => res.text())
