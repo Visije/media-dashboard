@@ -1,30 +1,34 @@
 // -----------------------------
-// ROLE BASED REDIRECT (ONLY ON DASHBOARD)
+// PAGE DETECTION (NO URL LOGIC)
 // -----------------------------
 
+const page = document.querySelector('meta[name="page"]')?.content;
 const role = localStorage.getItem("role");
-const currentPage = window.location.pathname;
 
-// Redirect ONLY if user is on index.html
-if (currentPage.endsWith("index.html") || currentPage === "/" || currentPage.endsWith("/")) {
+// -----------------------------
+// ROLE BASED REDIRECT
+// -----------------------------
+
+if (page === "admin") {
   if (role === "writer") {
-    window.location.href = "writer.html";
+    window.location.replace("writer.html");
   }
   else if (role === "editor") {
-    window.location.href = "editor.html";
+    window.location.replace("editor.html");
   }
 }
 
 // -----------------------------
-// ADMIN DASHBOARD ONLY
-// (Google Sheets Stats Fetch)
+// ADMIN DASHBOARD STATS ONLY
 // -----------------------------
 
-const weeklyEl = document.getElementById("weeklyUploads");
-const monthlyEl = document.getElementById("monthlyUploads");
-const pendingEl = document.getElementById("pendingScripts");
+if (page === "admin") {
 
-if (weeklyEl && monthlyEl && pendingEl) {
+  const weeklyEl = document.getElementById("weeklyUploads");
+  const monthlyEl = document.getElementById("monthlyUploads");
+  const pendingEl = document.getElementById("pendingScripts");
+
+  if (!weeklyEl || !monthlyEl || !pendingEl) return;
 
   fetch("https://docs.google.com/spreadsheets/d/e/1fbeWgceLfW_9Nxa7yRQwak-Zuu8q0kw8HOLqIFFfFP4/pub?gid=2143528718&single=true&output=csv")
     .then(res => res.text())
@@ -43,8 +47,5 @@ if (weeklyEl && monthlyEl && pendingEl) {
       pendingEl.innerText = stats.pending_scripts || 0;
 
     })
-    .catch(error => {
-      console.error("Sheet fetch error:", error);
-    });
-
+    .catch(err => console.error("Sheet error:", err));
 }
