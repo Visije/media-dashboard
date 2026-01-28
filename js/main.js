@@ -1,15 +1,18 @@
 // -----------------------------
-// READ ROLE FROM LOCAL STORAGE
+// ROLE BASED REDIRECT (ONLY ON DASHBOARD)
 // -----------------------------
 
 const role = localStorage.getItem("role");
+const currentPage = window.location.pathname;
 
-// Redirect based on role
-if (role === "writer") {
-  window.location.href = "writer.html";
-}
-else if (role === "editor") {
-  window.location.href = "editor.html";
+// Redirect ONLY if user is on index.html
+if (currentPage.endsWith("index.html") || currentPage === "/" || currentPage.endsWith("/")) {
+  if (role === "writer") {
+    window.location.href = "writer.html";
+  }
+  else if (role === "editor") {
+    window.location.href = "editor.html";
+  }
 }
 
 // -----------------------------
@@ -45,4 +48,3 @@ if (weeklyEl && monthlyEl && pendingEl) {
     });
 
 }
-
