@@ -4,15 +4,123 @@
   <meta charset="UTF-8">
   <title>Script Tracker</title>
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    h2 {
+      margin-top: 40px;
+    }
+
+    table {
+      margin-bottom: 30px;
+    }
+
+    .Ready {
+      color: green;
+      font-weight: bold;
+    }
+
+    .Writing {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .Pending {
+      color: red;
+      font-weight: bold;
+    }
+
+    form {
+      margin-top: 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+    }
+
+    form input,
+    form select,
+    form button {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    form button {
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
 
 <h1>✍️ Script Tracker</h1>
 
+<!-- ================= SCRIPT TABLES ================= -->
 <div id="tables"></div>
 
+<!-- ================= ADD SCRIPT FORM ================= -->
+<hr>
+
+<h2>➕ Add New Script</h2>
+
+<form
+  action="https://docs.google.com/forms/d/e/1FAIpQLSeZRpIo8ev3VfZKWYjWBRez3VzbGxNcJZVXCe7wCQGBjdWTMg/formResponse"
+  method="POST"
+  target="_blank"
+>
+
+  <!-- TITLE -->
+  <input
+    type="text"
+    name="entry.784403962"
+    placeholder="Script Title"
+    required
+  >
+
+  <!-- CHANNEL -->
+  <select name="entry.783334091" required>
+    <option value="">Select Channel</option>
+    <option>Ender Vij</option>
+    <option>I'm Gurey</option>
+    <option>CRUST</option>
+    <option>Zone-out History</option>
+    <option>Touristico</option>
+  </select>
+
+  <!-- STATUS -->
+  <select name="entry.1166266533" required>
+    <option>Ready</option>
+    <option>Writing</option>
+    <option>Pending</option>
+  </select>
+
+  <!-- WORD COUNT -->
+  <input
+    type="number"
+    name="entry.649041339"
+    placeholder="Word Count"
+    required
+  >
+
+  <!-- DATE -->
+  <input
+    type="text"
+    name="entry.648927088"
+    placeholder="YYYY-MM-DD"
+    required
+  >
+
+  <button type="submit">Submit Script</button>
+</form>
+
+<!-- ================= SCRIPT LOGIC ================= -->
 <script>
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
+const sheetURL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
 
 const channels = [
   "Ender Vij",
@@ -22,7 +130,7 @@ const channels = [
   "Touristico"
 ];
 
-// Simple CSV parser (works if you avoid commas inside cells)
+// Simple CSV parser (avoid commas inside cells)
 function parseCSV(text) {
   return text
     .trim()
@@ -62,7 +170,7 @@ fetch(sheetURL)
           html += `
             <tr>
               <td>${row[0]}</td>
-              <td>${row[2]}</td>
+              <td class="${row[2]}">${row[2]}</td>
               <td>${row[3]}</td>
               <td>${row[4]}</td>
             </tr>
