@@ -1,37 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <base href="./">
-  <title>Scripts</title>
+  <meta charset="UTF-8">
+  <title>Script Tracker</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-  
 <body>
-  
-<nav class="main-nav">
-  <a href="index.html">Dashboard</a>
-  <a href="calendar.html">Calendar</a>
-  <a href="scripts.html">Scripts</a>
-  <a href="goals.html">Goals</a>
-</nav>
 
 <h1>✍️ Script Tracker</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Channel</th>
-    <th>Status</th>
-  </tr>
-  <tr>
-    <td>Why Earth Is Unique</td>
-    <td>Facts Hindi</td>
-    <td>Ready</td>
-  </tr>
-</table>
+<div id="tables"></div>
+
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
+
+const channels = [
+  "Ender Vij",
+  "I'm Gurey",
+  "CRUST",
+  "Zone-out History",
+  "Touristico"
+];
+
+// Simple CSV parser (works if you avoid commas inside cells)
+function parseCSV(text) {
+  return text
+    .trim()
+    .split("\n")
+    .slice(1)
+    .map(row => row.split(","));
+}
+
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(text => {
+    const rows = parseCSV(text);
+    const container = document.getElementById("tables");
+
+    channels.forEach(channel => {
+      const channelRows = rows.filter(row => row[1] === channel);
+
+      let html = `
+        <h2>${channel}</h2>
+        <table>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Words</th>
+            <th>Date</th>
+          </tr>
+      `;
+
+      if (channelRows.length === 0) {
+        html += `
+          <tr>
+            <td colspan="4">No scripts yet</td>
+          </tr>
+        `;
+      } else {
+        channelRows.forEach(row => {
+          html += `
+            <tr>
+              <td>${row[0]}</td>
+              <td>${row[2]}</td>
+              <td>${row[3]}</td>
+              <td>${row[4]}</td>
+            </tr>
+          `;
+        });
+      }
+
+      html += `</table>`;
+      container.innerHTML += html;
+    });
+  });
+</script>
 
 </body>
-
 </html>
-
-
