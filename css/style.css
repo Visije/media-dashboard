@@ -153,3 +153,12 @@ td:nth-child(2) {
 td:nth-child(2):contains("Ready") {
   color: green;
 }
+
+h2 {
+  margin-top: 40px;
+  color: #333;
+}
+
+table {
+  margin-bottom: 30px;
+}
