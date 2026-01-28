@@ -145,3 +145,11 @@ body.dark table {
 .main-nav a:hover {
   color: #007bff;
 }
+
+td:nth-child(2) {
+  font-weight: bold;
+}
+
+td:nth-child(2):contains("Ready") {
+  color: green;
+}
