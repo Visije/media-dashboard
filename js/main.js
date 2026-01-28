@@ -4,6 +4,14 @@
 
 const role = localStorage.getItem("role");
 
+// Redirect based on role
+if (role === "writer") {
+  window.location.href = "writer.html";
+}
+else if (role === "editor") {
+  window.location.href = "editor.html";
+}
+
 // -----------------------------
 // ADMIN DASHBOARD ONLY
 // (Google Sheets Stats Fetch)
