@@ -137,10 +137,32 @@ function parseCSV(text) {
   return rows;
 }
 
+<script>
+function getWeekRange(dateStr) {
+  const d = new Date(dateStr);
+  const day = d.getDay() || 7; // Sun = 7
+  const monday = new Date(d);
+  monday.setDate(d.getDate() - day + 1);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+
+  return `${monday.toISOString().slice(0,10)} → ${sunday.toISOString().slice(0,10)}`;
+}
+</script>
+  
 fetch(sheetURL)
   .then(res => res.text())
   .then(text => {
     const rows = parseCSV(text);
+
+// Group by week
+const weeklyGroups = {};
+rows.forEach(r => {
+  const week = getWeekRange(r[4]);
+  if (!weeklyGroups[week]) weeklyGroups[week] = [];
+  weeklyGroups[week].push(r);
+});
+
     const container = document.getElementById("tables");
     container.innerHTML = "";
 
@@ -247,6 +269,7 @@ if (localStorage.getItem("theme") === "dark") {
 
 </body>
 </html>
+
 
 
 
