@@ -154,6 +154,8 @@ fetch(sheetURL)
   .then(res => res.text())
   .then(text => {
     const rows = parseCSV(text);
+    const container = document.getElementById("tables");
+    container.innerHTML = "";
 
 // Group by week
 const weeklyGroups = {};
@@ -163,63 +165,56 @@ rows.forEach(r => {
   weeklyGroups[week].push(r);
 });
 
-    const container = document.getElementById("tables");
-    container.innerHTML = "";
+ // -------- RENDER WEEKLY SECTIONS --------
+Object.keys(weeklyGroups).sort().reverse().forEach(week => {
 
-    channels.forEach(channel => {
-      const channelRows = rows.filter(r => r[1] === channel);
-      const completedCount = channelRows.filter(r => r[2] === "Ready").length;
-      const percentComplete = channelRows.length
-        ? Math.round((completedCount / channelRows.length) * 100)
-        : 0;
+    const weekTitle = document.createElement("h2");
+    weekTitle.style.marginTop = "40px";
+    weekTitle.innerText = `📆 Week: ${week}`;
+    container.appendChild(weekTitle); 
 
-      const card = document.createElement("div");
-      card.className = "channel-card";
+   channels.forEach(channel => {
+        const channelRows = weeklyGroups[week].filter(r => r[1] === channel);
+        if (channelRows.length === 0) return;
 
-      card.innerHTML = `
-        <div class="channel-header">
-          <h2>${channel}</h2>
-          <div>${percentComplete}% Completed</div>
-        </div>
+        const completed = channelRows.filter(r => r[2] === "Ready").length;
+        const percent = Math.round((completed / channelRows.length) * 100);
 
-        <div class="progress-bar">
-          <div class="progress-bar-inner" style="width:${percentComplete}%;"></div>
-        </div>
+        const card = document.createElement("div");
+        card.className = "channel-card";
+        card.innerHTML = `
+          <div class="channel-header">
+            <h3>${channel}</h3>
+            <div>${percent}% Ready</div>
+          </div>
 
-        <div style="margin-top:6px;font-size:13px;opacity:0.8;">
-          ${completedCount} / ${channelRows.length} scripts ready
-        </div>
+          <div class="progress-bar">
+            <div class="progress-bar-inner" style="width:${percent}%"></div>
+          </div>
 
-        <div class="controls">
-          <input placeholder="Search title" onkeyup="filterTable(this)">
-          <select onchange="sortTable(this)">
-            <option value="date_desc">Newest</option>
-            <option value="date_asc">Oldest</option>
-            <option value="words">Words</option>
-          </select>
-        </div>
-
-        <table>
-          <tr>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Words</th>
-            <th>Date</th>
-          </tr>
-          ${channelRows.map(r => `
+          <table>
             <tr>
-              <td>${r[0]}</td>
-              <td><span class="badge ${r[2]}">${r[2]}</span></td>
-              <td>${r[3]}</td>
-              <td>${r[4]}</td>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Words</th>
+              <th>Date</th>
             </tr>
-          `).join("")}
-        </table>
-      `;
-
-      container.appendChild(card);
+            ${channelRows.map(r => `
+              <tr>
+                <td>${r[0]}</td>
+                <td><span class="badge ${r[2]}">${r[2]}</span></td>
+                <td>${r[3]}</td>
+                <td>${r[4]}</td>
+              </tr>
+            `).join("")}
+          </table>
+        `;
+        container.appendChild(card);
+      });
     });
-  })
+  });
+</script>
+  
   .catch(err => {
     document.getElementById("tables").innerHTML =
       "<p style='color:red'>Error loading scripts</p>";
@@ -269,6 +264,7 @@ if (localStorage.getItem("theme") === "dark") {
 
 </body>
 </html>
+
 
 
 
