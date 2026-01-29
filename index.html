@@ -7,15 +7,22 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  
+<script>
+let role = localStorage.getItem("role");
 
- <script>
-const role = localStorage.getItem("role") ||
-  prompt("Enter role: admin / writer / editor");
+if (!role) {
+  role = prompt("Enter role: admin / writer / editor");
+  localStorage.setItem("role", role);
+}
 
-localStorage.setItem("role", role);
-
-if (role === "writer") location.href = "scripts.html";
-if (role === "editor") location.href = "calendar.html";
+// Redirect ONLY from dashboard
+if (role === "writer") {
+  window.location.href = "scripts.html";
+}
+if (role === "editor") {
+  window.location.href = "calendar.html";
+}
 </script>
 
 <header>
@@ -76,6 +83,7 @@ function goRole(role) {
   
 </body>
 </html>
+
 
 
 
