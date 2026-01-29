@@ -98,12 +98,17 @@
   <a href="goals.html">🎯 Daily Goals</a>
 </nav>
 
-  <script>
-  const role = localStorage.getItem("role");
+<script>
+let role = localStorage.getItem("role");
 
-  if (role !== "writer" && role !== "admin") {
-    window.location.href = "index.html";
-  }
+if (!role) {
+  role = "admin"; // default role
+  localStorage.setItem("role", role);
+}
+
+if (role !== "writer" && role !== "admin") {
+  window.location.href = "index.html";
+}
 </script>
 
 <h1>✍️ Script Tracker (Ascend Style)</h1>
@@ -242,6 +247,7 @@ if (localStorage.getItem("theme") === "dark") {
 
 </body>
 </html>
+
 
 
 
