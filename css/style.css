@@ -172,3 +172,31 @@ table {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+:root {
+  --bg: #f7f8fc;
+  --card: #ffffff;
+  --text: #2a2a2a;
+  --accent: #6c5ce7;
+}
+
+body.dark {
+  --bg: #0f1220;
+  --card: #181b34;
+  --text: #eaeaf0;
+  --accent: #7c7cff;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+.channel-card {
+  background: var(--card);
+}
+
+.progress-bar-inner {
+  background: var(--accent);
+}
