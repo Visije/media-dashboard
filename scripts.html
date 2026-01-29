@@ -120,13 +120,13 @@ const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydN
 
 const channels = [
   "Ender Vij",
-  "IM Gurey",
+  "I'm Gurey",
   "CRUST",
   "Zone-out History",
   "Touristico"
 ];
 
-// Safe CSV parser (handles commas)
+// ---------- CSV PARSER (SAFE) ----------
 function parseCSV(text) {
   const lines = text.split("\n").filter(l => l.trim() !== "");
   const rows = [];
@@ -137,10 +137,12 @@ function parseCSV(text) {
   return rows;
 }
 
-<script>
+// ---------- WEEK RANGE ----------
 function getWeekRange(dateStr) {
   const d = new Date(dateStr);
-  const day = d.getDay() || 7; // Sun = 7
+  if (isNaN(d)) return null;
+
+  const day = d.getDay() || 7;
   const monday = new Date(d);
   monday.setDate(d.getDate() - day + 1);
   const sunday = new Date(monday);
@@ -148,32 +150,37 @@ function getWeekRange(dateStr) {
 
   return `${monday.toISOString().slice(0,10)} → ${sunday.toISOString().slice(0,10)}`;
 }
-</script>
-  
+
+// ---------- FETCH & RENDER ----------
 fetch(sheetURL)
-  .then(res => res.text())
+  .then(res => {
+    if (!res.ok) throw new Error("Failed to fetch sheet");
+    return res.text();
+  })
   .then(text => {
     const rows = parseCSV(text);
     const container = document.getElementById("tables");
     container.innerHTML = "";
 
-// Group by week
-const weeklyGroups = {};
-rows.forEach(r => {
-  const week = getWeekRange(r[4]);
-  if (!weeklyGroups[week]) weeklyGroups[week] = [];
-  weeklyGroups[week].push(r);
-});
+    // Group by week
+    const weeklyGroups = {};
+    rows.forEach(r => {
+      if (!r[4]) return;
+      const week = getWeekRange(r[4]);
+      if (!week) return;
 
- // -------- RENDER WEEKLY SECTIONS --------
-Object.keys(weeklyGroups).sort().reverse().forEach(week => {
+      if (!weeklyGroups[week]) weeklyGroups[week] = [];
+      weeklyGroups[week].push(r);
+    });
 
-    const weekTitle = document.createElement("h2");
-    weekTitle.style.marginTop = "40px";
-    weekTitle.innerText = `📆 Week: ${week}`;
-    container.appendChild(weekTitle); 
+    // Render weeks
+    Object.keys(weeklyGroups).sort().reverse().forEach(week => {
+      const h2 = document.createElement("h2");
+      h2.style.marginTop = "40px";
+      h2.textContent = `📆 Week: ${week}`;
+      container.appendChild(h2);
 
-   channels.forEach(channel => {
+      channels.forEach(channel => {
         const channelRows = weeklyGroups[week].filter(r => r[1] === channel);
         if (channelRows.length === 0) return;
 
@@ -212,38 +219,12 @@ Object.keys(weeklyGroups).sort().reverse().forEach(week => {
         container.appendChild(card);
       });
     });
-  });
-</script>
-  
+  })
   .catch(err => {
+    console.error(err);
     document.getElementById("tables").innerHTML =
-      "<p style='color:red'>Error loading scripts</p>";
+      "<p style='color:red'>❌ Error loading scripts</p>";
   });
-
-function filterTable(input) {
-  const rows = input.closest(".channel-card").querySelectorAll("table tr");
-  rows.forEach((row, i) => {
-    if (i === 0) return;
-    row.style.display = row.children[0].innerText
-      .toLowerCase()
-      .includes(input.value.toLowerCase()) ? "" : "none";
-  });
-}
-
-function sortTable(select) {
-  const table = select.closest(".channel-card").querySelector("table");
-  const rows = Array.from(table.rows).slice(1);
-
-  rows.sort((a, b) => {
-    if (select.value === "words")
-      return b.cells[2].innerText - a.cells[2].innerText;
-    if (select.value === "date_asc")
-      return new Date(a.cells[3].innerText) - new Date(b.cells[3].innerText);
-    return new Date(b.cells[3].innerText) - new Date(a.cells[3].innerText);
-  });
-
-  rows.forEach(r => table.appendChild(r));
-}
 </script>
 
 <script>
@@ -264,6 +245,7 @@ if (localStorage.getItem("theme") === "dark") {
 
 </body>
 </html>
+
 
 
 
