@@ -115,14 +115,21 @@ const sheetURL = "PASTE_SCRIPTS_CSV_URL";
 
 const channels = [
   "Ender Vij",
-  "I'm Gurey",
+  "IM Gurey",
   "CRUST",
   "Zone-out History",
   "Touristico"
 ];
 
+// Safe CSV parser (handles commas)
 function parseCSV(text) {
-  return text.trim().split("\n").slice(1).map(r => r.split(","));
+  const lines = text.split("\n").filter(l => l.trim() !== "");
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+    if (cols) rows.push(cols.map(c => c.replace(/^"|"$/g, "")));
+  }
+  return rows;
 }
 
 fetch(sheetURL)
@@ -130,6 +137,7 @@ fetch(sheetURL)
   .then(text => {
     const rows = parseCSV(text);
     const container = document.getElementById("tables");
+    container.innerHTML = "";
 
     channels.forEach(channel => {
       const channelRows = rows.filter(r => r[1] === channel);
@@ -140,20 +148,20 @@ fetch(sheetURL)
 
       const card = document.createElement("div");
       card.className = "channel-card";
-card.innerHTML = `
-  <div class="channel-header">
-    <h2>${channel}</h2>
-    <div>${percentComplete}% Completed</div>
-  </div>
 
-  <div class="progress-bar">
-    <div class="progress-bar-inner" style="width: ${percentComplete}%;"></div>
-  </div>
+      card.innerHTML = `
+        <div class="channel-header">
+          <h2>${channel}</h2>
+          <div>${percentComplete}% Completed</div>
+        </div>
 
-  <div style="margin-top:6px;font-size:13px;opacity:0.8;">
-    ${completedCount} / ${channelRows.length} scripts ready
-  </div>
-`;
+        <div class="progress-bar">
+          <div class="progress-bar-inner" style="width:${percentComplete}%;"></div>
+        </div>
+
+        <div style="margin-top:6px;font-size:13px;opacity:0.8;">
+          ${completedCount} / ${channelRows.length} scripts ready
+        </div>
 
         <div class="controls">
           <input placeholder="Search title" onkeyup="filterTable(this)">
@@ -181,8 +189,13 @@ card.innerHTML = `
           `).join("")}
         </table>
       `;
+
       container.appendChild(card);
     });
+  })
+  .catch(err => {
+    document.getElementById("tables").innerHTML =
+      "<p style='color:red'>Error loading scripts</p>";
   });
 
 function filterTable(input) {
@@ -229,6 +242,7 @@ if (localStorage.getItem("theme") === "dark") {
 
 </body>
 </html>
+
 
 
 
