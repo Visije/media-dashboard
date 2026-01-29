@@ -91,18 +91,23 @@
 </head>
 <body>
 
-  <nav>
-  <a href="index.html">🏠 Dashboard</a>
-  <a href="scripts.html">✍️ Scripts</a>
+<header>
+  <h1>✍️ Script Tracker</h1>
+  <p>All channels • Ascend-style view</p>
+</header>
+
+<nav>
+  <a href="index.html">Dashboard</a>
   <a href="calendar.html">📅 Calendar</a>
-  <a href="goals.html">🎯 Daily Goals</a>
+  <a href="scripts.html">Scripts</a>
+  <a href="goals.html">Daily Goals</a>
 </nav>
 
-<h1>✍️ Script Tracker (Ascend Style)</h1>
-
+<!-- SCRIPT TABLES RENDER HERE -->
 <div id="tables"></div>
 
-<script>
+<script src="js/scripts.js"></script>
+
 const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
 
 const channels = [
@@ -232,6 +237,7 @@ if (localStorage.getItem("theme") === "dark") {
 
 </body>
 </html>
+
 
 
 
