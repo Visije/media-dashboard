@@ -1,7 +1,7 @@
 // -----------------------------
 // PAGE DETECTION (SAFE)
 // -----------------------------
-const pageMeta = document.querySelector('meta[name="page"]');
+const page = document.querySelector('meta[name="page"]')?.content;
 const page = pageMeta ? pageMeta.content : null;
 const role = localStorage.getItem("role");
 
