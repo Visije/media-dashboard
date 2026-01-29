@@ -8,6 +8,16 @@
 </head>
 <body>
 
+ <script>
+const role = localStorage.getItem("role") ||
+  prompt("Enter role: admin / writer / editor");
+
+localStorage.setItem("role", role);
+
+if (role === "writer") location.href = "scripts.html";
+if (role === "editor") location.href = "calendar.html";
+</script>
+
 <header>
   <h1>📊 Media Command Center</h1>
   <p>All Channels • All Content • One Place</p>
@@ -66,6 +76,7 @@ function goRole(role) {
   
 </body>
 </html>
+
 
 
 
