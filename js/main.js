@@ -1,8 +1,7 @@
 // -----------------------------
-// PAGE DETECTION (SAFE)
+// PAGE DETECTION
 // -----------------------------
 const page = document.querySelector('meta[name="page"]')?.content;
-const page = pageMeta ? pageMeta.content : null;
 const role = localStorage.getItem("role");
 
 // -----------------------------
@@ -11,14 +10,13 @@ const role = localStorage.getItem("role");
 if (page === "admin") {
   if (role === "writer") {
     window.location.replace("scripts.html");
-  } 
-  else if (role === "editor") {
+  } else if (role === "editor") {
     window.location.replace("calendar.html");
   }
 }
 
 // -----------------------------
-// ADMIN DASHBOARD STATS ONLY
+// ADMIN DASHBOARD STATS
 // -----------------------------
 if (page === "admin") {
 
@@ -26,19 +24,16 @@ if (page === "admin") {
   const monthlyEl = document.getElementById("monthlyUploads");
   const pendingEl = document.getElementById("pendingScripts");
 
-  // Exit safely if elements not present
   if (!weeklyEl || !monthlyEl || !pendingEl) {
-    console.warn("Admin stat elements not found");
+    console.warn("Admin stats elements not found");
   } else {
 
     fetch("https://docs.google.com/spreadsheets/d/e/1fbeWgceLfW_9Nxa7yRQwak-Zuu8q0kw8HOLqIFFfFP4/pub?gid=2143528718&single=true&output=csv")
-      .then(res => {
-        if (!res.ok) throw new Error("Sheet fetch failed");
-        return res.text();
-      })
+      .then(res => res.text())
       .then(data => {
+
         const rows = data.trim().split("\n").slice(1);
-        const stats = {};
+        let stats = {};
 
         rows.forEach(row => {
           const [key, value] = row.split(",");
@@ -48,9 +43,8 @@ if (page === "admin") {
         weeklyEl.innerText = stats.weekly_uploads || 0;
         monthlyEl.innerText = stats.monthly_uploads || 0;
         pendingEl.innerText = stats.pending_scripts || 0;
+
       })
-      .catch(err => {
-        console.error("Sheet error:", err);
-      });
+      .catch(err => console.error("Sheet error:", err));
   }
 }
