@@ -1,41 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base href="./">
-  <title>Content Calendar</title>
+  <title>Script Calendar</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .day {
+      background: var(--card);
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
-  
 <body>
 
-<nav class="main-nav">
-  <a href="index.html">Dashboard</a>
-  <a href="calendar.html">Calendar</a>
-  <a href="scripts.html">Scripts</a>
-  <a href="goals.html">Goals</a>
-</nav>
+<h1>📅 Script Calendar</h1>
+<div id="calendar"></div>
 
-<h1>📅 Content Calendar</h1>
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
 
-<table>
-  <tr>
-    <th>Date</th>
-    <th>Channel</th>
-    <th>Platform</th>
-    <th>Content Type</th>
-    <th>Status</th>
-  </tr>
-  <tr>
-    <td>24 Jan</td>
-    <td>Facts Hindi</td>
-    <td>YouTube</td>
-    <td>Short</td>
-    <td>Scheduled</td>
-  </tr>
-</table>
+function parseCSV(t){return t.trim().split("\n").slice(1).map(r=>r.split(","));}
+
+fetch(sheetURL)
+.then(r=>r.text())
+.then(t=>{
+  const rows = parseCSV(t);
+  const byDate = {};
+
+  rows.forEach(r=>{
+    const date = r[4];
+    if(!byDate[date]) byDate[date]=[];
+    byDate[date].push(r);
+  });
+
+  const container = document.getElementById("calendar");
+  Object.keys(byDate).sort().forEach(date=>{
+    container.innerHTML += `
+      <div class="day">
+        <strong>${date}</strong>
+        <ul>
+          ${byDate[date].map(r=>`<li>${r[0]} – ${r[1]}</li>`).join("")}
+        </ul>
+      </div>`;
+  });
+});
+</script>
 
 </body>
-
 </html>
-
-
