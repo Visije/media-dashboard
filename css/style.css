@@ -200,3 +200,55 @@ body {
 .progress-bar-inner {
   background: var(--accent);
 }
+
+/* ---------- DARK MODE (Ascend style) ---------- */
+body.dark {
+  background: #0f1220;
+  color: #eaeaf0;
+}
+
+body.dark .channel-card {
+  background: #181b34;
+}
+
+body.dark h1,
+body.dark h2,
+body.dark th,
+body.dark td {
+  color: #eaeaf0;
+}
+
+body.dark table tr {
+  border-bottom: 1px solid #2a2f55;
+}
+
+body.dark input,
+body.dark select {
+  background: #10132a;
+  color: #eaeaf0;
+  border-color: #2a2f55;
+}
+
+body.dark .progress-bar {
+  background: #2a2f55;
+}
+
+/* ---------- TOGGLE BUTTON ---------- */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  padding: 10px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+body.dark .theme-toggle {
+  background: #181b34;
+  color: #fff;
+}
