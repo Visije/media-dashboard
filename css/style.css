@@ -252,3 +252,7 @@ body.dark .theme-toggle {
   background: #181b34;
   color: #fff;
 }
+
+.progress-bar-inner {
+  transition: width 0.4s ease;
+}
