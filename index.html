@@ -2,27 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="page" content="admin-dashboard">
   <title>Media Command Center</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  
+
 <script>
+/* ---------- ROLE HANDLING (SAFE) ---------- */
 let role = localStorage.getItem("role");
 
+// Ask only first time
 if (!role) {
   role = prompt("Enter role: admin / writer / editor");
   localStorage.setItem("role", role);
-}
 
-// Redirect ONLY from dashboard
-if (role === "writer") {
-  window.location.href = "scripts.html";
+  if (role === "writer") location.href = "scripts.html";
+  if (role === "editor") location.href = "calendar.html";
 }
-if (role === "editor") {
-  window.location.href = "calendar.html";
-}
+// No redirect if role already exists
 </script>
 
 <header>
@@ -32,9 +29,9 @@ if (role === "editor") {
 </header>
 
 <section style="text-align:center; margin-bottom:20px;">
-  <button onclick="goRole('admin')">👑 Admin</button>
-  <button onclick="goRole('writer')">✍️ Writer</button>
-  <button onclick="goRole('editor')">🎬 Editor</button>
+  <button onclick="setRole('admin')">👑 Admin</button>
+  <button onclick="setRole('writer')">✍️ Writer</button>
+  <button onclick="setRole('editor')">🎬 Editor</button>
 </section>
 
 <nav>
@@ -65,29 +62,19 @@ if (role === "editor") {
 
 <script src="js/main.js"></script>
 
-  <script>
+<script>
 function toggleDark() {
   document.body.classList.toggle("dark");
 }
-</script>
-  
-<script>
-function goRole(role) {
-  localStorage.setItem("role", role);
 
-  if (role === "writer") window.location.href = "writer.html";
-  if (role === "editor") window.location.href = "editor.html";
-  if (role === "admin") window.location.href = "index.html";
+function setRole(r) {
+  localStorage.setItem("role", r);
+
+  if (r === "admin") location.href = "index.html";
+  if (r === "writer") location.href = "scripts.html";
+  if (r === "editor") location.href = "calendar.html";
 }
 </script>
-  
+
 </body>
 </html>
-
-
-
-
-
-
-
-
