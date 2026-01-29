@@ -73,9 +73,18 @@ function goRole(role) {
   if (role === "admin") window.location.href = "index.html";
 }
 </script>
+  <button onclick="switchRole()">Switch Role</button>
+
+<script>
+function switchRole() {
+  localStorage.removeItem("role");
+  location.href = "index.html";
+}
+</script>
   
 </body>
 </html>
+
 
 
 
