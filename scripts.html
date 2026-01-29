@@ -1,144 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Script Tracker</title>
   <link rel="stylesheet" href="css/style.css">
-
   <style>
-    h2 {
-      margin-top: 40px;
+    body {
+      background: #f7f8fc;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 20px;
     }
-
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .channel-card {
+      background: white;
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .channel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .channel-header h2 {
+      margin: 0;
+      font-size: 22px;
+      color: #2a2a2a;
+    }
+    .progress-bar {
+      background: #e3e6ef;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 10px;
+      margin-top: 8px;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background: #6c5ce7;
+      transition: width 0.3s ease;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    input, select {
+      padding: 8px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: #6c5ce7;
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+    }
     table {
       width: 100%;
-      background: #fff;
       border-collapse: collapse;
-      margin-bottom: 30px;
+      margin-top: 10px;
     }
-
     th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-
-    th {
-      background: #f2f2f2;
-    }
-
-    .Ready {
-      color: green;
-      font-weight: bold;
-    }
-
-    .Writing {
-      color: orange;
-      font-weight: bold;
-    }
-
-    .Pending {
-      color: red;
-      font-weight: bold;
-    }
-
-    form {
-      margin-top: 30px;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 500px;
-    }
-
-    form input,
-    form select,
-    form button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
       font-size: 15px;
     }
-
-    form button {
-      background: #000;
-      color: #fff;
-      border: none;
-      cursor: pointer;
+    th {
+      color: #444;
+      font-weight: 600;
     }
-
-    form button:hover {
-      background: #222;
+    .badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      display: inline-block;
     }
+    .Ready { background: #00b894; }
+    .Writing { background: #fdcb6e; }
+    .Pending { background: #d63031; }
   </style>
 </head>
-
 <body>
 
-<h1>✍️ Script Tracker</h1>
+<h1>✍️ Script Tracker (Ascend Style)</h1>
 
-<!-- ================= SCRIPT TABLES ================= -->
 <div id="tables"></div>
 
-<!-- ================= ADD SCRIPT FORM ================= -->
-<hr>
-
-<h2>➕ Add New Script</h2>
-
-<form
-  action="https://docs.google.com/forms/d/e/1FAIpQLSeZRpIo8ev3VfZKWYjWBRez3VzbGxNcJZVXCe7wCQGBjdWTMg/formResponse"
-  method="POST"
-  target="_blank"
->
-
-  <!-- SCRIPT TITLE -->
-  <input
-    type="text"
-    name="entry.784403962"
-    placeholder="Script Title"
-    required
-  >
-
-  <!-- CHANNEL -->
-  <select name="entry.783334091" required>
-    <option value="">Select Channel</option>
-    <option>Ender Vij</option>
-    <option>I'm Gurey</option>
-    <option>CRUST</option>
-    <option>Zone-out History</option>
-    <option>Touristico</option>
-  </select>
-
-  <!-- STATUS -->
-  <select name="entry.1166266533" required>
-    <option>Ready</option>
-    <option>Writing</option>
-    <option>Pending</option>
-  </select>
-
-  <!-- WORD COUNT -->
-  <input
-    type="number"
-    name="entry.649041339"
-    placeholder="Word Count"
-    required
-  >
-
-  <!-- DATE -->
-  <input
-    type="text"
-    name="entry.648927088"
-    placeholder="YYYY-MM-DD"
-    required
-  >
-
-  <button type="submit">Submit Script</button>
-</form>
-
-<!-- ================= SCRIPT LOGIC ================= -->
 <script>
-const sheetURL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
+const sheetURL = "PASTE_SCRIPTS_CSV_URL";
 
 const channels = [
   "Ender Vij",
@@ -148,13 +106,8 @@ const channels = [
   "Touristico"
 ];
 
-// Simple CSV parser (avoid commas in sheet cells)
 function parseCSV(text) {
-  return text
-    .trim()
-    .split("\n")
-    .slice(1)
-    .map(row => row.split(","));
+  return text.trim().split("\n").slice(1).map(r => r.split(","));
 }
 
 fetch(sheetURL)
@@ -164,10 +117,33 @@ fetch(sheetURL)
     const container = document.getElementById("tables");
 
     channels.forEach(channel => {
-      const channelRows = rows.filter(row => row[1] === channel);
+      const channelRows = rows.filter(r => r[1] === channel);
+      const completedCount = channelRows.filter(r => r[2] === "Ready").length;
+      const percentComplete = channelRows.length
+        ? Math.round((completedCount / channelRows.length) * 100)
+        : 0;
 
-      let html = `
-        <h2>${channel}</h2>
+      const card = document.createElement("div");
+      card.className = "channel-card";
+      card.innerHTML = `
+        <div class="channel-header">
+          <h2>${channel}</h2>
+          <div>${percentComplete}% Completed</div>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-bar-inner" style="width: ${percentComplete}%;"></div>
+        </div>
+
+        <div class="controls">
+          <input placeholder="Search title" onkeyup="filterTable(this)">
+          <select onchange="sortTable(this)">
+            <option value="date_desc">Newest</option>
+            <option value="date_asc">Oldest</option>
+            <option value="words">Words</option>
+          </select>
+        </div>
+
         <table>
           <tr>
             <th>Title</th>
@@ -175,31 +151,44 @@ fetch(sheetURL)
             <th>Words</th>
             <th>Date</th>
           </tr>
-      `;
-
-      if (channelRows.length === 0) {
-        html += `
-          <tr>
-            <td colspan="4">No scripts yet</td>
-          </tr>
-        `;
-      } else {
-        channelRows.forEach(row => {
-          html += `
+          ${channelRows.map(r => `
             <tr>
-              <td>${row[0]}</td>
-              <td class="${row[2]}">${row[2]}</td>
-              <td>${row[3]}</td>
-              <td>${row[4]}</td>
+              <td>${r[0]}</td>
+              <td><span class="badge ${r[2]}">${r[2]}</span></td>
+              <td>${r[3]}</td>
+              <td>${r[4]}</td>
             </tr>
-          `;
-        });
-      }
-
-      html += `</table>`;
-      container.innerHTML += html;
+          `).join("")}
+        </table>
+      `;
+      container.appendChild(card);
     });
   });
+
+function filterTable(input) {
+  const rows = input.closest(".channel-card").querySelectorAll("table tr");
+  rows.forEach((row, i) => {
+    if (i === 0) return;
+    row.style.display = row.children[0].innerText
+      .toLowerCase()
+      .includes(input.value.toLowerCase()) ? "" : "none";
+  });
+}
+
+function sortTable(select) {
+  const table = select.closest(".channel-card").querySelector("table");
+  const rows = Array.from(table.rows).slice(1);
+
+  rows.sort((a, b) => {
+    if (select.value === "words")
+      return b.cells[2].innerText - a.cells[2].innerText;
+    if (select.value === "date_asc")
+      return new Date(a.cells[3].innerText) - new Date(b.cells[3].innerText);
+    return new Date(b.cells[3].innerText) - new Date(a.cells[3].innerText);
+  });
+
+  rows.forEach(r => table.appendChild(r));
+}
 </script>
 
 </body>
