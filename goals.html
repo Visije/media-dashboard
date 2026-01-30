@@ -1,59 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <base href="./">
-  <meta charset="UTF-8">
-  <title>Daily Goals Tracker</title>
+  <title>Daily Goals</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .goal-card {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+
+    .goal-card label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .progress-box {
+      margin: 20px 0;
+    }
+
+    .progress-bar {
+      background: #e3e6ef;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 12px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .streak {
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-<nav class="main-nav">
-  <a href="index.html">Dashboard</a>
-  <a href="calendar.html">Calendar</a>
-  <a href="scripts.html">Scripts</a>
-  <a href="goals.html">Goals</a>
-</nav>
- 
-<h1>🕒 Daily Goals Tracker</h1>
-<p>Track your entire day from morning to night</p>
-
-<ul id="taskList" class="task-list">
-  <li><input type="checkbox"> 🌅 Wake up & morning routine</li>
-  <li><input type="checkbox"> 🧠 Planning & goal review</li>
-  <li><input type="checkbox"> ✍️ Write scripts</li>
-  <li><input type="checkbox"> 🎬 Content recording / editing</li>
-  <li><input type="checkbox"> 📤 Upload & scheduling</li>
-  <li><input type="checkbox"> 📚 Learning / research</li>
-  <li><input type="checkbox"> 🏃 Health / walk / workout</li>
-  <li><input type="checkbox"> 🌙 Night review & shutdown</li>
-</ul>
+<h1>🌅 Daily Goals</h1>
 
 <div class="progress-box">
-  <p id="progressText">Completed 0 / 8 tasks</p>
-  <progress id="progressBar" value="0" max="8"></progress>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <p id="progressText">0% completed</p>
+  <div class="streak">🔥 Streak: <span id="streak">0</span> days</div>
+</div>
+
+<h2>Morning</h2>
+<div class="goal-card">
+  <label><input type="checkbox"> Wake up early</label>
+</div>
+<div class="goal-card">
+  <label><input type="checkbox"> Exercise / walk</label>
+</div>
+
+<h2>Work</h2>
+<div class="goal-card">
+  <label><input type="checkbox"> Write scripts</label>
+</div>
+<div class="goal-card">
+  <label><input type="checkbox"> Upload content</label>
+</div>
+
+<h2>Growth</h2>
+<div class="goal-card">
+  <label><input type="checkbox"> Learn something new</label>
+</div>
+
+<h2>Night</h2>
+<div class="goal-card">
+  <label><input type="checkbox"> Night review & planning</label>
 </div>
 
 <script>
-const checkboxes = document.querySelectorAll("#taskList input[type='checkbox']");
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+const progressFill = document.getElementById("progressFill");
 const progressText = document.getElementById("progressText");
-const progressBar = document.getElementById("progressBar");
+const streakEl = document.getElementById("streak");
+
+const today = new Date().toDateString();
+
+let streak = Number(localStorage.getItem("streak")) || 0;
+let lastCompleted = localStorage.getItem("lastCompleted");
 
 function updateProgress() {
-  const completed = document.querySelectorAll("#taskList input:checked").length;
-  progressText.innerText = `Completed ${completed} / ${checkboxes.length} tasks`;
-  progressBar.value = completed;
+  const done = [...checkboxes].filter(c => c.checked).length;
+  const total = checkboxes.length;
+  const percent = Math.round((done / total) * 100);
+
+  progressFill.style.width = percent + "%";
+  progressText.innerText = `${percent}% completed`;
+
+  if (percent === 100 && lastCompleted !== today) {
+    streak++;
+    localStorage.setItem("streak", streak);
+    localStorage.setItem("lastCompleted", today);
+  }
+
+  streakEl.innerText = streak;
 }
 
-checkboxes.forEach(cb => {
-  cb.addEventListener("change", updateProgress);
-});
+checkboxes.forEach(cb => cb.addEventListener("change", updateProgress));
+
+streakEl.innerText = streak;
 </script>
 
 </body>
 </html>
-
-
-
-
