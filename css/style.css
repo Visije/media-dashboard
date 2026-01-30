@@ -276,3 +276,25 @@ nav a {
 nav a:hover {
   color: var(--accent);
 }
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+th, td {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  vertical-align: top;
+}
+
+td:first-child {
+  max-width: 420px;   /* Title column width */
+}
+
+@media (max-width: 768px) {
+  td:first-child {
+    max-width: 220px;
+  }
+}
