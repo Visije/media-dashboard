@@ -68,34 +68,27 @@ function parseCSV(text) {
   return text.trim().split("\n").slice(1).map(row => row.split(","));
 }
 
-fetch(HABITS_CSV)
-  .then(res => res.text())
-  .then(text => {
-    const rows = parseCSV(text);
-    const todayHabits = rows.filter(r => r[1] === today);
-    const container = document.getElementById("habits");
+fetchWithCache(HABITS_CSV, "habits_today", 300000)
+.then(text => {
+  const rows = parseCSV(text);
+  const today = new Date().toISOString().slice(0,10);
 
-    if (todayHabits.length === 0) {
-      container.innerHTML = "<p>No habits found for today.</p>";
-      document.getElementById("overallProgress").innerText = "0%";
-      return;
-    }
+  const todayHabits = rows.filter(r => r[1] === today);
+  const container = document.getElementById("habits");
 
-    let doneCount = 0;
+  let html = "";
+  todayHabits.forEach(h => {
+    const done = h[2] === "1";
+    html += `
+      <div class="habit-card ${done ? "done" : ""}">
+        <strong>${h[0]}</strong>
+        <span>${done ? "✅" : "⬜"}</span>
+      </div>
+    `;
+  });
 
-    todayHabits.forEach(h => {
-      const habitName = h[0];
-      const done = h[2] === "1";
-
-      if (done) doneCount++;
-
-      container.innerHTML += `
-        <div class="habit-card ${done ? "done" : ""}">
-          <div class="habit-text">${habitName}</div>
-          <input type="checkbox" class="checkbox" ${done ? "checked" : ""} disabled>
-        </div>
-      `;
-    });
+  container.innerHTML = html;
+});
 
     const percent = Math.round((doneCount / todayHabits.length) * 100);
     document.getElementById("overallProgress").innerText = percent + "%";
