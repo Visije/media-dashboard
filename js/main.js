@@ -83,3 +83,19 @@ if (page === "admin") {
       .catch(err => console.error("Admin stats sheet error:", err));
   }
 }
+
+function getStreak(row) {
+  let streak = 0;
+  for (let i = 7; i >= 1; i--) {
+    if (row[i] === "TRUE") streak++;
+    else break;
+  }
+  return streak;
+}
+
+function streakCoin(streak) {
+  if (streak >= 21) return `<span class="coin gold">21</span>`;
+  if (streak >= 7)  return `<span class="coin silver">7</span>`;
+  if (streak >= 3)  return `<span class="coin bronze">3</span>`;
+  return "";
+}
