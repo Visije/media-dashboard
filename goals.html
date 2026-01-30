@@ -1,123 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Daily Goals</title>
+  <base href="./">
+  <meta charset="UTF-8">
+  <title>Daily Goals Tracker</title>
   <link rel="stylesheet" href="css/style.css">
+
   <style>
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Segoe UI", sans-serif;
+    .goals-wrapper {
+      max-width: 700px;
+      margin: auto;
     }
 
-    .goal-card {
-      background: var(--card);
-      padding: 18px;
+    .task-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 25px;
+    }
+
+    .task-list li {
+      background: var(--card, #ffffff);
+      padding: 14px 16px;
+      margin-bottom: 12px;
       border-radius: 14px;
-      margin-bottom: 16px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-    }
-
-    .goal-card label {
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      font-size: 16px;
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .task-list input {
+      transform: scale(1.3);
       cursor: pointer;
     }
 
     .progress-box {
-      margin: 20px 0;
+      margin-top: 25px;
+      background: var(--card, #ffffff);
+      padding: 18px;
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      text-align: center;
     }
 
-    .progress-bar {
-      background: #e3e6ef;
+    progress {
+      width: 100%;
+      height: 14px;
+      margin-top: 10px;
       border-radius: 10px;
       overflow: hidden;
-      height: 12px;
     }
 
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--accent);
-      transition: width 0.3s ease;
+    progress::-webkit-progress-bar {
+      background-color: #e6e9f2;
+      border-radius: 10px;
+    }
+
+    progress::-webkit-progress-value {
+      background-color: #6c5ce7;
+      border-radius: 10px;
     }
 
     .streak {
-      font-size: 18px;
       margin-top: 10px;
+      font-size: 18px;
       font-weight: 600;
-    }
-
-    h2 {
-      margin-top: 30px;
-      margin-bottom: 10px;
     }
   </style>
 </head>
 
 <body>
 
-<h1>🌅 Daily Goals</h1>
+<nav class="main-nav">
+  <a href="index.html">Dashboard</a>
+  <a href="calendar.html">Calendar</a>
+  <a href="scripts.html">Scripts</a>
+  <a href="goals.html">Goals</a>
+</nav>
 
-<div class="progress-box">
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
+<div class="goals-wrapper">
+
+  <h1>🕒 Daily Goals Tracker</h1>
+  <p>Track your entire day from morning to night</p>
+
+  <ul id="taskList" class="task-list">
+    <li><input type="checkbox"> 🌅 Wake up & morning routine</li>
+    <li><input type="checkbox"> 🧠 Planning & goal review</li>
+    <li><input type="checkbox"> ✍️ Write scripts</li>
+    <li><input type="checkbox"> 🎬 Content recording / editing</li>
+    <li><input type="checkbox"> 📤 Upload & scheduling</li>
+    <li><input type="checkbox"> 📚 Learning / research</li>
+    <li><input type="checkbox"> 🏃 Health / walk / workout</li>
+    <li><input type="checkbox"> 🌙 Night review & shutdown</li>
+  </ul>
+
+  <div class="progress-box">
+    <p id="progressText">0% completed</p>
+    <progress id="progressBar" value="0" max="8"></progress>
+    <div class="streak">🔥 Streak: <span id="streakCount">0</span> days</div>
   </div>
-  <p id="progressText">0% completed</p>
-  <div class="streak">🔥 Streak: <span id="streak">0</span> days</div>
-</div>
 
-<h2>Morning</h2>
-<div class="goal-card">
-  <label><input type="checkbox"> Wake up early</label>
-</div>
-<div class="goal-card">
-  <label><input type="checkbox"> Exercise / walk</label>
-</div>
-
-<h2>Work</h2>
-<div class="goal-card">
-  <label><input type="checkbox"> Write scripts</label>
-</div>
-<div class="goal-card">
-  <label><input type="checkbox"> Upload content</label>
-</div>
-
-<h2>Growth</h2>
-<div class="goal-card">
-  <label><input type="checkbox"> Learn something new</label>
-</div>
-
-<h2>Night</h2>
-<div class="goal-card">
-  <label><input type="checkbox"> Night review & planning</label>
 </div>
 
 <script>
-const checkboxes = document.querySelectorAll("input[type='checkbox']");
-const progressFill = document.getElementById("progressFill");
+const checkboxes = document.querySelectorAll("#taskList input[type='checkbox']");
 const progressText = document.getElementById("progressText");
-const streakEl = document.getElementById("streak");
+const progressBar = document.getElementById("progressBar");
+const streakEl = document.getElementById("streakCount");
 
-const today = new Date().toDateString();
-
+const todayKey = new Date().toDateString();
+const savedData = JSON.parse(localStorage.getItem("dailyGoals")) || {};
 let streak = Number(localStorage.getItem("streak")) || 0;
-let lastCompleted = localStorage.getItem("lastCompleted");
+
+// Restore today's progress
+if (savedData.date === todayKey) {
+  checkboxes.forEach((cb, i) => cb.checked = savedData.checked[i]);
+} else {
+  savedData.checked = new Array(checkboxes.length).fill(false);
+}
 
 function updateProgress() {
-  const done = [...checkboxes].filter(c => c.checked).length;
-  const total = checkboxes.length;
-  const percent = Math.round((done / total) * 100);
+  const completed = [...checkboxes].filter(cb => cb.checked).length;
+  const percent = Math.round((completed / checkboxes.length) * 100);
 
-  progressFill.style.width = percent + "%";
   progressText.innerText = `${percent}% completed`;
+  progressBar.value = completed;
 
-  if (percent === 100 && lastCompleted !== today) {
+  savedData.date = todayKey;
+  savedData.checked = [...checkboxes].map(cb => cb.checked);
+  localStorage.setItem("dailyGoals", JSON.stringify(savedData));
+
+  if (percent === 100 && savedData.completed !== todayKey) {
     streak++;
     localStorage.setItem("streak", streak);
-    localStorage.setItem("lastCompleted", today);
+    savedData.completed = todayKey;
+    localStorage.setItem("dailyGoals", JSON.stringify(savedData));
   }
 
   streakEl.innerText = streak;
@@ -126,6 +145,7 @@ function updateProgress() {
 checkboxes.forEach(cb => cb.addEventListener("change", updateProgress));
 
 streakEl.innerText = streak;
+updateProgress();
 </script>
 
 </body>
