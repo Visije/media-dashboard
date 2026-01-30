@@ -310,3 +310,16 @@ body {
   overflow-x: hidden;
 }
 
+.channel-card {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  min-width: 700px;
+}
+
+.title-cell {
+  max-width: 350px;
+  word-break: break-word;
+}
