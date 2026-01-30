@@ -3,7 +3,8 @@
 // =======================================
 
 // Google Sheets CSV URL (published)
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
+const sheetURL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
 
 // Channel list
 const channels = [
@@ -14,7 +15,7 @@ const channels = [
   "Touristico"
 ];
 
-// ---------------- CSV PARSER ----------------
+// ---------------- SAFE CSV PARSER ----------------
 function parseCSV(text) {
   const lines = text.split("\n").filter(l => l.trim() !== "");
   const rows = [];
@@ -25,7 +26,6 @@ function parseCSV(text) {
 
     rows.push(cols.map(c => c.replace(/^"|"$/g, "").trim()));
   }
-
   return rows;
 }
 
@@ -41,7 +41,11 @@ function getWeekRange(dateStr) {
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
 
-  return monday.toISOString().slice(0, 10) + " → " + sunday.toISOString().slice(0, 10);
+  return (
+    monday.toISOString().slice(0, 10) +
+    " → " +
+    sunday.toISOString().slice(0, 10)
+  );
 }
 
 // ---------------- FETCH & RENDER ----------------
@@ -60,8 +64,10 @@ fetch(sheetURL)
 
     const weeklyGroups = {};
 
+    // Group by week
     rows.forEach(r => {
       if (!r[4]) return;
+
       const week = getWeekRange(r[4]);
       if (!week) return;
 
@@ -69,22 +75,30 @@ fetch(sheetURL)
       weeklyGroups[week].push(r);
     });
 
+    // Render weeks (latest first)
     Object.keys(weeklyGroups)
       .sort()
       .reverse()
       .forEach(week => {
-
         const weekTitle = document.createElement("h2");
         weekTitle.textContent = "📆 Week: " + week;
         weekTitle.style.marginTop = "40px";
         container.appendChild(weekTitle);
 
         channels.forEach(channel => {
-          const channelRows = weeklyGroups[week].filter(r => r[1] === channel);
+          const channelRows = weeklyGroups[week].filter(
+            r => r[1] === channel
+          );
+
           if (channelRows.length === 0) return;
 
-          const completed = channelRows.filter(r => r[2] === "Ready").length;
-          const percent = Math.round((completed / channelRows.length) * 100);
+          const completed = channelRows.filter(
+            r => r[2] === "Ready"
+          ).length;
+
+          const percent = Math.round(
+            (completed / channelRows.length) * 100
+          );
 
           const card = document.createElement("div");
           card.className = "channel-card";
@@ -106,14 +120,18 @@ fetch(sheetURL)
                 '<th>Words</th>' +
                 '<th>Date</th>' +
               '</tr>' +
+
               channelRows.map(r =>
                 '<tr>' +
-                  '<td class="title-cell">${r[0]}</td>' +
+                  '<td class="title-cell">' +
+                    (r[0].length > 120 ? r[0].slice(0, 120) + "…" : r[0]) +
+                  '</td>' +
                   '<td><span class="badge ' + r[2] + '">' + r[2] + '</span></td>' +
                   '<td>' + r[3] + '</td>' +
                   '<td>' + r[4] + '</td>' +
                 '</tr>'
               ).join("") +
+
             '</table>';
 
           container.appendChild(card);
@@ -123,7 +141,8 @@ fetch(sheetURL)
   .catch(err => {
     const container = document.getElementById("tables");
     if (container) {
-      container.innerHTML = "<p style='color:red;font-weight:bold'>❌ Error loading scripts</p>";
+      container.innerHTML =
+        "<p style='color:red;font-weight:bold'>❌ Error loading scripts</p>";
     }
-    console.error(err);
+    console.error("Script Tracker Error:", err);
   });
