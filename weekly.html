@@ -37,29 +37,28 @@ function parseCSV(text) {
   return text.trim().split("\n").slice(1).map(r => r.split(","));
 }
 
-fetch(WEEKLY_CSV)
-  .then(res => res.text())
-  .then(text => {
-    const rows = parseCSV(text);
-    const container = document.getElementById("goals");
+fetchWithCache(WEEKLY_CSV, "weekly_goals", 300000)
+.then(text => {
+  const rows = parseCSV(text);
+  const container = document.getElementById("goals");
 
-    rows.forEach(r => {
-      const target = Number(r[1]);
-      const done = Number(r[2]);
-      const percent = target > 0 ? Math.min(100, Math.round((done / target) * 100)) : 0;
-
-      container.innerHTML += `
-        <div class="goal-card">
-          <strong>${r[0]}</strong>
-          <div>${done} / ${target}</div>
-          <div class="bar">
-            <div class="bar-inner" style="width:${percent}%"></div>
-          </div>
-          <small>${percent}% completed</small>
+  let html = "";
+  rows.forEach(r => {
+    const percent = Math.min(100, Math.round((r[2] / r[1]) * 100));
+    html += `
+      <div class="goal-card">
+        <strong>${r[0]}</strong>
+        <div>${r[2]} / ${r[1]}</div>
+        <div class="bar">
+          <div class="bar-inner" style="width:${percent}%"></div>
         </div>
-      `;
-    });
-  })
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+});
+
   .catch(err => {
     console.error("Error fetching weekly CSV:", err);
     document.getElementById("goals").innerText = "Unable to load weekly goals.";
