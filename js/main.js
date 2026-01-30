@@ -1,11 +1,31 @@
-// -----------------------------
-// PAGE DETECTION
-// -----------------------------
-const page = document.querySelector('meta[name="page"]')?.content;
+// ==================================================
+// GLOBAL FETCH CACHE (FAST LOAD)
+// ==================================================
+async function fetchWithCache(url, key, ttl = 60000) {
+  const cached = localStorage.getItem(key);
+  const time = localStorage.getItem(key + "_time");
 
-// -----------------------------
+  if (cached && time && Date.now() - time < ttl) {
+    return cached;
+  }
+
+  const res = await fetch(url);
+  const text = await res.text();
+
+  localStorage.setItem(key, text);
+  localStorage.setItem(key + "_time", Date.now());
+
+  return text;
+}
+
+// ==================================================
+// PAGE DETECTION
+// ==================================================
+const page = document.querySelector('meta[name="page"]')?.content || null;
+
+// ==================================================
 // ROLE INIT (DECLARE ONCE SAFELY)
-// -----------------------------
+// ==================================================
 if (!window.appRole) {
   window.appRole = localStorage.getItem("role");
 
@@ -17,9 +37,9 @@ if (!window.appRole) {
 
 const role = window.appRole;
 
-// -----------------------------
+// ==================================================
 // ROLE BASED REDIRECT (ADMIN ONLY)
-// -----------------------------
+// ==================================================
 if (page === "admin") {
   if (role === "writer") {
     window.location.replace("scripts.html");
@@ -28,9 +48,9 @@ if (page === "admin") {
   }
 }
 
-// -----------------------------
-// ADMIN DASHBOARD STATS
-// -----------------------------
+// ==================================================
+// ADMIN DASHBOARD STATS (CACHED + FAST)
+// ==================================================
 if (page === "admin") {
 
   const weeklyEl = document.getElementById("weeklyUploads");
@@ -41,8 +61,10 @@ if (page === "admin") {
     console.warn("Admin stats elements not found");
   } else {
 
-    fetch("https://docs.google.com/spreadsheets/d/e/1fbeWgceLfW_9Nxa7yRQwak-Zuu8q0kw8HOLqIFFfFP4/pub?gid=2143528718&single=true&output=csv")
-      .then(res => res.text())
+    const STATS_CSV_URL =
+      "https://docs.google.com/spreadsheets/d/e/1fbeWgceLfW_9Nxa7yRQwak-Zuu8q0kw8HOLqIFFfFP4/pub?gid=2143528718&single=true&output=csv";
+
+    fetchWithCache(STATS_CSV_URL, "admin_stats", 300000) // 5 min cache
       .then(data => {
 
         const rows = data.trim().split("\n").slice(1);
@@ -58,7 +80,6 @@ if (page === "admin") {
         pendingEl.innerText = stats.pending_scripts || 0;
 
       })
-      .catch(err => console.error("Sheet error:", err));
+      .catch(err => console.error("Admin stats sheet error:", err));
   }
 }
-
