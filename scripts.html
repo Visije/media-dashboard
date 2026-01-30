@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="page" content="writer">
   <title>Script Tracker</title>
   <link rel="stylesheet" href="css/style.css">
+
   <style>
-  </head>
-  <body> {
+    body {
       background: #f7f8fc;
       font-family: "Segoe UI", sans-serif;
       margin: 0;
@@ -15,15 +15,25 @@
     }
     h1 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       color: #333;
+    }
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #555;
     }
     .channel-card {
       background: white;
       margin-bottom: 30px;
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     .channel-header {
       display: flex;
@@ -31,72 +41,48 @@
       align-items: center;
       margin-bottom: 12px;
     }
-    .channel-header h2 {
-      margin: 0;
-      font-size: 22px;
-      color: #2a2a2a;
-    }
     .progress-bar {
       background: #e3e6ef;
       border-radius: 8px;
       overflow: hidden;
       height: 10px;
-      margin-top: 8px;
+      margin-bottom: 15px;
     }
     .progress-bar-inner {
       height: 100%;
       background: #6c5ce7;
-      transition: width 0.3s ease;
-    }
-    .controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    input, select {
-      padding: 8px 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
-      font-size: 14px;
-      outline: none;
-    }
-    input:focus, select:focus {
-      border-color: #6c5ce7;
-      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
     }
     th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #f0f0f0;
-      font-size: 15px;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
     }
     th {
-      color: #444;
-      font-weight: 600;
+      text-align: left;
+      color: #555;
     }
     .badge {
       padding: 4px 10px;
       border-radius: 12px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: white;
-      display: inline-block;
     }
     .Ready { background: #00b894; }
     .Writing { background: #fdcb6e; }
     .Pending { background: #d63031; }
   </style>
 </head>
+
 <body>
-  
+
 <header>
   <h1>✍️ Script Tracker</h1>
-  <p>All channels • Ascend-style view</p>
+  <p style="text-align:center;">All channels • Ascend-style view</p>
 </header>
 
 <nav>
@@ -108,9 +94,7 @@
 
 <div id="tables"></div>
 
-<!-- ✅ ONLY THIS SCRIPT TAG -->
-<script src="js/scripts.js"></script>
-
+<script>
 const sheetURL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
 
@@ -122,10 +106,11 @@ const channels = [
   "Touristico"
 ];
 
-// ---------- SAFE CSV PARSER ----------
+// SAFE CSV PARSER
 function parseCSV(text) {
-  const lines = text.split("\n").filter(l => l.trim() !== "");
+  const lines = text.split("\n").filter(l => l.trim());
   const rows = [];
+
   for (let i = 1; i < lines.length; i++) {
     const cols = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
     if (cols) rows.push(cols.map(c => c.replace(/^"|"$/g, "")));
@@ -133,7 +118,7 @@ function parseCSV(text) {
   return rows;
 }
 
-// ---------- WEEK RANGE ----------
+// WEEK RANGE
 function getWeekRange(dateStr) {
   const d = new Date(dateStr);
   if (isNaN(d)) return null;
@@ -144,59 +129,40 @@ function getWeekRange(dateStr) {
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
 
-  return `${monday.toISOString().slice(0,10)} → ${sunday
-    .toISOString()
-    .slice(0,10)}`;
+  return `${monday.toISOString().slice(0,10)} → ${sunday.toISOString().slice(0,10)}`;
 }
 
-// ---------- FETCH & RENDER ----------
+// FETCH & RENDER
 fetch(sheetURL)
-  .then(res => {
-    if (!res.ok) throw new Error("Failed to fetch sheet");
-    return res.text();
-  })
+  .then(res => res.text())
   .then(text => {
     const rows = parseCSV(text);
     const container = document.getElementById("tables");
     container.innerHTML = "";
 
-    const weeklyGroups = {};
+    const weekly = {};
     rows.forEach(r => {
       if (!r[4]) return;
       const week = getWeekRange(r[4]);
-      if (!week) return;
-      if (!weeklyGroups[week]) weeklyGroups[week] = [];
-      weeklyGroups[week].push(r);
+      if (!weekly[week]) weekly[week] = [];
+      weekly[week].push(r);
     });
 
-    Object.keys(weeklyGroups)
-      .sort()
-      .reverse()
-      .forEach(week => {
-        const h2 = document.createElement("h2");
-        h2.textContent = `📆 Week: ${week}`;
-        h2.style.marginTop = "40px";
-        container.appendChild(h2);
+    Object.keys(weekly).sort().reverse().forEach(week => {
+      container.innerHTML += `<h2>📆 Week: ${week}</h2>`;
 
-        channels.forEach(channel => {
-          const channelRows = weeklyGroups[week].filter(
-            r => r[1] === channel
-          );
-          if (channelRows.length === 0) return;
+      channels.forEach(channel => {
+        const channelRows = weekly[week].filter(r => r[1] === channel);
+        if (!channelRows.length) return;
 
-          const completed = channelRows.filter(
-            r => r[2] === "Ready"
-          ).length;
-          const percent = Math.round(
-            (completed / channelRows.length) * 100
-          );
+        const ready = channelRows.filter(r => r[2] === "Ready").length;
+        const percent = Math.round((ready / channelRows.length) * 100);
 
-          const card = document.createElement("div");
-          card.className = "channel-card";
-          card.innerHTML = `
+        container.innerHTML += `
+          <div class="channel-card">
             <div class="channel-header">
-              <h3>${channel}</h3>
-              <div>${percent}% Ready</div>
+              <strong>${channel}</strong>
+              <span>${percent}% Ready</span>
             </div>
 
             <div class="progress-bar">
@@ -210,47 +176,25 @@ fetch(sheetURL)
                 <th>Words</th>
                 <th>Date</th>
               </tr>
-              ${channelRows
-                .map(
-                  r => `
+              ${channelRows.map(r => `
                 <tr>
-                  <td class="title-cell">
-  ${r[0].substring(0, 120)}${r[0].length > 120 ? "..." : ""}
-</td>
+                  <td>${r[0]}</td>
                   <td><span class="badge ${r[2]}">${r[2]}</span></td>
                   <td>${r[3]}</td>
                   <td>${r[4]}</td>
-                </tr>`
-                )
-                .join("")}
+                </tr>
+              `).join("")}
             </table>
-          `;
-          container.appendChild(card);
-        });
+          </div>
+        `;
       });
+    });
   })
   .catch(err => {
     console.error(err);
     document.getElementById("tables").innerHTML =
       "<p style='color:red'>❌ Error loading scripts</p>";
   });
-
-</script>
-
-<script>
-function toggleTheme() {
-  document.body.classList.toggle("dark");
-
-  localStorage.setItem(
-    "theme",
-    document.body.classList.contains("dark") ? "dark" : "light"
-  );
-}
-
-// Apply saved theme on page load
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-}
 </script>
 
 </body>
