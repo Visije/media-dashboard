@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Monthly Habit Heatmap</title>
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+body {
+  background:#f5f7fb;
+  font-family:"Segoe UI", system-ui, sans-serif;
+}
+
+.wrapper {
+  max-width:1100px;
+  margin:40px auto;
+  padding:0 16px;
+}
+
+h1 {
+  margin-bottom:6px;
+}
+
+.subtitle {
+  color:#666;
+  margin-bottom:24px;
+}
+
+.heatmap {
+  display:grid;
+  grid-template-columns: repeat(31, 1fr);
+  gap:6px;
+}
+
+.day {
+  width:28px;
+  height:28px;
+  border-radius:6px;
+  background:#e6e9f2;
+  cursor:pointer;
+  transition: transform 0.1s ease;
+}
+
+.day:hover {
+  transform: scale(1.08);
+}
+
+.day[data-level="1"] { background:#c7ecee; }
+.day[data-level="2"] { background:#7ed6df; }
+.day[data-level="3"] { background:#22a6b3; }
+.day[data-level="4"] { background:#1e90ff; }
+
+.legend {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:18px;
+  font-size:14px;
+}
+
+.legend span {
+  width:18px;
+  height:18px;
+  border-radius:4px;
+  display:inline-block;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="main-nav">
+  <a href="index.html">Dashboard</a>
+  <a href="calendar.html">Calendar</a>
+  <a href="scripts.html">Scripts</a>
+  <a href="goals.html">Weekly</a>
+  <a href="monthly.html" class="active">Monthly</a>
+</nav>
+
+<div class="wrapper">
+  <h1>🗓 Monthly Habit Heatmap</h1>
+  <p class="subtitle">Consistency overview (GitHub-style)</p>
+
+  <div id="heatmap" class="heatmap"></div>
+
+  <div class="legend">
+    <span style="background:#e6e9f2"></span> 0
+    <span style="background:#c7ecee"></span> 1
+    <span style="background:#7ed6df"></span> 2
+    <span style="background:#22a6b3"></span> 3
+    <span style="background:#1e90ff"></span> 4+
+  </div>
+</div>
+
+<script>
+/* ✅ YOUR GOOGLE SHEETS CSV URL */
+const SHEET_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vQG8OaP-7XsbejCWez02U9KifCRwcg2zHUg8xhtyZvQX_WY6MuWfOqjGEibWlsdNONDMmUD3d1nmA1l/pub?gid=0&single=true&output=csv";
+
+function parseCSV(text) {
+  return text.trim().split("\n").slice(1).map(r => r.split(","));
+}
+
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth();
+const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+fetch(SHEET_URL)
+.then(res => res.text())
+.then(text => {
+  const rows = parseCSV(text);
+  const counts = {};
+
+  rows.forEach(([date, habit, done]) => {
+    if (
+      done === "TRUE" &&
+      date.startsWith(`${year}-${String(month + 1).padStart(2, "0")}`)
+    ) {
+      counts[date] = (counts[date] || 0) + 1;
+    }
+  });
+
+  const heatmap = document.getElementById("heatmap");
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateKey =
+      `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+    const count = counts[dateKey] || 0;
+    const level = Math.min(count, 4);
+
+    const cell = document.createElement("div");
+    cell.className = "day";
+    cell.dataset.level = level;
+    cell.title = `${dateKey} : ${count} habits completed`;
+
+    heatmap.appendChild(cell);
+  }
+});
+</script>
+
+</body>
+</html>
