@@ -108,7 +108,7 @@ fetch(sheetURL)
               '</tr>' +
               channelRows.map(r =>
                 '<tr>' +
-                  '<td>' + r[0] + '</td>' +
+                  '<td class="title-cell">${r[0]}</td>' +
                   '<td><span class="badge ' + r[2] + '">' + r[2] + '</span></td>' +
                   '<td>' + r[3] + '</td>' +
                   '<td>' + r[4] + '</td>' +
