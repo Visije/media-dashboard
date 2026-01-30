@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Weekly Execution Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Weekly Habit & Goal Tracker</title>
   <style>
     body {
       background: #f6f8fc;
-      font-family: Segoe UI, sans-serif;
+      font-family: "Segoe UI", sans-serif;
       padding: 20px;
+      color: #222;
     }
-    h1 { margin-bottom: 20px; }
+
+    h1 {
+      margin-bottom: 20px;
+    }
 
     .top {
       display: grid;
@@ -18,9 +22,9 @@
     }
 
     .card {
-      background: white;
-      border-radius: 14px;
+      background: #fff;
       padding: 16px;
+      border-radius: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
 
@@ -28,30 +32,32 @@
       width: 90px;
       height: 90px;
       border-radius: 50%;
-      background: conic-gradient(#6ab04c 44%, #eaeaea 0);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
+      font-size: 18px;
       margin: 10px 0;
+      background: conic-gradient(#6ab04c 0%, #eaeaea 0);
     }
 
-    /* HABITS */
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
     }
+
     th, td {
       padding: 6px;
       text-align: center;
       border-bottom: 1px solid #eee;
     }
-    th:first-child, td:first-child {
+
+    th:first-child,
+    td:first-child {
       text-align: left;
     }
 
-    /* DAYS */
     .days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -60,23 +66,11 @@
     }
 
     .day-card {
-      background: white;
+      background: #fff;
       border-radius: 14px;
       padding: 12px;
       text-align: center;
       box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-    }
-
-    .tasks {
-      margin-top: 25px;
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 12px;
-    }
-
-    .tasks ul {
-      padding-left: 18px;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -86,74 +80,138 @@
 
 <!-- TOP SECTION -->
 <div class="top">
-  <!-- OVERALL -->
+
+  <!-- OVERALL PROGRESS -->
   <div class="card">
     <h3>Overall Progress</h3>
-    <div class="ring">44%</div>
-    <p>18 / 41 completed</p>
+    <div class="ring" id="overallRing">0%</div>
+    <p id="overallCount">0 / 0 completed</p>
   </div>
 
-  <!-- HABITS -->
+  <!-- HABIT TRACKER -->
   <div class="card">
     <h3>Habit Tracker</h3>
-    <table>
+    <table id="habitTable">
       <tr>
         <th>Habit</th>
-        <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
-      </tr>
-      <tr>
-        <td>Wake up 6am</td>
-        <td>✔</td><td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <td>Gym</td>
-        <td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <td>No alcohol</td>
-        <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td>
+        <th>Mon</th><th>Tue</th><th>Wed</th>
+        <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
       </tr>
     </table>
   </div>
+
 </div>
 
-<!-- DAY PROGRESS -->
+<!-- DAY WISE RINGS -->
 <div class="days">
-  <div class="day-card"><strong>Mon</strong><div class="ring">85%</div></div>
-  <div class="day-card"><strong>Tue</strong><div class="ring">80%</div></div>
-  <div class="day-card"><strong>Wed</strong><div class="ring">60%</div></div>
-  <div class="day-card"><strong>Thu</strong><div class="ring">17%</div></div>
-  <div class="day-card"><strong>Fri</strong><div class="ring">0%</div></div>
-  <div class="day-card"><strong>Sat</strong><div class="ring">0%</div></div>
-  <div class="day-card"><strong>Sun</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Mon</strong><div class="ring" id="ring-Mon">0%</div></div>
+  <div class="day-card"><strong>Tue</strong><div class="ring" id="ring-Tue">0%</div></div>
+  <div class="day-card"><strong>Wed</strong><div class="ring" id="ring-Wed">0%</div></div>
+  <div class="day-card"><strong>Thu</strong><div class="ring" id="ring-Thu">0%</div></div>
+  <div class="day-card"><strong>Fri</strong><div class="ring" id="ring-Fri">0%</div></div>
+  <div class="day-card"><strong>Sat</strong><div class="ring" id="ring-Sat">0%</div></div>
+  <div class="day-card"><strong>Sun</strong><div class="ring" id="ring-Sun">0%</div></div>
 </div>
 
-<!-- TASKS -->
-<div class="tasks">
-  <div class="card">
-    <h4>Monday</h4>
-    <ul>
-      <li>✔ Write scripts</li>
-      <li>✔ Upload shorts</li>
-    </ul>
-  </div>
+<script>
+/* ===================== CONFIG ===================== */
 
-  <div class="card">
-    <h4>Tuesday</h4>
-    <ul>
-      <li>✔ Research</li>
-      <li>✖ Edit video</li>
-    </ul>
-  </div>
+const HABITS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=0&single=true&output=csv";
 
-  <div class="card">
-    <h4>Wednesday</h4>
-    <ul>
-      <li>✔ Gym</li>
-      <li>✖ Client call</li>
-    </ul>
-  </div>
-</div>
+const TASKS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=871675699&single=true&output=csv";
+
+const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+/* ===================== HELPERS ===================== */
+
+function parseCSV(text) {
+  return text.trim().split("\n").slice(1).map(r => r.split(","));
+}
+
+function setRing(el, percent) {
+  el.style.background =
+    `conic-gradient(#6ab04c ${percent}%, #eaeaea 0)`;
+  el.innerText = percent + "%";
+}
+
+/* ===================== MAIN LOGIC ===================== */
+
+Promise.all([
+  fetch(HABITS_URL).then(r => r.text()),
+  fetch(TASKS_URL).then(r => r.text())
+]).then(([habitsText, tasksText]) => {
+
+  const habits = parseCSV(habitsText);
+  const tasks  = parseCSV(tasksText);
+
+  let weeklyDone = 0;
+  let weeklyTotal = 0;
+
+  const dayStats = {};
+  DAYS.forEach(d => dayStats[d] = { done: 0, total: 0 });
+
+  /* ---------- HABITS ---------- */
+  const habitTable = document.getElementById("habitTable");
+
+  habits.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${row[0]}</td>`;
+
+    DAYS.forEach((day, i) => {
+      const value = row[i + 1];
+      let symbol = "";
+
+      if (value !== "") {
+        weeklyTotal++;
+        dayStats[day].total++;
+
+        if (value === "TRUE") {
+          symbol = "✔";
+          weeklyDone++;
+          dayStats[day].done++;
+        } else {
+          symbol = "✖";
+        }
+      }
+
+      tr.innerHTML += `<td>${symbol}</td>`;
+    });
+
+    habitTable.appendChild(tr);
+  });
+
+  /* ---------- TASKS ---------- */
+  tasks.forEach(([day, , done]) => {
+    weeklyTotal++;
+    dayStats[day].total++;
+
+    if (done === "TRUE") {
+      weeklyDone++;
+      dayStats[day].done++;
+    }
+  });
+
+  /* ---------- OVERALL ---------- */
+  const overallPercent = weeklyTotal
+    ? Math.round((weeklyDone / weeklyTotal) * 100)
+    : 0;
+
+  setRing(document.getElementById("overallRing"), overallPercent);
+  document.getElementById("overallCount").innerText =
+    `${weeklyDone} / ${weeklyTotal} completed`;
+
+  /* ---------- DAY RINGS ---------- */
+  DAYS.forEach(day => {
+    const stat = dayStats[day];
+    const percent = stat.total
+      ? Math.round((stat.done / stat.total) * 100)
+      : 0;
+
+    setRing(document.getElementById(`ring-${day}`), percent);
+  });
+
+});
+</script>
 
 </body>
 </html>
