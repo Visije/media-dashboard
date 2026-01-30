@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Daily Habits</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: #f7f8fc;
+      font-family: "Segoe UI", sans-serif;
+      padding: 20px;
+      color: #2a2a2a;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .progress-summary {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .progress-summary span {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .habit-card {
+      background: white;
+      padding: 16px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+    .habit-card:hover {
+      transform: translateY(-3px);
+    }
+    .done {
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+    .habit-text {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .checkbox {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🔥 Today’s Habits</h1>
+
+<div class="progress-summary">
+  <span id="overallProgress">Loading...</span> completed
+</div>
+
+<div id="habits"></div>
+
+<script>
+const HABITS_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRjECmq4MMR8GcXgQ-maRGB9_11qPAfjX1RV4pMy0gYpXewXTmyAb9czKykNyMSQnWeb3MmV7cQJazJ/pub?gid=0&single=true&output=csv";
+const today = new Date().toISOString().slice(0,10);
+
+function parseCSV(text) {
+  return text.trim().split("\n").slice(1).map(row => row.split(","));
+}
+
+fetch(HABITS_CSV)
+  .then(res => res.text())
+  .then(text => {
+    const rows = parseCSV(text);
+    const todayHabits = rows.filter(r => r[1] === today);
+    const container = document.getElementById("habits");
+
+    if (todayHabits.length === 0) {
+      container.innerHTML = "<p>No habits found for today.</p>";
+      document.getElementById("overallProgress").innerText = "0%";
+      return;
+    }
+
+    let doneCount = 0;
+
+    todayHabits.forEach(h => {
+      const habitName = h[0];
+      const done = h[2] === "1";
+
+      if (done) doneCount++;
+
+      container.innerHTML += `
+        <div class="habit-card ${done ? "done" : ""}">
+          <div class="habit-text">${habitName}</div>
+          <input type="checkbox" class="checkbox" ${done ? "checked" : ""} disabled>
+        </div>
+      `;
+    });
+
+    const percent = Math.round((doneCount / todayHabits.length) * 100);
+    document.getElementById("overallProgress").innerText = percent + "%";
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("habits").innerText = "Error loading habits.";
+  });
+</script>
+
+</body>
+</html>
