@@ -298,3 +298,11 @@ td:first-child {
     max-width: 220px;
   }
 }
+
+.title-cell {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;   /* max 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
