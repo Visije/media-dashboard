@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weekly Execution Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: #f6f8fc;
+      font-family: Segoe UI, sans-serif;
+      padding: 20px;
+    }
+    h1 { margin-bottom: 20px; }
+
+    .top {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: conic-gradient(#6ab04c 44%, #eaeaea 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    /* HABITS */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 6px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    th:first-child, td:first-child {
+      text-align: left;
+    }
+
+    /* DAYS */
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .day-card {
+      background: white;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
+
+    .tasks {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+    }
+
+    .tasks ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📅 Weekly Execution Dashboard</h1>
+
+<!-- TOP SECTION -->
+<div class="top">
+  <!-- OVERALL -->
+  <div class="card">
+    <h3>Overall Progress</h3>
+    <div class="ring">44%</div>
+    <p>18 / 41 completed</p>
+  </div>
+
+  <!-- HABITS -->
+  <div class="card">
+    <h3>Habit Tracker</h3>
+    <table>
+      <tr>
+        <th>Habit</th>
+        <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+      </tr>
+      <tr>
+        <td>Wake up 6am</td>
+        <td>✔</td><td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>Gym</td>
+        <td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>No alcohol</td>
+        <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- DAY PROGRESS -->
+<div class="days">
+  <div class="day-card"><strong>Mon</strong><div class="ring">85%</div></div>
+  <div class="day-card"><strong>Tue</strong><div class="ring">80%</div></div>
+  <div class="day-card"><strong>Wed</strong><div class="ring">60%</div></div>
+  <div class="day-card"><strong>Thu</strong><div class="ring">17%</div></div>
+  <div class="day-card"><strong>Fri</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Sat</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Sun</strong><div class="ring">0%</div></div>
+</div>
+
+<!-- TASKS -->
+<div class="tasks">
+  <div class="card">
+    <h4>Monday</h4>
+    <ul>
+      <li>✔ Write scripts</li>
+      <li>✔ Upload shorts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Tuesday</h4>
+    <ul>
+      <li>✔ Research</li>
+      <li>✖ Edit video</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Wednesday</h4>
+    <ul>
+      <li>✔ Gym</li>
+      <li>✖ Client call</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>
