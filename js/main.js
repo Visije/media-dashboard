@@ -2,7 +2,20 @@
 // PAGE DETECTION
 // -----------------------------
 const page = document.querySelector('meta[name="page"]')?.content;
-const role = localStorage.getItem("role");
+
+// -----------------------------
+// ROLE INIT (DECLARE ONCE SAFELY)
+// -----------------------------
+if (!window.appRole) {
+  window.appRole = localStorage.getItem("role");
+
+  if (!window.appRole) {
+    window.appRole = prompt("Enter role: admin / writer / editor");
+    localStorage.setItem("role", window.appRole);
+  }
+}
+
+const role = window.appRole;
 
 // -----------------------------
 // ROLE BASED REDIRECT (ADMIN ONLY)
@@ -48,3 +61,4 @@ if (page === "admin") {
       .catch(err => console.error("Sheet error:", err));
   }
 }
+
