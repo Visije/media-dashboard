@@ -214,7 +214,9 @@ fetch(sheetURL)
                 .map(
                   r => `
                 <tr>
-                  <td class="title-cell">${r[0]}</td>
+                  <td class="title-cell">
+  ${r[0].substring(0, 120)}${r[0].length > 120 ? "..." : ""}
+</td>
                   <td><span class="badge ${r[2]}">${r[2]}</span></td>
                   <td>${r[3]}</td>
                   <td>${r[4]}</td>
@@ -253,5 +255,3 @@ if (localStorage.getItem("theme") === "dark") {
 
 </body>
 </html>
-
-
