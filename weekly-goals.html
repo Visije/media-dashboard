@@ -25,6 +25,7 @@
       padding: 16px;
       border-radius: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
     }
 
     .ring {
@@ -122,6 +123,7 @@
 
 </div>
 
+<!-- DAY RINGS -->
 <div class="days">
   <div class="day-card"><strong>Mon</strong><div class="ring" id="ring-Mon">0%</div></div>
   <div class="day-card"><strong>Tue</strong><div class="ring" id="ring-Tue">0%</div></div>
@@ -132,6 +134,25 @@
   <div class="day-card"><strong>Sun</strong><div class="ring" id="ring-Sun">0%</div></div>
 </div>
 
+<!-- SUNDAY WEEKLY REVIEW -->
+<div class="card">
+  <h3>🧠 Sunday Weekly Review</h3>
+
+  <p>
+    <strong>Weekly Score:</strong>
+    <span id="weekScore">--</span>/100
+  </p>
+
+  <h4>Wins</h4>
+  <p id="wins"></p>
+
+  <h4>Improvements</h4>
+  <p id="improve"></p>
+
+  <h4>Notes</h4>
+  <p id="notes"></p>
+</div>
+
 <script>
 /* ================= CONFIG ================= */
 
@@ -140,6 +161,9 @@ const HABITS_URL =
 
 const TASKS_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=871675699&single=true&output=csv";
+
+const REVIEW_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=0&single=true&output=csv";
 
 const FORM_URL =
 "https://docs.google.com/forms/d/e/1FAIpQLScsq34Fh-iefgnZECMNtYvyCuYW0dWiYJG5Lx4ngottl9YgSw/formResponse";
@@ -230,6 +254,19 @@ Promise.all([
     setRing(document.getElementById("ring-"+d),p);
   });
 
+});
+
+/* ===== WEEKLY REVIEW ===== */
+fetch(REVIEW_URL)
+.then(r=>r.text())
+.then(t=>{
+  const rows=t.trim().split("\n");
+  const last=rows[rows.length-1].split(",");
+
+  document.getElementById("weekScore").innerText=last[1];
+  document.getElementById("wins").innerText=last[2];
+  document.getElementById("improve").innerText=last[3];
+  document.getElementById("notes").innerText=last[4];
 });
 </script>
 
