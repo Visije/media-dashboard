@@ -99,3 +99,4 @@ function streakCoin(streak) {
   if (streak >= 3)  return `<span class="coin bronze">3</span>`;
   return "";
 }
+
