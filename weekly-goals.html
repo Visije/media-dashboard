@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Weekly Habit & Goal Tracker</title>
+
   <style>
     body {
       background: #f6f8fc;
@@ -11,9 +12,7 @@
       color: #222;
     }
 
-    h1 {
-      margin-bottom: 20px;
-    }
+    h1 { margin-bottom: 20px; }
 
     .top {
       display: grid;
@@ -53,8 +52,7 @@
       border-bottom: 1px solid #eee;
     }
 
-    th:first-child,
-    td:first-child {
+    th:first-child, td:first-child {
       text-align: left;
     }
 
@@ -72,23 +70,44 @@
       text-align: center;
       box-shadow: 0 6px 16px rgba(0,0,0,0.05);
     }
+
+    /* ===== Coins ===== */
+    .coin {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .bronze { background: linear-gradient(145deg,#cd7f32,#b87333); color:#3a220f; }
+    .silver { background: linear-gradient(145deg,#e6e6e6,#bfc1c2); color:#333; }
+    .gold   { background: linear-gradient(145deg,#ffd700,#f5c542); color:#4a3b00; }
+
+    input[type="checkbox"] {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
 
 <h1>📅 Weekly Execution Dashboard</h1>
 
-<!-- TOP SECTION -->
 <div class="top">
 
-  <!-- OVERALL PROGRESS -->
+  <!-- OVERALL -->
   <div class="card">
     <h3>Overall Progress</h3>
     <div class="ring" id="overallRing">0%</div>
     <p id="overallCount">0 / 0 completed</p>
   </div>
 
-  <!-- HABIT TRACKER -->
+  <!-- HABITS -->
   <div class="card">
     <h3>Habit Tracker</h3>
     <table id="habitTable">
@@ -96,13 +115,13 @@
         <th>Habit</th>
         <th>Mon</th><th>Tue</th><th>Wed</th>
         <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+        <th>Streak</th>
       </tr>
     </table>
   </div>
 
 </div>
 
-<!-- DAY WISE RINGS -->
 <div class="days">
   <div class="day-card"><strong>Mon</strong><div class="ring" id="ring-Mon">0%</div></div>
   <div class="day-card"><strong>Tue</strong><div class="ring" id="ring-Tue">0%</div></div>
@@ -114,100 +133,101 @@
 </div>
 
 <script>
-/* ===================== CONFIG ===================== */
+/* ================= CONFIG ================= */
 
-const HABITS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=0&single=true&output=csv";
+const HABITS_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=0&single=true&output=csv";
 
-const TASKS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=871675699&single=true&output=csv";
+const TASKS_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=871675699&single=true&output=csv";
+
+const FORM_URL =
+"https://docs.google.com/forms/d/e/1FAIpQLScsq34Fh-iefgnZECMNtYvyCuYW0dWiYJG5Lx4ngottl9YgSw/formResponse";
 
 const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
-/* ===================== HELPERS ===================== */
+/* ================= HELPERS ================= */
 
-function parseCSV(text) {
-  return text.trim().split("\n").slice(1).map(r => r.split(","));
+function parseCSV(t){ return t.trim().split("\n").slice(1).map(r=>r.split(",")); }
+
+function setRing(el,p){
+  el.style.background = `conic-gradient(#6ab04c ${p}%, #eaeaea 0)`;
+  el.innerText = p + "%";
 }
 
-function setRing(el, percent) {
-  el.style.background =
-    `conic-gradient(#6ab04c ${percent}%, #eaeaea 0)`;
-  el.innerText = percent + "%";
+function getStreak(row){
+  let s=0;
+  for(let i=7;i>=1;i--){
+    if(row[i]==="TRUE") s++;
+    else break;
+  }
+  return s;
 }
 
-/* ===================== MAIN LOGIC ===================== */
+function streakCoin(s){
+  if(s>=21) return '<span class="coin gold">21</span>';
+  if(s>=7)  return '<span class="coin silver">7</span>';
+  if(s>=3)  return '<span class="coin bronze">3</span>';
+  return "";
+}
+
+/* ===== Google Form bridge ===== */
+function updateHabit(habit,day,val){
+  const d=new FormData();
+  d.append("entry.129852130",habit);
+  d.append("entry.1541899312",day);
+  d.append("entry.1645968702",val?"TRUE":"FALSE");
+  fetch(FORM_URL,{method:"POST",mode:"no-cors",body:d});
+}
+
+/* ================= MAIN ================= */
 
 Promise.all([
-  fetch(HABITS_URL).then(r => r.text()),
-  fetch(TASKS_URL).then(r => r.text())
-]).then(([habitsText, tasksText]) => {
+  fetch(HABITS_URL).then(r=>r.text()),
+  fetch(TASKS_URL).then(r=>r.text())
+]).then(([hText,tText])=>{
 
-  const habits = parseCSV(habitsText);
-  const tasks  = parseCSV(tasksText);
+  const habits=parseCSV(hText);
+  const tasks=parseCSV(tText);
 
-  let weeklyDone = 0;
-  let weeklyTotal = 0;
+  let weeklyDone=0, weeklyTotal=0;
+  const stats={}; DAYS.forEach(d=>stats[d]={done:0,total:0});
 
-  const dayStats = {};
-  DAYS.forEach(d => dayStats[d] = { done: 0, total: 0 });
+  const table=document.getElementById("habitTable");
 
-  /* ---------- HABITS ---------- */
-  const habitTable = document.getElementById("habitTable");
+  habits.forEach(row=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${row[0]}</td>`;
 
-  habits.forEach(row => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${row[0]}</td>`;
+    DAYS.forEach((d,i)=>{
+      const v=row[i+1];
+      let cell="";
 
-    DAYS.forEach((day, i) => {
-      const value = row[i + 1];
-      let symbol = "";
-
-      if (value !== "") {
-        weeklyTotal++;
-        dayStats[day].total++;
-
-        if (value === "TRUE") {
-          symbol = "✔";
-          weeklyDone++;
-          dayStats[day].done++;
-        } else {
-          symbol = "✖";
-        }
+      if(v!==""){
+        weeklyTotal++; stats[d].total++;
+        if(v==="TRUE"){ weeklyDone++; stats[d].done++; }
+        cell=`<input type="checkbox" ${v==="TRUE"?"checked":""}
+              onchange="updateHabit('${row[0]}','${d}',this.checked)">`;
       }
-
-      tr.innerHTML += `<td>${symbol}</td>`;
+      tr.innerHTML+=`<td>${cell}</td>`;
     });
 
-    habitTable.appendChild(tr);
+    tr.innerHTML+=`<td>${streakCoin(getStreak(row))}</td>`;
+    table.appendChild(tr);
   });
 
-  /* ---------- TASKS ---------- */
-  tasks.forEach(([day, , done]) => {
-    weeklyTotal++;
-    dayStats[day].total++;
-
-    if (done === "TRUE") {
-      weeklyDone++;
-      dayStats[day].done++;
-    }
+  tasks.forEach(([d,,done])=>{
+    weeklyTotal++; stats[d].total++;
+    if(done==="TRUE"){ weeklyDone++; stats[d].done++; }
   });
 
-  /* ---------- OVERALL ---------- */
-  const overallPercent = weeklyTotal
-    ? Math.round((weeklyDone / weeklyTotal) * 100)
-    : 0;
+  const overall=Math.round((weeklyDone/weeklyTotal)*100)||0;
+  setRing(overallRing,overall);
+  overallCount.innerText=`${weeklyDone} / ${weeklyTotal} completed`;
 
-  setRing(document.getElementById("overallRing"), overallPercent);
-  document.getElementById("overallCount").innerText =
-    `${weeklyDone} / ${weeklyTotal} completed`;
-
-  /* ---------- DAY RINGS ---------- */
-  DAYS.forEach(day => {
-    const stat = dayStats[day];
-    const percent = stat.total
-      ? Math.round((stat.done / stat.total) * 100)
-      : 0;
-
-    setRing(document.getElementById(`ring-${day}`), percent);
+  DAYS.forEach(d=>{
+    const p=stats[d].total?Math.round((stats[d].done/stats[d].total)*100):0;
+    setRing(document.getElementById("ring-"+d),p);
   });
 
 });
