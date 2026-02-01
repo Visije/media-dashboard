@@ -5,7 +5,7 @@ async function fetchWithCache(url, key, ttl = 60000) {
   const cached = localStorage.getItem(key);
   const time = localStorage.getItem(key + "_time");
 
-  if (cached && time && Date.now() - time < ttl) {
+  if (cached && time && Date.now() - Number(time) < ttl) {
     return cached;
   }
 
@@ -19,26 +19,31 @@ async function fetchWithCache(url, key, ttl = 60000) {
 }
 
 // ==================================================
-// PAGE DETECTION
+// PAGE DETECTION (SAFE)
 // ==================================================
-const page = document.querySelector('meta[name="page"]')?.content || null;
+const pageMeta = document.querySelector('meta[name="page"]');
+const page = pageMeta ? pageMeta.content : null;
 
 // ==================================================
-// ROLE INIT (DECLARE ONCE SAFELY)
+// ROLE INIT (DECLARE ONCE — NO ERRORS EVER)
 // ==================================================
-if (!window.appRole) {
-  window.appRole = localStorage.getItem("role");
-
+(function initRole() {
   if (!window.appRole) {
-    window.appRole = prompt("Enter role: admin / writer / editor");
-    localStorage.setItem("role", window.appRole);
+    let storedRole = localStorage.getItem("role");
+
+    if (!storedRole) {
+      storedRole = prompt("Enter role: admin / writer / editor");
+      localStorage.setItem("role", storedRole);
+    }
+
+    window.appRole = storedRole;
   }
-}
+})();
 
 const role = window.appRole;
 
 // ==================================================
-// ROLE BASED REDIRECT (ADMIN ONLY)
+// ROLE BASED REDIRECT (ADMIN PAGE ONLY)
 // ==================================================
 if (page === "admin") {
   if (role === "writer") {
@@ -49,7 +54,7 @@ if (page === "admin") {
 }
 
 // ==================================================
-// ADMIN DASHBOARD STATS (CACHED + FAST)
+// ADMIN DASHBOARD STATS (CACHED + SAFE)
 // ==================================================
 if (page === "admin") {
 
@@ -68,7 +73,7 @@ if (page === "admin") {
       .then(data => {
 
         const rows = data.trim().split("\n").slice(1);
-        let stats = {};
+        const stats = {};
 
         rows.forEach(row => {
           const [key, value] = row.split(",");
@@ -84,9 +89,13 @@ if (page === "admin") {
   }
 }
 
+// ==================================================
+// HABIT STREAK + COIN SYSTEM (ASCEND STYLE)
+// ==================================================
 function getStreak(row) {
   let streak = 0;
-  for (let i = 7; i >= 1; i--) {
+  // expects Mon–Sun at index 1–7 OR adjust if week column exists
+  for (let i = row.length - 1; i >= 1; i--) {
     if (row[i] === "TRUE") streak++;
     else break;
   }
@@ -99,4 +108,3 @@ function streakCoin(streak) {
   if (streak >= 3)  return `<span class="coin bronze">3</span>`;
   return "";
 }
-
