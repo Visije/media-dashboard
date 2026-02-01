@@ -383,3 +383,11 @@ table {
   gap: 6px;
   align-items: center;
 }
+
+.no-task {
+  list-style: none;
+  font-size: 13px;
+  color: #9aa0a6;
+  font-style: italic;
+  padding: 6px 0;
+}
