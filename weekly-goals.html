@@ -361,7 +361,11 @@ fetch(TASKS_URL)
       );
  
       if (dayTasks.length === 0) {
-        ul.innerHTML = "<li class='no-task'>No tasks planned</li>";
+  ul.innerHTML = "<li class='no-task'>No tasks planned</li>";
+  ul.closest(".card").classList.add("no-tasks");
+  return;
+}
+ul.closest(".card").classList.remove("no-tasks");
         return;
       }
 
