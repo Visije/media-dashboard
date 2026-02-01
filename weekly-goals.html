@@ -1,125 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Weekly Habit & Goal Tracker</title>
+<meta charset="UTF-8">
+<title>Weekly Habit & Goal Tracker</title>
 
-  <style>
-    body {
-      background: #f6f8fc;
-      font-family: "Segoe UI", sans-serif;
-      padding: 20px;
-      color: #222;
-    }
+<style>
+body{
+  background:#f6f8fc;
+  font-family:"Segoe UI",sans-serif;
+  padding:20px;
+  color:#222;
+}
+h1{margin-bottom:10px}
 
-    h1 { margin-bottom: 20px; }
+.top{
+  display:grid;
+  grid-template-columns:2fr 3fr;
+  gap:20px;
+}
 
-    .top {
-      display: grid;
-      grid-template-columns: 2fr 3fr;
-      gap: 20px;
-    }
+.card{
+  background:#fff;
+  padding:16px;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
+  margin-bottom:20px;
+}
 
-    .card {
-      background: #fff;
-      padding: 16px;
-      border-radius: 14px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-      margin-bottom: 20px;
-    }
+.ring{
+  width:90px;height:90px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:18px;
+  margin:10px 0;
+  background:conic-gradient(#6ab04c 0%,#eaeaea 0);
+}
 
-    .ring {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 18px;
-      margin: 10px 0;
-      background: conic-gradient(#6ab04c 0%, #eaeaea 0);
-    }
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+th,td{
+  padding:6px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+}
+th:first-child,td:first-child{text-align:left}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
+.days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:12px;
+  margin-top:20px;
+}
 
-    th, td {
-      padding: 6px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
+.day-card{
+  background:#fff;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.05);
+}
 
-    th:first-child, td:first-child {
-      text-align: left;
-    }
+/* ===== Coins ===== */
+.coin{
+  width:20px;height:20px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:600;
+}
+.bronze{background:linear-gradient(145deg,#cd7f32,#b87333);color:#3a220f}
+.silver{background:linear-gradient(145deg,#e6e6e6,#bfc1c2);color:#333}
+.gold{background:linear-gradient(145deg,#ffd700,#f5c542);color:#4a3b00}
 
-    .days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .day-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-    }
-
-    /* ===== Coins ===== */
-    .coin {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 600;
-    }
-
-    .bronze { background: linear-gradient(145deg,#cd7f32,#b87333); color:#3a220f; }
-    .silver { background: linear-gradient(145deg,#e6e6e6,#bfc1c2); color:#333; }
-    .gold   { background: linear-gradient(145deg,#ffd700,#f5c542); color:#4a3b00; }
-
-    input[type="checkbox"] {
-      transform: scale(1.1);
-      cursor: pointer;
-    }
-  </style>
+input[type=checkbox]{transform:scale(1.1);cursor:pointer}
+select{padding:6px 10px;border-radius:8px}
+</style>
 </head>
 
 <body>
 
 <h1>📅 Weekly Execution Dashboard</h1>
 
+<!-- WEEK SELECTOR -->
+<select id="weekSelector"></select>
+
 <div class="top">
 
-  <!-- OVERALL -->
-  <div class="card">
-    <h3>Overall Progress</h3>
-    <div class="ring" id="overallRing">0%</div>
-    <p id="overallCount">0 / 0 completed</p>
-  </div>
+<!-- OVERALL -->
+<div class="card">
+  <h3>Overall Progress</h3>
+  <div class="ring" id="overallPercent">0%</div>
+  <p id="overallCount">0 / 0 completed</p>
+</div>
 
-  <!-- HABITS -->
-  <div class="card">
-    <h3>Habit Tracker</h3>
-    <table id="habitTable">
-      <tr>
-        <th>Habit</th>
-        <th>Mon</th><th>Tue</th><th>Wed</th>
-        <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-        <th>Streak</th>
-      </tr>
-    </table>
-  </div>
+<!-- HABITS -->
+<div class="card">
+  <h3>Habit Tracker</h3>
+  <table id="habitTable">
+    <tr>
+      <th>Habit</th>
+      <th>Mon</th><th>Tue</th><th>Wed</th>
+      <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+      <th>Streak</th>
+    </tr>
+  </table>
+</div>
 
 </div>
 
@@ -134,55 +127,51 @@
   <div class="day-card"><strong>Sun</strong><div class="ring" id="ring-Sun">0%</div></div>
 </div>
 
-<!-- SUNDAY WEEKLY REVIEW -->
+<!-- WEEKLY REVIEW -->
 <div class="card">
-  <h3>🧠 Sunday Weekly Review</h3>
-
-  <p>
-    <strong>Weekly Score:</strong>
-    <span id="weekScore">--</span>/100
-  </p>
-
-  <h4>Wins</h4>
-  <p id="wins"></p>
-
-  <h4>Improvements</h4>
-  <p id="improve"></p>
-
-  <h4>Notes</h4>
-  <p id="notes"></p>
+  <h3>Sunday Weekly Review</h3>
+  <p><strong>Weekly Score:</strong> <span id="weekScore">--</span>/100</p>
+  <h4>Wins</h4><p id="wins"></p>
+  <h4>Improvements</h4><p id="improve"></p>
+  <h4>Notes</h4><p id="notes"></p>
 </div>
 
 <script>
-/* ================= CONFIG ================= */
+/* ===== CONFIG ===== */
+const HABITS_CSV =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=1148852579&single=true&output=csv";
 
-const HABITS_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=0&single=true&output=csv";
+const TASKS_CSV =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=774223864&single=true&output=csv";
 
-const TASKS_URL =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vTevC7GTwIxjA8vTP1IPBQieCntxYqrIyc0N1IMzrTGL6aU5rDSPz-O9jtwI1-Aivio8sgosjuNbYe9/pub?gid=871675699&single=true&output=csv";
-
-const REVIEW_URL =
+const REVIEW_CSV =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=0&single=true&output=csv";
 
 const FORM_URL =
 "https://docs.google.com/forms/d/e/1FAIpQLScsq34Fh-iefgnZECMNtYvyCuYW0dWiYJG5Lx4ngottl9YgSw/formResponse";
 
-const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
-/* ================= HELPERS ================= */
-
-function parseCSV(t){ return t.trim().split("\n").slice(1).map(r=>r.split(",")); }
+/* ===== HELPERS ===== */
+function parseCSV(t){return t.trim().split("\n").slice(1).map(r=>r.split(","));}
 
 function setRing(el,p){
-  el.style.background = `conic-gradient(#6ab04c ${p}%, #eaeaea 0)`;
-  el.innerText = p + "%";
+  el.style.background=`conic-gradient(#6ab04c ${p}%,#eaeaea 0)`;
+  el.innerText=p+"%";
 }
 
-function getStreak(row){
+function getISOWeek(){
+  const d=new Date();
+  d.setDate(d.getDate()+3-(d.getDay()+6)%7);
+  const week1=new Date(d.getFullYear(),0,4);
+  const weekNo=1+Math.round(((d-week1)/86400000-3+(week1.getDay()+6)%7)/7);
+  return d.getFullYear()+"-W"+String(weekNo).padStart(2,"0");
+}
+
+function getStreak(vals){
   let s=0;
-  for(let i=7;i>=1;i--){
-    if(row[i]==="TRUE") s++;
+  for(let i=vals.length-1;i>=0;i--){
+    if(vals[i]==="TRUE") s++;
     else break;
   }
   return s;
@@ -195,7 +184,6 @@ function streakCoin(s){
   return "";
 }
 
-/* ===== Google Form bridge ===== */
 function updateHabit(habit,day,val){
   const d=new FormData();
   d.append("entry.129852130",habit);
@@ -204,69 +192,85 @@ function updateHabit(habit,day,val){
   fetch(FORM_URL,{method:"POST",mode:"no-cors",body:d});
 }
 
-/* ================= MAIN ================= */
+/* ===== MAIN ENGINE ===== */
+const CURRENT_WEEK=getISOWeek();
 
 Promise.all([
-  fetch(HABITS_URL).then(r=>r.text()),
-  fetch(TASKS_URL).then(r=>r.text())
-]).then(([hText,tText])=>{
+  fetch(HABITS_CSV).then(r=>r.text()),
+  fetch(TASKS_CSV).then(r=>r.text()),
+  fetch(REVIEW_CSV).then(r=>r.text())
+]).then(([hText,tText,rText])=>{
 
   const habits=parseCSV(hText);
   const tasks=parseCSV(tText);
+  const reviews=parseCSV(rText);
 
-  let weeklyDone=0, weeklyTotal=0;
-  const stats={}; DAYS.forEach(d=>stats[d]={done:0,total:0});
+  const weeks=[...new Set(habits.map(r=>r[0]))].sort().reverse();
+  const selector=document.getElementById("weekSelector");
 
-  const table=document.getElementById("habitTable");
+  weeks.forEach(w=>{
+    const o=document.createElement("option");
+    o.value=w;o.textContent=w;
+    if(w===CURRENT_WEEK) o.selected=true;
+    selector.appendChild(o);
+  });
 
-  habits.forEach(row=>{
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${row[0]}</td>`;
+  selector.onchange=()=>loadWeek(selector.value);
+  loadWeek(selector.value);
 
-    DAYS.forEach((d,i)=>{
-      const v=row[i+1];
-      let cell="";
+  function loadWeek(week){
+    habitTable.innerHTML=habitTable.rows[0].outerHTML;
 
-      if(v!==""){
-        weeklyTotal++; stats[d].total++;
-        if(v==="TRUE"){ weeklyDone++; stats[d].done++; }
-        cell=`<input type="checkbox" ${v==="TRUE"?"checked":""}
-              onchange="updateHabit('${row[0]}','${d}',this.checked)">`;
-      }
-      tr.innerHTML+=`<td>${cell}</td>`;
+    let weeklyDone=0,weeklyTotal=0;
+    const stats={};DAYS.forEach(d=>stats[d]={done:0,total:0});
+
+    habits.filter(r=>r[0]===week).forEach(row=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${row[1]}</td>`;
+      const vals=row.slice(2);
+
+      DAYS.forEach((d,i)=>{
+        const v=vals[i];
+        let cell="";
+        if(v!==""){
+          weeklyTotal++;stats[d].total++;
+          if(v==="TRUE"){weeklyDone++;stats[d].done++}
+          cell=`<input type="checkbox" ${v==="TRUE"?"checked":""}
+          ${week!==CURRENT_WEEK?"disabled":""}
+          onchange="updateHabit('${row[1]}','${d}',this.checked)">`;
+        }
+        tr.innerHTML+=`<td>${cell}</td>`;
+      });
+
+      tr.innerHTML+=`<td>${streakCoin(getStreak(vals))}</td>`;
+      habitTable.appendChild(tr);
     });
 
-    tr.innerHTML+=`<td>${streakCoin(getStreak(row))}</td>`;
-    table.appendChild(tr);
-  });
+    tasks.filter(r=>r[0]===week).forEach(([_,day,,done])=>{
+      weeklyTotal++;stats[day].total++;
+      if(done==="TRUE"){weeklyDone++;stats[day].done++}
+    });
 
-  tasks.forEach(([d,,done])=>{
-    weeklyTotal++; stats[d].total++;
-    if(done==="TRUE"){ weeklyDone++; stats[d].done++; }
-  });
+    const p=weeklyTotal?Math.round((weeklyDone/weeklyTotal)*100):0;
+    setRing(overallPercent,p);
+    overallCount.innerText=`${weeklyDone} / ${weeklyTotal} completed`;
 
-  const overall=Math.round((weeklyDone/weeklyTotal)*100)||0;
-  setRing(overallRing,overall);
-  overallCount.innerText=`${weeklyDone} / ${weeklyTotal} completed`;
+    DAYS.forEach(d=>{
+      const dp=stats[d].total?Math.round((stats[d].done/stats[d].total)*100):0;
+      setRing(document.getElementById("ring-"+d),dp);
+    });
 
-  DAYS.forEach(d=>{
-    const p=stats[d].total?Math.round((stats[d].done/stats[d].total)*100):0;
-    setRing(document.getElementById("ring-"+d),p);
-  });
-
-});
-
-/* ===== WEEKLY REVIEW ===== */
-fetch(REVIEW_URL)
-.then(r=>r.text())
-.then(t=>{
-  const rows=t.trim().split("\n");
-  const last=rows[rows.length-1].split(",");
-
-  document.getElementById("weekScore").innerText=last[1];
-  document.getElementById("wins").innerText=last[2];
-  document.getElementById("improve").innerText=last[3];
-  document.getElementById("notes").innerText=last[4];
+    const rev=reviews.find(r=>r[0]===week);
+    if(rev){
+      weekScore.innerText=rev[1];
+      wins.innerText=rev[2];
+      improve.innerText=rev[3];
+      notes.innerText=rev[4];
+    }else{
+      weekScore.innerText="--";
+      wins.innerText="";improve.innerText="";notes.innerText="";
+    }
+  }
 });
 </script>
 
