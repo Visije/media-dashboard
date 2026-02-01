@@ -349,3 +349,37 @@ table {
   background: linear-gradient(145deg, #ffd700, #f5c542);
   color: #4a3b00;
 }
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.task-card {
+  background: white;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+}
+
+.task-card h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: #5f9f45; /* Ascend green */
+}
+
+.task-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-card li {
+  font-size: 13px;
+  margin-bottom: 6px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
