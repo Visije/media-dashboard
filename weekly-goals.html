@@ -190,12 +190,30 @@ select{padding:6px 10px;border-radius:8px}
 <div class="tasks" id="taskGrid"></div>
 
 <!-- SUNDAY REVIEW -->
-<div class="card">
-  <h3>Sunday Weekly Review</h3>
+<div class="card" style="margin-top:20px;">
+  <h2>Sunday Weekly Review</h2>
   <p><strong>Weekly Score:</strong> <span id="weekScore">--</span>/100</p>
   <h4>Wins</h4><p id="wins"></p>
   <h4>Improvements</h4><p id="improve"></p>
   <h4>Notes</h4><p id="notes"></p>
+</div>
+  
+<!-- PLAN NEXT WEEK -->
+<div class="card" style="margin-top:20px;">
+  <h2>📝 Plan Next Week</h2>
+
+  <input id="nextFocus" placeholder="Weekly focus"
+         style="width:100%;padding:8px;margin-bottom:8px;">
+
+  <textarea id="nextGoals" placeholder="Top goals for next week"
+            style="width:100%;padding:8px;margin-bottom:8px;"></textarea>
+
+  <textarea id="nextNotes" placeholder="Notes / constraints"
+            style="width:100%;padding:8px;margin-bottom:8px;"></textarea>
+
+  <button onclick="saveNextWeek()">
+    Save Plan
+  </button>
 </div>
 
 <script>
