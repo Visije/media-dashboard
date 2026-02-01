@@ -391,3 +391,14 @@ table {
   font-style: italic;
   padding: 6px 0;
 }
+
+.day-card.no-tasks {
+  background: #f1f3f4;
+  box-shadow: none;
+  border: 1px dashed #d0d7de;
+}
+
+.day-card.no-tasks h3,
+.day-card.no-tasks strong {
+  color: #8a8f94;
+}
