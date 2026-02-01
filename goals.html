@@ -1,210 +1,296 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Weekly Goals & Habit Tracker</title>
-  <style>
-    body {
-      font-family: Segoe UI, sans-serif;
-      background: #f5f7fb;
-      padding: 20px;
-    }
+<meta charset="UTF-8">
+<title>Weekly Habit & Goal Tracker</title>
 
-    h2 { margin: 0 0 10px; }
+<style>
+body{
+  background:#f6f8fc;
+  font-family:"Segoe UI",sans-serif;
+  padding:20px;
+  color:#222;
+}
+h1{margin-bottom:10px}
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 2fr 3fr;
-      gap: 20px;
-    }
+.top{
+  display:grid;
+  grid-template-columns:2fr 3fr;
+  gap:20px;
+}
 
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-    }
+.card{
+  background:#fff;
+  padding:16px;
+  border-radius:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
+  margin-bottom:20px;
+}
 
-    /* OVERALL PROGRESS */
-    .ring {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: conic-gradient(#6ab04c 44%, #eaeaea 0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      margin-top: 10px;
-    }
+.ring{
+  width:90px;height:90px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:18px;
+  margin:10px auto;
+  background:conic-gradient(#6ab04c 0%,#eaeaea 0);
+}
 
-    .bars {
-      display: flex;
-      gap: 6px;
-      align-items: flex-end;
-      height: 80px;
-    }
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+th,td{
+  padding:6px;
+  text-align:center;
+  border-bottom:1px solid #eee;
+}
+th:first-child,td:first-child{text-align:left}
 
-    .bar {
-      width: 12px;
-      background: #6ab04c;
-      border-radius: 4px;
-    }
+.days{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:12px;
+  margin-top:20px;
+}
 
-    /* HABITS */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
+.day-card{
+  background:#fff;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.05);
+}
 
-    th, td {
-      padding: 6px;
-      border-bottom: 1px solid #eee;
-      text-align: center;
-    }
+/* ===== Tasks ===== */
+.tasks{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+.tasks ul{
+  list-style:none;
+  padding:0;
+  font-size:14px;
+}
+.tasks li{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:6px;
+}
 
-    th:first-child, td:first-child {
-      text-align: left;
-    }
+/* ===== Coins ===== */
+.coin{
+  width:20px;height:20px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:600;
+}
+.bronze{background:linear-gradient(145deg,#cd7f32,#b87333);color:#3a220f}
+.silver{background:linear-gradient(145deg,#e6e6e6,#bfc1c2);color:#333}
+.gold{background:linear-gradient(145deg,#ffd700,#f5c542);color:#4a3b00}
 
-    /* DAY RINGS */
-    .days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .day-card {
-      background: white;
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-    }
-
-    /* TASKS */
-    .tasks {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .tasks ul {
-      padding-left: 18px;
-      font-size: 14px;
-    }
-  </style>
+input[type=checkbox]{transform:scale(1.1);cursor:pointer}
+input[type=checkbox]:disabled{cursor:not-allowed;opacity:.5}
+select{padding:6px 10px;border-radius:8px}
+</style>
 </head>
 
 <body>
 
-<h1>📅 Weekly Goals & Habit Tracker</h1>
+<h1>📅 Weekly Execution Dashboard</h1>
+<select id="weekSelector"></select>
 
-<!-- TOP SECTION -->
-<div class="grid-2">
+<div class="top">
 
-  <!-- OVERALL PROGRESS -->
   <div class="card">
-    <h2>Overall Progress</h2>
-
-    <div class="bars">
-      <div class="bar" style="height:70%"></div>
-      <div class="bar" style="height:80%"></div>
-      <div class="bar" style="height:60%"></div>
-      <div class="bar" style="height:17%"></div>
-      <div class="bar" style="height:0%"></div>
-      <div class="bar" style="height:0%"></div>
-      <div class="bar" style="height:0%"></div>
-    </div>
-
-    <div class="ring" id="overallRing">44%</div>
-    <p id="overallCount">18 / 41 completed</p>
+    <h3>Overall Progress</h3>
+    <div class="ring" id="overallPercent">0%</div>
+    <p id="overallCount">0 / 0 completed</p>
   </div>
 
-  <!-- HABIT TRACKER -->
   <div class="card">
-    <h2>Habit Tracker</h2>
-    <table>
-      <tr>
-        <th>Habit</th>
-        <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
-        <th>Streak</th>
-      </tr>
-      <tr>
-        <td>Wake up 6am</td>
-        <td><input type="checkbox" checked></td>
-        <td><input type="checkbox" checked></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox" checked></td>
-        <td></td><td></td><td></td>
-        <td><!-- coin here --></td>
-      </tr>
-      <tr>
-        <td>Gym</td>
-        <td><input type="checkbox" checked></td>
-        <td><input type="checkbox"></td>
-        <td><input type="checkbox" checked></td>
-        <td></td><td></td><td></td><td></td>
-        <td></td>
-      </tr>
+    <h3>Habit Tracker</h3>
+    <table id="habitTable">
+      <thead>
+        <tr>
+          <th>Habit</th>
+          <th>Mon</th><th>Tue</th><th>Wed</th>
+          <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+          <th>Streak</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
     </table>
   </div>
 
 </div>
 
-<!-- DAY PROGRESS -->
+<!-- DAY RINGS -->
 <div class="days">
-  <div class="day-card"><strong>Mon</strong><div class="ring">85%</div></div>
-  <div class="day-card"><strong>Tue</strong><div class="ring">80%</div></div>
-  <div class="day-card"><strong>Wed</strong><div class="ring">60%</div></div>
-  <div class="day-card"><strong>Thu</strong><div class="ring">17%</div></div>
-  <div class="day-card"><strong>Fri</strong><div class="ring">0%</div></div>
-  <div class="day-card"><strong>Sat</strong><div class="ring">0%</div></div>
-  <div class="day-card"><strong>Sun</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Mon</strong><div class="ring" id="ring-Mon">0%</div></div>
+  <div class="day-card"><strong>Tue</strong><div class="ring" id="ring-Tue">0%</div></div>
+  <div class="day-card"><strong>Wed</strong><div class="ring" id="ring-Wed">0%</div></div>
+  <div class="day-card"><strong>Thu</strong><div class="ring" id="ring-Thu">0%</div></div>
+  <div class="day-card"><strong>Fri</strong><div class="ring" id="ring-Fri">0%</div></div>
+  <div class="day-card"><strong>Sat</strong><div class="ring" id="ring-Sat">0%</div></div>
+  <div class="day-card"><strong>Sun</strong><div class="ring" id="ring-Sun">0%</div></div>
 </div>
 
 <!-- TASK LISTS -->
-<div class="tasks">
-  <div class="card">
-    <h3>Monday</h3>
-    <ul>
-      <li><input type="checkbox" checked> Write scripts</li>
-      <li><input type="checkbox" checked> Upload shorts</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>Tuesday</h3>
-    <ul>
-      <li><input type="checkbox"> Edit video</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h3>Wednesday</h3>
-    <ul>
-      <li><input type="checkbox" checked> Research</li>
-      <li><input type="checkbox"> Client call</li>
-    </ul>
-  </div>
-</div>
+<div class="tasks" id="taskGrid"></div>
 
 <!-- SUNDAY REVIEW -->
-<div class="card" style="margin-top:20px;">
-  <h2>🧠 Sunday Weekly Review</h2>
-  <p><strong>Score:</strong> 78 / 100</p>
-
-  <h4>Wins</h4>
-  <p>Stayed consistent with gym</p>
-
-  <h4>Needs Improvement</h4>
-  <p>Sleep schedule</p>
-
-  <h4>Notes</h4>
-  <p>Felt focused most days</p>
+<div class="card">
+  <h3>Sunday Weekly Review</h3>
+  <p><strong>Weekly Score:</strong> <span id="weekScore">--</span>/100</p>
+  <h4>Wins</h4><p id="wins"></p>
+  <h4>Improvements</h4><p id="improve"></p>
+  <h4>Notes</h4><p id="notes"></p>
 </div>
+
+<script>
+/* ================= CONFIG ================= */
+const HABITS_CSV =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=1148852579&single=true&output=csv";
+
+const TASKS_CSV =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=774223864&single=true&output=csv";
+
+const REVIEW_CSV =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=0&single=true&output=csv";
+
+const DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+/* ================= HELPERS ================= */
+function parseCSV(t){
+  return t.trim().split("\n").slice(1).map(r=>r.split(","));
+}
+
+function setRing(el,p){
+  el.style.background=`conic-gradient(#6ab04c ${p}%,#eaeaea 0)`;
+  el.innerText=p+"%";
+}
+
+function getISOWeek(){
+  const d=new Date();
+  d.setDate(d.getDate()+3-(d.getDay()+6)%7);
+  const w1=new Date(d.getFullYear(),0,4);
+  const wn=1+Math.round(((d-w1)/86400000-3+(w1.getDay()+6)%7)/7);
+  return d.getFullYear()+"-W"+String(wn).padStart(2,"0");
+}
+
+function getStreak(vals){
+  let s=0;
+  for(let i=vals.length-1;i>=0;i--){
+    if(vals[i]==="TRUE") s++;
+    else break;
+  }
+  return s;
+}
+
+function streakCoin(s){
+  if(s>=21) return '<span class="coin gold">21</span>';
+  if(s>=7)  return '<span class="coin silver">7</span>';
+  if(s>=3)  return '<span class="coin bronze">3</span>';
+  return "";
+}
+
+/* ================= MAIN ================= */
+const CURRENT_WEEK=getISOWeek();
+
+Promise.all([
+  fetch(HABITS_CSV).then(r=>r.text()),
+  fetch(TASKS_CSV).then(r=>r.text()),
+  fetch(REVIEW_CSV).then(r=>r.text())
+]).then(([hText,tText,rText])=>{
+
+  const habits=parseCSV(hText);
+  const tasks=parseCSV(tText);
+  const reviews=parseCSV(rText);
+
+  const weeks=[...new Set(habits.map(r=>r[0]))].sort().reverse();
+  weekSelector.innerHTML=weeks.map(w=>`<option ${w===CURRENT_WEEK?"selected":""}>${w}</option>`).join("");
+  weekSelector.onchange=()=>loadWeek(weekSelector.value);
+
+  loadWeek(weekSelector.value);
+
+  function loadWeek(week){
+    const stats={};DAYS.forEach(d=>stats[d]={done:0,total:0});
+    let done=0,total=0;
+
+    /* HABITS */
+    habitTable.querySelector("tbody").innerHTML="";
+    habits.filter(r=>r[0]===week).forEach(r=>{
+      const tr=document.createElement("tr");
+      tr.innerHTML=`<td>${r[1]}</td>`;
+      const vals=r.slice(2);
+
+      DAYS.forEach((d,i)=>{
+        if(vals[i]!==""){
+          total++;stats[d].total++;
+          if(vals[i]==="TRUE"){done++;stats[d].done++}
+          tr.innerHTML+=`<td><input type="checkbox" ${vals[i]==="TRUE"?"checked":""} disabled></td>`;
+        }else tr.innerHTML+="<td></td>";
+      });
+
+      tr.innerHTML+=`<td>${streakCoin(getStreak(vals))}</td>`;
+      habitTable.querySelector("tbody").appendChild(tr);
+    });
+
+    /* TASKS */
+    taskGrid.innerHTML="";
+    DAYS.forEach(d=>{
+      const card=document.createElement("div");
+      card.className="card";
+      card.innerHTML=`<h4>${d}</h4><ul></ul>`;
+      const ul=card.querySelector("ul");
+
+      tasks.filter(r=>r[0]===week && r[1]===d).forEach(r=>{
+        total++;stats[d].total++;
+        if(r[3]==="TRUE"){done++;stats[d].done++}
+        ul.innerHTML+=`
+          <li>
+            <input type="checkbox" ${r[3]==="TRUE"?"checked":""} disabled>
+            ${r[2]}
+          </li>`;
+      });
+
+      taskGrid.appendChild(card);
+    });
+
+    setRing(overallPercent, total?Math.round(done/total*100):0);
+    overallCount.innerText=`${done} / ${total} completed`;
+
+    DAYS.forEach(d=>{
+      const p=stats[d].total?Math.round(stats[d].done/stats[d].total*100):0;
+      setRing(document.getElementById("ring-"+d),p);
+    });
+
+    const rev=reviews.find(r=>r[0]===week);
+    if(rev){
+      weekScore.innerText=rev[1];
+      wins.innerText=rev[2];
+      improve.innerText=rev[3];
+      notes.innerText=rev[4];
+    }else{
+      weekScore.innerText="--";
+      wins.innerText="";
+      improve.innerText="";
+      notes.innerText="";
+    }
+  }
+});
+</script>
 
 </body>
 </html>
