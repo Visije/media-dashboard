@@ -402,3 +402,18 @@ table {
 .day-card.no-tasks strong {
   color: #8a8f94;
 }
+
+.no-task {
+  list-style: none;
+  font-size: 13px;
+  color: #9aa0a6;
+  font-style: italic;
+  padding: 6px 0;
+}
+
+.day-card.no-tasks,
+.card.no-tasks {
+  background: #f1f3f4;
+  border: 1px dashed #d0d7de;
+  box-shadow: none;
+}
