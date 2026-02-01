@@ -81,6 +81,7 @@ th:first-child,td:first-child{text-align:left}
 .gold{background:linear-gradient(145deg,#ffd700,#f5c542);color:#4a3b00}
 
 input[type=checkbox]{transform:scale(1.1);cursor:pointer}
+input[type=checkbox]:disabled{cursor:not-allowed;opacity:.5}
 select{padding:6px 10px;border-radius:8px}
 </style>
 </head>
@@ -88,7 +89,6 @@ select{padding:6px 10px;border-radius:8px}
 <body>
 
 <h1>📅 Weekly Execution Dashboard</h1>
-
 <select id="weekSelector"></select>
 
 <div class="top">
@@ -135,7 +135,7 @@ select{padding:6px 10px;border-radius:8px}
 </div>
 
 <script>
-/* ===== CONFIG ===== */
+/* ================= CONFIG ================= */
 const HABITS_CSV =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=1148852579&single=true&output=csv";
 
@@ -150,8 +150,10 @@ const FORM_URL =
 
 const DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
-/* ===== HELPERS ===== */
-function parseCSV(t){return t.trim().split("\n").slice(1).map(r=>r.split(","));}
+/* ================= HELPERS ================= */
+function parseCSV(t){
+  return t.trim().split("\n").slice(1).map(r=>r.split(","));
+}
 
 function setRing(el,p){
   el.style.background=`conic-gradient(#6ab04c ${p}%,#eaeaea 0)`;
@@ -190,7 +192,7 @@ function updateHabit(habit,day,val){
   fetch(FORM_URL,{method:"POST",mode:"no-cors",body:d});
 }
 
-/* ===== MAIN ===== */
+/* ================= MAIN ================= */
 const CURRENT_WEEK=getISOWeek();
 
 Promise.all([
@@ -251,8 +253,9 @@ Promise.all([
     });
 
     const p=weeklyTotal?Math.round((weeklyDone/weeklyTotal)*100):0;
-    setRing(overallPercent,p);
-    overallCount.innerText=`${weeklyDone} / ${weeklyTotal} completed`;
+    setRing(document.getElementById("overallPercent"),p);
+    document.getElementById("overallCount").innerText=
+      `${weeklyDone} / ${weeklyTotal} completed`;
 
     DAYS.forEach(d=>{
       const dp=stats[d].total?Math.round((stats[d].done/stats[d].total)*100):0;
