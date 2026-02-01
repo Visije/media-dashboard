@@ -292,5 +292,55 @@ Promise.all([
 });
 </script>
 
+<script>
+const TASKS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT4pu5TJ1kHSmb6NnKW5RfevfbDOA9OiePLxSCb2kkvL8wyyjlA5Ay4XBV9W5yKgsWm_4ZilasazuBc/pub?gid=0&single=true&output=csv";
+
+const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+fetch(TASKS_URL)
+  .then(r => r.text())
+  .then(csv => {
+    const lines = csv.trim().split("\n");
+    const headers = lines[0].split(",");
+
+    const rows = lines.slice(1).map(line => {
+      const values = line.split(",");
+      const obj = {};
+      headers.forEach((h, i) => obj[h.trim()] = values[i]?.trim());
+      return obj;
+    });
+
+    console.log("Parsed tasks:", rows); // 🔍 debug
+
+    DAYS.forEach(day => {
+      const ul = document.getElementById(`tasks-${day}`);
+      if (!ul) return;
+
+      const dayTasks = rows.filter(r =>
+        r.Day === day || r.day === day
+      );
+
+      if (dayTasks.length === 0) {
+        ul.innerHTML = `<li style="opacity:.5">No tasks</li>`;
+        return;
+      }
+
+      dayTasks.forEach(taskRow => {
+        const li = document.createElement("li");
+        const done =
+          taskRow.Done === "TRUE" ||
+          taskRow.done === "TRUE" ||
+          taskRow.Status === "TRUE";
+
+        li.innerHTML = `
+          <input type="checkbox" ${done ? "checked" : ""}>
+          ${taskRow.Task || taskRow.task}
+        `;
+        ul.appendChild(li);
+      });
+    });
+  });
+</script>
+  
 </body>
 </html>
