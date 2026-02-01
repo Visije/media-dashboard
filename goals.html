@@ -1,213 +1,210 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Weekly Goals & Habit Tracker</title>
-<link rel="stylesheet" href="css/style.css">
+  <title>Weekly Goals & Habit Tracker</title>
+  <style>
+    body {
+      font-family: Segoe UI, sans-serif;
+      background: #f5f7fb;
+      padding: 20px;
+    }
 
-<style>
-body {
-  background:#f5f7fb;
-  font-family:"Segoe UI",system-ui,sans-serif;
-}
+    h2 { margin: 0 0 10px; }
 
-.wrapper {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 16px;
-}
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 20px;
+    }
 
-h1 { margin-bottom: 6px; }
-.subtitle { color:#666; margin-bottom:20px; }
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
 
-.card {
-  background:#fff;
-  border-radius:16px;
-  padding:18px;
-  box-shadow:0 6px 18px rgba(0,0,0,.06);
-}
+    /* OVERALL PROGRESS */
+    .ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: conic-gradient(#6ab04c 44%, #eaeaea 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
 
-table {
-  width:100%;
-  border-collapse:collapse;
-  margin-top:12px;
-}
+    .bars {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 80px;
+    }
 
-th, td {
-  padding:10px;
-  text-align:center;
-  font-size:15px;
-}
+    .bar {
+      width: 12px;
+      background: #6ab04c;
+      border-radius: 4px;
+    }
 
-th {
-  font-weight:600;
-  color:#444;
-}
+    /* HABITS */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
 
-td:first-child, th:first-child {
-  text-align:left;
-}
+    th, td {
+      padding: 6px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
+    }
 
-input[type="checkbox"] {
-  transform: scale(1.2);
-  cursor:pointer;
-}
+    th:first-child, td:first-child {
+      text-align: left;
+    }
 
-.streak {
-  font-weight:600;
-  color:#e17055;
-}
+    /* DAY RINGS */
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
 
-.progress-box {
-  margin-top:20px;
-  text-align:center;
-}
+    .day-card {
+      background: white;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
 
-progress {
-  width:100%;
-  height:14px;
-  margin-top:8px;
-  border-radius:10px;
-}
+    /* TASKS */
+    .tasks {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
 
-progress::-webkit-progress-bar {
-  background:#e6e9f2;
-}
-
-progress::-webkit-progress-value {
-  background:#6c5ce7;
-}
-</style>
+    .tasks ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
 
-<nav class="main-nav">
-  <a href="index.html">Dashboard</a>
-  <a href="calendar.html">Calendar</a>
-  <a href="scripts.html">Scripts</a>
-  <a href="goals.html" class="active">Goals</a>
-</nav>
+<h1>📅 Weekly Goals & Habit Tracker</h1>
 
-<div class="wrapper">
+<!-- TOP SECTION -->
+<div class="grid-2">
 
-<h1>📅 Weekly Habit Tracker</h1>
-<p class="subtitle">Mon–Sun execution with streaks (Ascend style)</p>
+  <!-- OVERALL PROGRESS -->
+  <div class="card">
+    <h2>Overall Progress</h2>
 
-<div class="card">
+    <div class="bars">
+      <div class="bar" style="height:70%"></div>
+      <div class="bar" style="height:80%"></div>
+      <div class="bar" style="height:60%"></div>
+      <div class="bar" style="height:17%"></div>
+      <div class="bar" style="height:0%"></div>
+      <div class="bar" style="height:0%"></div>
+      <div class="bar" style="height:0%"></div>
+    </div>
 
-<table id="habitTable">
-<thead>
-<tr>
-  <th>Habit</th>
-  <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-  <th>🔥 Streak</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+    <div class="ring" id="overallRing">44%</div>
+    <p id="overallCount">18 / 41 completed</p>
+  </div>
 
-<div class="progress-box">
-  <strong id="weeklyPercent">0% completed</strong>
-  <progress id="weeklyProgress" value="0" max="1"></progress>
+  <!-- HABIT TRACKER -->
+  <div class="card">
+    <h2>Habit Tracker</h2>
+    <table>
+      <tr>
+        <th>Habit</th>
+        <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+        <th>Streak</th>
+      </tr>
+      <tr>
+        <td>Wake up 6am</td>
+        <td><input type="checkbox" checked></td>
+        <td><input type="checkbox" checked></td>
+        <td><input type="checkbox"></td>
+        <td><input type="checkbox" checked></td>
+        <td></td><td></td><td></td>
+        <td><!-- coin here --></td>
+      </tr>
+      <tr>
+        <td>Gym</td>
+        <td><input type="checkbox" checked></td>
+        <td><input type="checkbox"></td>
+        <td><input type="checkbox" checked></td>
+        <td></td><td></td><td></td><td></td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+
 </div>
 
+<!-- DAY PROGRESS -->
+<div class="days">
+  <div class="day-card"><strong>Mon</strong><div class="ring">85%</div></div>
+  <div class="day-card"><strong>Tue</strong><div class="ring">80%</div></div>
+  <div class="day-card"><strong>Wed</strong><div class="ring">60%</div></div>
+  <div class="day-card"><strong>Thu</strong><div class="ring">17%</div></div>
+  <div class="day-card"><strong>Fri</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Sat</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Sun</strong><div class="ring">0%</div></div>
 </div>
+
+<!-- TASK LISTS -->
+<div class="tasks">
+  <div class="card">
+    <h3>Monday</h3>
+    <ul>
+      <li><input type="checkbox" checked> Write scripts</li>
+      <li><input type="checkbox" checked> Upload shorts</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Tuesday</h3>
+    <ul>
+      <li><input type="checkbox"> Edit video</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Wednesday</h3>
+    <ul>
+      <li><input type="checkbox" checked> Research</li>
+      <li><input type="checkbox"> Client call</li>
+    </ul>
+  </div>
 </div>
 
-<script>
-/* ===== CONFIG ===== */
-const habits = [
-  "Wake up before 6",
-  "No alcohol",
-  "Cold shower",
-  "1 hour no social media",
-  "Gym / Workout",
-  "Reading",
-  "Learning / Skill"
-];
+<!-- SUNDAY REVIEW -->
+<div class="card" style="margin-top:20px;">
+  <h2>🧠 Sunday Weekly Review</h2>
+  <p><strong>Score:</strong> 78 / 100</p>
 
-const days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-const weekKey = getWeekKey();
+  <h4>Wins</h4>
+  <p>Stayed consistent with gym</p>
 
-/* ===== STORAGE ===== */
-let data = JSON.parse(localStorage.getItem("weeklyHabits")) || {};
-if (!data[weekKey]) data[weekKey] = {};
-habits.forEach(h => {
-  if (!data[weekKey][h]) data[weekKey][h] = Array(7).fill(false);
-});
+  <h4>Needs Improvement</h4>
+  <p>Sleep schedule</p>
 
-/* ===== BUILD TABLE ===== */
-const tbody = document.querySelector("#habitTable tbody");
-
-habits.forEach((habit, hIndex) => {
-  const tr = document.createElement("tr");
-
-  tr.innerHTML = `<td>${habit}</td>`;
-
-  days.forEach((_, dIndex) => {
-    const td = document.createElement("td");
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.checked = data[weekKey][habit][dIndex];
-
-    cb.addEventListener("change", () => {
-      data[weekKey][habit][dIndex] = cb.checked;
-      localStorage.setItem("weeklyHabits", JSON.stringify(data));
-      updateStats();
-    });
-
-    td.appendChild(cb);
-    tr.appendChild(td);
-  });
-
-  const streakTd = document.createElement("td");
-  streakTd.className = "streak";
-  streakTd.id = `streak-${hIndex}`;
-  tr.appendChild(streakTd);
-
-  tbody.appendChild(tr);
-});
-
-/* ===== HELPERS ===== */
-function getWeekKey() {
-  const d = new Date();
-  const onejan = new Date(d.getFullYear(),0,1);
-  const week = Math.ceil((((d - onejan) / 86400000) + onejan.getDay()+1)/7);
-  return `${d.getFullYear()}-W${week}`;
-}
-
-function calculateStreak(arr) {
-  let streak = 0;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (arr[i]) streak++;
-    else break;
-  }
-  return streak;
-}
-
-/* ===== UPDATE STATS ===== */
-function updateStats() {
-  let total = habits.length * 7;
-  let done = 0;
-
-  habits.forEach((habit, i) => {
-    const arr = data[weekKey][habit];
-    arr.forEach(v => v && done++);
-
-    document.getElementById(`streak-${i}`).innerText =
-      calculateStreak(arr) + "🔥";
-  });
-
-  const percent = Math.round((done / total) * 100);
-  document.getElementById("weeklyPercent").innerText =
-    `${percent}% completed`;
-  document.getElementById("weeklyProgress").max = total;
-  document.getElementById("weeklyProgress").value = done;
-}
-
-updateStats();
-</script>
+  <h4>Notes</h4>
+  <p>Felt focused most days</p>
+</div>
 
 </body>
 </html>
