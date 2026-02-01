@@ -359,9 +359,9 @@ fetch(TASKS_URL)
       const dayTasks = rows.filter(r =>
         r.Day === day || r.day === day
       );
-
+ 
       if (dayTasks.length === 0) {
-        ul.innerHTML = `<li style="opacity:.5">No tasks</li>`;
+        ul.innerHTML = "<li class='no-task'>No tasks planned</li>";
         return;
       }
 
