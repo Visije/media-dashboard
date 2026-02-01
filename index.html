@@ -6,21 +6,23 @@
   <title>Media Command Center</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
+<!-- ================= ROLE HANDLING (SAFE & SINGLE) ================= -->
 <script>
-/* ---------- ROLE HANDLING (SAFE) ---------- */
-let role = localStorage.getItem("role");
+(function () {
+  let role = localStorage.getItem("role");
 
-// Ask only first time
-if (!role) {
-  role = prompt("Enter role: admin / writer / editor");
-  localStorage.setItem("role", role);
+  if (!role) {
+    role = prompt("Enter role: admin / writer / editor");
+    localStorage.setItem("role", role);
+  }
 
+  // Redirect non-admins away from admin dashboard
   if (role === "writer") location.href = "scripts.html";
   if (role === "editor") location.href = "calendar.html";
-}
-// No redirect if role already exists
+})();
 </script>
 
 <header>
@@ -29,6 +31,7 @@ if (!role) {
   <button onclick="toggleDark()">🌙 Dark Mode</button>
 </header>
 
+<!-- ================= ROLE SWITCHER ================= -->
 <section style="text-align:center; margin-bottom:20px;">
   <button onclick="setRole('admin')">👑 Admin</button>
   <button onclick="setRole('writer')">✍️ Writer</button>
@@ -42,6 +45,7 @@ if (!role) {
   <a href="goals.html">Goals</a>
 </nav>
 
+<!-- ================= STATS ================= -->
 <section class="stats">
   <div class="card">
     <h2>Weekly Uploads</h2>
@@ -61,8 +65,10 @@ if (!role) {
   <p>© 2026 Your Media Company</p>
 </footer>
 
+<!-- ================= MAIN JS (LOAD ONCE) ================= -->
 <script src="js/main.js"></script>
 
+<!-- ================= PAGE FUNCTIONS ================= -->
 <script>
 function toggleDark() {
   document.body.classList.toggle("dark");
@@ -76,14 +82,6 @@ function setRole(r) {
   if (r === "editor") location.href = "calendar.html";
 }
 </script>
-  
-<script src="js/main.js"></script>
 
 </body>
 </html>
-
-
-
-
-
-
