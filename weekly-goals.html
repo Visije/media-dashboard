@@ -35,7 +35,7 @@ h1{margin-bottom:10px}
   justify-content:center;
   font-weight:bold;
   font-size:18px;
-  margin:10px 0;
+  margin:10px auto;
   background:conic-gradient(#6ab04c 0%,#eaeaea 0);
 }
 
@@ -66,6 +66,25 @@ th:first-child,td:first-child{text-align:left}
   box-shadow:0 6px 16px rgba(0,0,0,.05);
 }
 
+/* ===== Tasks ===== */
+.tasks{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+.tasks ul{
+  list-style:none;
+  padding:0;
+  font-size:14px;
+}
+.tasks li{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:6px;
+}
+
 /* ===== Coins ===== */
 .coin{
   width:20px;height:20px;
@@ -93,29 +112,30 @@ select{padding:6px 10px;border-radius:8px}
 
 <div class="top">
 
-<div class="card">
-  <h3>Overall Progress</h3>
-  <div class="ring" id="overallPercent">0%</div>
-  <p id="overallCount">0 / 0 completed</p>
+  <div class="card">
+    <h3>Overall Progress</h3>
+    <div class="ring" id="overallPercent">0%</div>
+    <p id="overallCount">0 / 0 completed</p>
+  </div>
+
+  <div class="card">
+    <h3>Habit Tracker</h3>
+    <table id="habitTable">
+      <thead>
+        <tr>
+          <th>Habit</th>
+          <th>Mon</th><th>Tue</th><th>Wed</th>
+          <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+          <th>Streak</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
 </div>
 
-<div class="card">
-  <h3>Habit Tracker</h3>
-  <table id="habitTable">
-    <thead>
-      <tr>
-        <th>Habit</th>
-        <th>Mon</th><th>Tue</th><th>Wed</th>
-        <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-        <th>Streak</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-</div>
-
+<!-- DAY RINGS -->
 <div class="days">
   <div class="day-card"><strong>Mon</strong><div class="ring" id="ring-Mon">0%</div></div>
   <div class="day-card"><strong>Tue</strong><div class="ring" id="ring-Tue">0%</div></div>
@@ -126,6 +146,10 @@ select{padding:6px 10px;border-radius:8px}
   <div class="day-card"><strong>Sun</strong><div class="ring" id="ring-Sun">0%</div></div>
 </div>
 
+<!-- TASK LISTS -->
+<div class="tasks" id="taskGrid"></div>
+
+<!-- SUNDAY REVIEW -->
 <div class="card">
   <h3>Sunday Weekly Review</h3>
   <p><strong>Weekly Score:</strong> <span id="weekScore">--</span>/100</p>
@@ -144,9 +168,6 @@ const TASKS_CSV =
 
 const REVIEW_CSV =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=0&single=true&output=csv";
-
-const FORM_URL =
-"https://docs.google.com/forms/d/e/1FAIpQLScsq34Fh-iefgnZECMNtYvyCuYW0dWiYJG5Lx4ngottl9YgSw/formResponse";
 
 const DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
@@ -184,14 +205,6 @@ function streakCoin(s){
   return "";
 }
 
-function updateHabit(habit,day,val){
-  const d=new FormData();
-  d.append("entry.129852130",habit);
-  d.append("entry.1541899312",day);
-  d.append("entry.1645968702",val?"TRUE":"FALSE");
-  fetch(FORM_URL,{method:"POST",mode:"no-cors",body:d});
-}
-
 /* ================= MAIN ================= */
 const CURRENT_WEEK=getISOWeek();
 
@@ -206,60 +219,61 @@ Promise.all([
   const reviews=parseCSV(rText);
 
   const weeks=[...new Set(habits.map(r=>r[0]))].sort().reverse();
-  const selector=document.getElementById("weekSelector");
+  weekSelector.innerHTML=weeks.map(w=>`<option ${w===CURRENT_WEEK?"selected":""}>${w}</option>`).join("");
+  weekSelector.onchange=()=>loadWeek(weekSelector.value);
 
-  weeks.forEach(w=>{
-    const o=document.createElement("option");
-    o.value=w;o.textContent=w;
-    if(w===CURRENT_WEEK) o.selected=true;
-    selector.appendChild(o);
-  });
-
-  selector.onchange=()=>loadWeek(selector.value);
-  loadWeek(selector.value);
+  loadWeek(weekSelector.value);
 
   function loadWeek(week){
-    const tbody=document.querySelector("#habitTable tbody");
-    tbody.innerHTML="";
-
-    let weeklyDone=0,weeklyTotal=0;
     const stats={};DAYS.forEach(d=>stats[d]={done:0,total:0});
+    let done=0,total=0;
 
-    habits.filter(r=>r[0]===week).forEach(row=>{
+    /* HABITS */
+    habitTable.querySelector("tbody").innerHTML="";
+    habits.filter(r=>r[0]===week).forEach(r=>{
       const tr=document.createElement("tr");
-      tr.innerHTML=`<td>${row[1]}</td>`;
-      const vals=row.slice(2);
+      tr.innerHTML=`<td>${r[1]}</td>`;
+      const vals=r.slice(2);
 
       DAYS.forEach((d,i)=>{
-        const v=vals[i];
-        let cell="";
-        if(v!==""){
-          weeklyTotal++;stats[d].total++;
-          if(v==="TRUE"){weeklyDone++;stats[d].done++}
-          cell=`<input type="checkbox" ${v==="TRUE"?"checked":""}
-          ${week!==CURRENT_WEEK?"disabled":""}
-          onchange="updateHabit('${row[1]}','${d}',this.checked)">`;
-        }
-        tr.innerHTML+=`<td>${cell}</td>`;
+        if(vals[i]!==""){
+          total++;stats[d].total++;
+          if(vals[i]==="TRUE"){done++;stats[d].done++}
+          tr.innerHTML+=`<td><input type="checkbox" ${vals[i]==="TRUE"?"checked":""} disabled></td>`;
+        }else tr.innerHTML+="<td></td>";
       });
 
       tr.innerHTML+=`<td>${streakCoin(getStreak(vals))}</td>`;
-      tbody.appendChild(tr);
+      habitTable.querySelector("tbody").appendChild(tr);
     });
 
-    tasks.filter(r=>r[0]===week).forEach(([_,day,,done])=>{
-      weeklyTotal++;stats[day].total++;
-      if(done==="TRUE"){weeklyDone++;stats[day].done++}
+    /* TASKS */
+    taskGrid.innerHTML="";
+    DAYS.forEach(d=>{
+      const card=document.createElement("div");
+      card.className="card";
+      card.innerHTML=`<h4>${d}</h4><ul></ul>`;
+      const ul=card.querySelector("ul");
+
+      tasks.filter(r=>r[0]===week && r[1]===d).forEach(r=>{
+        total++;stats[d].total++;
+        if(r[3]==="TRUE"){done++;stats[d].done++}
+        ul.innerHTML+=`
+          <li>
+            <input type="checkbox" ${r[3]==="TRUE"?"checked":""} disabled>
+            ${r[2]}
+          </li>`;
+      });
+
+      taskGrid.appendChild(card);
     });
 
-    const p=weeklyTotal?Math.round((weeklyDone/weeklyTotal)*100):0;
-    setRing(document.getElementById("overallPercent"),p);
-    document.getElementById("overallCount").innerText=
-      `${weeklyDone} / ${weeklyTotal} completed`;
+    setRing(overallPercent, total?Math.round(done/total*100):0);
+    overallCount.innerText=`${done} / ${total} completed`;
 
     DAYS.forEach(d=>{
-      const dp=stats[d].total?Math.round((stats[d].done/stats[d].total)*100):0;
-      setRing(document.getElementById("ring-"+d),dp);
+      const p=stats[d].total?Math.round(stats[d].done/stats[d].total*100):0;
+      setRing(document.getElementById("ring-"+d),p);
     });
 
     const rev=reviews.find(r=>r[0]===week);
@@ -270,7 +284,9 @@ Promise.all([
       notes.innerText=rev[4];
     }else{
       weekScore.innerText="--";
-      wins.innerText="";improve.innerText="";notes.innerText="";
+      wins.innerText="";
+      improve.innerText="";
+      notes.innerText="";
     }
   }
 });
