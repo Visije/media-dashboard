@@ -1,5 +1,5 @@
 // ==================================================
-// GLOBAL FETCH CACHE (FAST LOAD)
+// GLOBAL FETCH CACHE (FAST LOAD, SAFE)
 // ==================================================
 async function fetchWithCache(url, key, ttl = 60000) {
   const cached = localStorage.getItem(key);
@@ -19,13 +19,13 @@ async function fetchWithCache(url, key, ttl = 60000) {
 }
 
 // ==================================================
-// PAGE DETECTION (SAFE)
+// PAGE DETECTION (SAFE, NO ERRORS)
 // ==================================================
 const pageMeta = document.querySelector('meta[name="page"]');
-const page = pageMeta ? pageMeta.content : null;
+const PAGE = pageMeta ? pageMeta.content : null;
 
 // ==================================================
-// ROLE INIT (DECLARE ONCE — NO ERRORS EVER)
+// ROLE INIT (DECLARE ONCE — NEVER REDECLARE)
 // ==================================================
 (function initRole() {
   if (!window.appRole) {
@@ -43,9 +43,9 @@ const page = pageMeta ? pageMeta.content : null;
 const role = window.appRole;
 
 // ==================================================
-// ROLE BASED REDIRECT (ADMIN PAGE ONLY)
+// ROLE-BASED REDIRECT (ADMIN PAGE ONLY)
 // ==================================================
-if (page === "admin") {
+if (PAGE === "admin") {
   if (role === "writer") {
     window.location.replace("scripts.html");
   } else if (role === "editor") {
@@ -56,7 +56,7 @@ if (page === "admin") {
 // ==================================================
 // ADMIN DASHBOARD STATS (CACHED + SAFE)
 // ==================================================
-if (page === "admin") {
+if (PAGE === "admin") {
 
   const weeklyEl = document.getElementById("weeklyUploads");
   const monthlyEl = document.getElementById("monthlyUploads");
@@ -71,7 +71,6 @@ if (page === "admin") {
 
     fetchWithCache(STATS_CSV_URL, "admin_stats", 300000) // 5 min cache
       .then(data => {
-
         const rows = data.trim().split("\n").slice(1);
         const stats = {};
 
@@ -83,7 +82,6 @@ if (page === "admin") {
         weeklyEl.innerText = stats.weekly_uploads || 0;
         monthlyEl.innerText = stats.monthly_uploads || 0;
         pendingEl.innerText = stats.pending_scripts || 0;
-
       })
       .catch(err => console.error("Admin stats sheet error:", err));
   }
@@ -92,10 +90,10 @@ if (page === "admin") {
 // ==================================================
 // HABIT STREAK + COIN SYSTEM (ASCEND STYLE)
 // ==================================================
-function getStreak(row) {
+function getStreak(row, startIndex = 1) {
+  // row = [habit, Mon, Tue, Wed, Thu, Fri, Sat, Sun]
   let streak = 0;
-  // expects Mon–Sun at index 1–7 OR adjust if week column exists
-  for (let i = row.length - 1; i >= 1; i--) {
+  for (let i = row.length - 1; i >= startIndex; i--) {
     if (row[i] === "TRUE") streak++;
     else break;
   }
@@ -107,4 +105,19 @@ function streakCoin(streak) {
   if (streak >= 7)  return `<span class="coin silver">7</span>`;
   if (streak >= 3)  return `<span class="coin bronze">3</span>`;
   return "";
+}
+
+// ==================================================
+// UTILITIES (OPTIONAL, FUTURE SAFE)
+// ==================================================
+function isAdmin() {
+  return role === "admin";
+}
+
+function isWriter() {
+  return role === "writer";
+}
+
+function isEditor() {
+  return role === "editor";
 }
