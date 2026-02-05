@@ -110,7 +110,8 @@
 
 <!-- HEADER -->
 <div class="card" style="text-align:center;">
-  <h1>Good Morning 👋</h1>
+  <h1 id="greeting"></h1>
+  <p class="quote" id="dailyQuote"></p>
   <p class="quote">Focus on execution, not overload.</p>
 </div>
 
@@ -162,6 +163,48 @@
 <footer class="muted" style="text-align:center;">
   © 2026 Your Media Company
 </footer>
+  
+<script>
+function setGreeting() {
+  const hour = new Date().getHours();
+  let greeting = "Hello 👋";
+
+  if (hour >= 5 && hour < 12) {
+    greeting = "Good Morning 👋";
+  } else if (hour >= 12 && hour < 17) {
+    greeting = "Good Afternoon 👋";
+  } else {
+    greeting = "Good Evening 👋";
+  }
+
+  document.getElementById("greeting").innerText = greeting;
+}
+
+setGreeting();
+</script>
+
+<script>
+const quotes = [
+  "Small actions done daily create massive results.",
+  "Consistency beats intensity every time.",
+  "Win the morning, win the day.",
+  "Do the work even when motivation is missing.",
+  "Future you is watching today’s choices.",
+  "One focused day is better than seven distracted ones.",
+  "Discipline is choosing what you want most over what you want now."
+];
+</script>
+
+<script>
+function setDailyQuote() {
+  const today = new Date().toDateString();
+  const index = today.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % quotes.length;
+  document.getElementById("dailyQuote").innerText = `“${quotes[index]}”`;
+}
+
+setDailyQuote();
+</script>
 
 </body>
 </html>
+
