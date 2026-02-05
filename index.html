@@ -4,123 +4,30 @@
   <meta charset="UTF-8">
   <meta name="page" content="home">
   <title>Home – Daily Focus</title>
-
-  <button id="focusToggle"
-  style="
-    position:fixed;
-    top:16px;
-    right:16px;
-    background:none;
-    border:1px solid #444;
-    color:inherit;
-    padding:6px 10px;
-    border-radius:8px;
-    cursor:pointer;
-    opacity:0.6;
-  ">
-  Focus
-</button>
-
-  <style>
-    body {
-      font-family: Segoe UI, sans-serif;
-      background: #f6f8fc;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    }
-
-    h1, h2 { margin: 0 0 10px; }
-
-    .quote {
-      font-style: italic;
-      color: #555;
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .coins span {
-      margin-right: 8px;
-    }
-
-    .coin {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .bronze { background: #cd7f32; color: #3a220f; }
-    .silver { background: #dcdcdc; color: #333; }
-    .gold { background: #ffd700; color: #4a3b00; }
-
-    .ring {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: conic-gradient(#6ab04c 0%, #eaeaea 0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    ul { padding-left: 18px; }
-
-    .muted {
-      color: #8a8f94;
-      font-style: italic;
-    }
-
-    .priority {
-      font-size: 18px;
-      font-weight: 600;
-      color: #111;
-    }
-
-    .no-task {
-      font-style: italic;
-      color: #9aa0a6;
-    }
-
-    button {
-      padding: 6px 10px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
 </head>
-
 <body>
 
-<!-- ================= ROLE HANDLING ================= -->
+<!-- FOCUS TOGGLE -->
+<button id="focusToggle">Focus</button>
+
+<!-- ROLE HANDLING -->
 <script>
 (function () {
   let role = localStorage.getItem("role");
+
   if (!role) {
     role = prompt("Enter role: admin / writer / editor");
     localStorage.setItem("role", role);
   }
-  if (role === "writer") location.href = "scripts.html";
-  if (role === "editor") location.href = "calendar.html";
+
+  // Redirect only non-admins
+  if (role === "writer" && location.pathname.endsWith("index.html")) {
+    location.href = "scripts.html";
+  }
+
+  if (role === "editor" && location.pathname.endsWith("index.html")) {
+    location.href = "calendar.html";
+  }
 })();
 </script>
 
@@ -133,7 +40,6 @@
 
 <!-- STREAKS + PROGRESS -->
 <div class="row">
-
   <div class="card">
     <h2>Consistency</h2>
     <div class="coins">
@@ -147,9 +53,8 @@
   <div class="card">
     <h2>This Week</h2>
     <div class="ring" id="weekRing">0%</div>
-    <p id="weekCount" class="muted"></p>
+    <p class="muted" id="weekCount">Progress updates automatically</p>
   </div>
-
 </div>
 
 <!-- ONE CLEAR PRIORITY -->
@@ -179,26 +84,23 @@
 <footer class="muted" style="text-align:center;">
   © 2026 Your Media Company
 </footer>
-  
+
+<!-- GREETING -->
 <script>
 function setGreeting() {
   const hour = new Date().getHours();
   let greeting = "Hello 👋";
 
-  if (hour >= 5 && hour < 12) {
-    greeting = "Good Morning 👋";
-  } else if (hour >= 12 && hour < 17) {
-    greeting = "Good Afternoon 👋";
-  } else {
-    greeting = "Good Evening 👋";
-  }
+  if (hour >= 5 && hour < 12) greeting = "Good Morning 👋";
+  else if (hour >= 12 && hour < 17) greeting = "Good Afternoon 👋";
+  else greeting = "Good Evening 👋";
 
   document.getElementById("greeting").innerText = greeting;
 }
-
 setGreeting();
 </script>
 
+<!-- QUOTES -->
 <script>
 const quotes = [
   "Small actions done daily create massive results.",
@@ -209,41 +111,36 @@ const quotes = [
   "One focused day is better than seven distracted ones.",
   "Discipline is choosing what you want most over what you want now."
 ];
-</script>
 
-<script>
 function setDailyQuote() {
   const today = new Date().toDateString();
-  const index = today.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % quotes.length;
+  const index =
+    today.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % quotes.length;
+
   document.getElementById("dailyQuote").innerText = `“${quotes[index]}”`;
 }
+setDailyQuote();
+</script>
+
+<!-- FOCUS MODE -->
 <script>
+(function autoFocusMode() {
+  const hour = new Date().getHours();
+  const saved = localStorage.getItem("focusMode");
+
+  if (saved === null && hour >= 5 && hour < 10) {
+    document.body.classList.add("focus");
+  }
+
+  if (saved === "on") document.body.classList.add("focus");
+  if (saved === "off") document.body.classList.remove("focus");
+})();
+
 document.getElementById("focusToggle").onclick = () => {
   const isOn = document.body.classList.toggle("focus");
   localStorage.setItem("focusMode", isOn ? "on" : "off");
 };
 </script>
 
-setDailyQuote();
-</script>
-
-<script>
-(function autoFocusMode() {
-  const hour = new Date().getHours();
-  const saved = localStorage.getItem("focusMode");
-
-  // Auto-enable in morning unless user turned it off
-  if (saved === null && hour >= 5 && hour < 10) {
-    document.body.classList.add("focus");
-  }
-
-  // Respect manual preference
-  if (saved === "on") document.body.classList.add("focus");
-  if (saved === "off") document.body.classList.remove("focus");
-})();
-</script>
-
 </body>
 </html>
-
-
