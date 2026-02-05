@@ -456,3 +456,117 @@ body.focus .quote,
 body.focus .coins {
   display: none;
 }
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f6f8fc;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.focus {
+  background: #0e1117;
+  color: #e6e6eb;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+body.focus .card {
+  background: #151a21;
+  box-shadow: none;
+  border: 1px solid #222834;
+}
+
+h1, h2 {
+  margin: 0 0 10px;
+}
+
+.quote {
+  font-style: italic;
+  color: #555;
+}
+
+body.focus .quote {
+  color: #9aa4b2;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.coins span {
+  margin-right: 8px;
+}
+
+.coin {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bronze { background: #cd7f32; color: #3a220f; }
+.silver { background: #dcdcdc; color: #333; }
+.gold { background: #ffd700; color: #4a3b00; }
+
+.ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(#6ab04c 0%, #eaeaea 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+body.focus .ring {
+  background: conic-gradient(#6ab04c 0%, #2a2f3a 0);
+}
+
+ul {
+  padding-left: 18px;
+}
+
+.muted {
+  color: #8a8f94;
+  font-style: italic;
+}
+
+.priority {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.no-task {
+  font-style: italic;
+  color: #9aa0a6;
+}
+
+#focusToggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: 1px solid #444;
+  color: inherit;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.6;
+}
