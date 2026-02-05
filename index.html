@@ -5,6 +5,22 @@
   <meta name="page" content="home">
   <title>Home – Daily Focus</title>
 
+  <button id="focusToggle"
+  style="
+    position:fixed;
+    top:16px;
+    right:16px;
+    background:none;
+    border:1px solid #444;
+    color:inherit;
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    opacity:0.6;
+  ">
+  Focus
+</button>
+
   <style>
     body {
       font-family: Segoe UI, sans-serif;
@@ -201,10 +217,33 @@ function setDailyQuote() {
   const index = today.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % quotes.length;
   document.getElementById("dailyQuote").innerText = `“${quotes[index]}”`;
 }
+<script>
+document.getElementById("focusToggle").onclick = () => {
+  const isOn = document.body.classList.toggle("focus");
+  localStorage.setItem("focusMode", isOn ? "on" : "off");
+};
+</script>
 
 setDailyQuote();
 </script>
 
+<script>
+(function autoFocusMode() {
+  const hour = new Date().getHours();
+  const saved = localStorage.getItem("focusMode");
+
+  // Auto-enable in morning unless user turned it off
+  if (saved === null && hour >= 5 && hour < 10) {
+    document.body.classList.add("focus");
+  }
+
+  // Respect manual preference
+  if (saved === "on") document.body.classList.add("focus");
+  if (saved === "off") document.body.classList.remove("focus");
+})();
+</script>
+
 </body>
 </html>
+
 
