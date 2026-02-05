@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="page" content="admin">
-  <title>Media Command Center</title>
+  <meta name="page" content="home">
+  <title>Home – Daily Focus</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<!-- ================= ROLE HANDLING (SAFE & SINGLE) ================= -->
+<!-- ================= ROLE HANDLING ================= -->
 <script>
 (function () {
   let role = localStorage.getItem("role");
@@ -19,64 +19,134 @@
     localStorage.setItem("role", role);
   }
 
-  // Redirect non-admins away from admin dashboard
   if (role === "writer") location.href = "scripts.html";
   if (role === "editor") location.href = "calendar.html";
 })();
 </script>
 
-<header>
-  <h1>📊 Media Command Center</h1>
-  <p>All Channels • All Content • One Place</p>
+<header style="text-align:center;">
+  <h1>Good Morning 👋</h1>
+  <p style="opacity:0.8">Focus on execution, not overload</p>
   <button onclick="toggleDark()">🌙 Dark Mode</button>
 </header>
 
 <!-- ================= ROLE SWITCHER ================= -->
-<section style="text-align:center; margin-bottom:20px;">
+<section style="text-align:center; margin:20px 0;">
   <button onclick="setRole('admin')">👑 Admin</button>
   <button onclick="setRole('writer')">✍️ Writer</button>
   <button onclick="setRole('editor')">🎬 Editor</button>
 </section>
 
 <nav>
-  <a href="index.html">Dashboard</a>
-  <a href="calendar.html">📅 Calendar</a>
-  <a href="scripts.html">Scripts</a>
-  <a href="goals.html">Goals</a>
+  <a href="index.html">Home</a>
+  <a href="weekly-dashboard.html">📅 Weekly</a>
+  <a href="scripts.html">✍️ Scripts</a>
+  <a href="goals.html">🎯 Goals</a>
 </nav>
 
-<!-- ================= STATS ================= -->
-<section class="stats">
-  <div class="card">
-    <h2>Weekly Uploads</h2>
-    <p id="weeklyUploads">0</p>
-  </div>
-  <div class="card">
-    <h2>Monthly Uploads</h2>
-    <p id="monthlyUploads">0</p>
-  </div>
-  <div class="card">
-    <h2>Pending Scripts</h2>
-    <p id="pendingScripts">0</p>
-  </div>
+<!-- ================= QUOTE ================= -->
+<section class="card" style="margin-top:20px;">
+  <p style="font-style:italic; text-align:center;">
+    “Small actions, done daily, create massive results.”
+  </p>
 </section>
 
-<footer>
-  <p>© 2026 Your Media Company</p>
+<!-- ================= STREAKS + PROGRESS ================= -->
+<section class="stats">
+
+  <div class="card">
+    <h3>Consistency</h3>
+    <div style="display:flex; gap:10px;">
+      <span class="coin bronze">3</span>
+      <span class="coin silver">7</span>
+      <span class="coin gold">21</span>
+    </div>
+    <p class="muted">Coins earned</p>
+  </div>
+
+  <div class="card">
+    <h3>This Week</h3>
+    <div class="ring" id="weekRing">0%</div>
+    <p id="weekCount" class="muted"></p>
+  </div>
+
+</section>
+
+<!-- ================= ONE CLEAR PRIORITY ================= -->
+<section class="card">
+  <h2>🎯 One Clear Priority (Today)</h2>
+  <p id="todayPriority" style="font-size:18px;font-weight:600;">
+    Write scripts without distraction
+  </p>
+</section>
+
+<!-- ================= TODAY TASKS ================= -->
+<section class="card">
+  <h2>📌 Today’s Tasks</h2>
+  <ul id="todayTasks"></ul>
+</section>
+
+<!-- ================= SCRIPTS PENDING TODAY ================= -->
+<section class="card">
+  <h2>✍️ Scripts Pending Today</h2>
+  <ul id="pendingScripts"></ul>
+</section>
+
+<footer style="text-align:center; opacity:0.6;">
+  © 2026 Your Media Company
 </footer>
 
-<!-- ================= MAIN JS (LOAD ONCE) ================= -->
-<script src="js/main.js"></script>
-
-<!-- ================= PAGE FUNCTIONS ================= -->
+<!-- ================= LOGIC ================= -->
 <script>
+/* -------- DATE HELPERS -------- */
+const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const today = new Date();
+const todayDay = days[today.getDay()];
+
+/* -------- TASKS (TODAY ONLY) -------- */
+fetch("PASTE_TASKS_CSV_URL")
+.then(r => r.text())
+.then(t => {
+  const rows = t.trim().split("\n").slice(1).map(r=>r.split(","));
+  const todayTasks = rows.filter(r => r[1] === todayDay && r[3] !== "TRUE");
+
+  const ul = document.getElementById("todayTasks");
+  if (todayTasks.length === 0) {
+    ul.innerHTML = "<li class='no-task'>No tasks planned today</li>";
+    return;
+  }
+
+  todayTasks.forEach(r => {
+    ul.innerHTML += `<li>${r[2]}</li>`;
+  });
+});
+
+/* -------- PENDING SCRIPTS (TODAY) -------- */
+fetch("PASTE_SCRIPTS_CSV_URL")
+.then(r => r.text())
+.then(t => {
+  const rows = t.trim().split("\n").slice(1).map(r=>r.split(","));
+  const pending = rows.filter(r => r[2] === "Pending");
+
+  const ul = document.getElementById("pendingScripts");
+  if (pending.length === 0) {
+    ul.innerHTML = "<li class='no-task'>No pending scripts today</li>";
+    return;
+  }
+
+  pending.forEach(r => {
+    ul.innerHTML += `<li>${r[0]} <span class="muted">(${r[1]})</span></li>`;
+  });
+});
+
+/* -------- DARK MODE -------- */
 function toggleDark() {
   document.body.classList.toggle("dark");
 }
 
+/* -------- ROLE SWITCH -------- */
 function setRole(r) {
   localStorage.setItem("role", r);
-
   if (r === "admin") location.href = "index.html";
   if (r === "writer") location.href = "scripts.html";
   if (r === "editor") location.href = "calendar.html";
