@@ -417,3 +417,37 @@ table {
   border: 1px dashed #d0d7de;
   box-shadow: none;
 }
+
+body.focus {
+  background: #0e1117;
+  color: #e6e6eb;
+}
+
+body.focus .card {
+  background: #151a21;
+  box-shadow: none;
+  border: 1px solid #222834;
+}
+
+body.focus h1,
+body.focus h2 {
+  color: #f1f3f5;
+}
+
+body.focus .quote,
+body.focus .muted {
+  color: #9aa4b2;
+}
+
+body.focus .priority {
+  font-size: 22px;
+  color: #ffffff;
+}
+
+body.focus .coin {
+  opacity: 0.85;
+}
+
+body.focus .ring {
+  background: conic-gradient(#6ab04c 0%, #2a2f3a 0);
+}
