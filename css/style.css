@@ -451,3 +451,8 @@ body.focus .coin {
 body.focus .ring {
   background: conic-gradient(#6ab04c 0%, #2a2f3a 0);
 }
+
+body.focus .quote,
+body.focus .coins {
+  display: none;
+}
