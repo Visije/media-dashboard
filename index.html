@@ -4,7 +4,93 @@
   <meta charset="UTF-8">
   <meta name="page" content="home">
   <title>Home – Daily Focus</title>
-  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      font-family: Segoe UI, sans-serif;
+      background: #f6f8fc;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    h1, h2 { margin: 0 0 10px; }
+
+    .quote {
+      font-style: italic;
+      color: #555;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .coins span {
+      margin-right: 8px;
+    }
+
+    .coin {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .bronze { background: #cd7f32; color: #3a220f; }
+    .silver { background: #dcdcdc; color: #333; }
+    .gold { background: #ffd700; color: #4a3b00; }
+
+    .ring {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: conic-gradient(#6ab04c 0%, #eaeaea 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    ul { padding-left: 18px; }
+
+    .muted {
+      color: #8a8f94;
+      font-style: italic;
+    }
+
+    .priority {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .no-task {
+      font-style: italic;
+      color: #9aa0a6;
+    }
+
+    button {
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
@@ -13,50 +99,27 @@
 <script>
 (function () {
   let role = localStorage.getItem("role");
-
   if (!role) {
     role = prompt("Enter role: admin / writer / editor");
     localStorage.setItem("role", role);
   }
-
   if (role === "writer") location.href = "scripts.html";
   if (role === "editor") location.href = "calendar.html";
 })();
 </script>
 
-<header style="text-align:center;">
+<!-- HEADER -->
+<div class="card" style="text-align:center;">
   <h1>Good Morning 👋</h1>
-  <p style="opacity:0.8">Focus on execution, not overload</p>
-  <button onclick="toggleDark()">🌙 Dark Mode</button>
-</header>
+  <p class="quote">Focus on execution, not overload.</p>
+</div>
 
-<!-- ================= ROLE SWITCHER ================= -->
-<section style="text-align:center; margin:20px 0;">
-  <button onclick="setRole('admin')">👑 Admin</button>
-  <button onclick="setRole('writer')">✍️ Writer</button>
-  <button onclick="setRole('editor')">🎬 Editor</button>
-</section>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="weekly-dashboard.html">📅 Weekly</a>
-  <a href="scripts.html">✍️ Scripts</a>
-  <a href="goals.html">🎯 Goals</a>
-</nav>
-
-<!-- ================= QUOTE ================= -->
-<section class="card" style="margin-top:20px;">
-  <p style="font-style:italic; text-align:center;">
-    “Small actions, done daily, create massive results.”
-  </p>
-</section>
-
-<!-- ================= STREAKS + PROGRESS ================= -->
-<section class="stats">
+<!-- STREAKS + PROGRESS -->
+<div class="row">
 
   <div class="card">
-    <h3>Consistency</h3>
-    <div style="display:flex; gap:10px;">
+    <h2>Consistency</h2>
+    <div class="coins">
       <span class="coin bronze">3</span>
       <span class="coin silver">7</span>
       <span class="coin gold">21</span>
@@ -65,93 +128,40 @@
   </div>
 
   <div class="card">
-    <h3>This Week</h3>
+    <h2>This Week</h2>
     <div class="ring" id="weekRing">0%</div>
     <p id="weekCount" class="muted"></p>
   </div>
 
-</section>
+</div>
 
-<!-- ================= ONE CLEAR PRIORITY ================= -->
-<section class="card">
+<!-- ONE CLEAR PRIORITY -->
+<div class="card">
   <h2>🎯 One Clear Priority (Today)</h2>
-  <p id="todayPriority" style="font-size:18px;font-weight:600;">
+  <div class="priority" id="todayPriority">
     Write scripts without distraction
-  </p>
-</section>
+  </div>
+</div>
 
-<!-- ================= TODAY TASKS ================= -->
-<section class="card">
+<!-- TODAY TASKS -->
+<div class="card">
   <h2>📌 Today’s Tasks</h2>
-  <ul id="todayTasks"></ul>
-</section>
+  <ul id="todayTasks">
+    <li class="no-task">No tasks planned today</li>
+  </ul>
+</div>
 
-<!-- ================= SCRIPTS PENDING TODAY ================= -->
-<section class="card">
+<!-- SCRIPTS PENDING -->
+<div class="card">
   <h2>✍️ Scripts Pending Today</h2>
-  <ul id="pendingScripts"></ul>
-</section>
+  <ul id="pendingScripts">
+    <li class="no-task">No pending scripts today</li>
+  </ul>
+</div>
 
-<footer style="text-align:center; opacity:0.6;">
+<footer class="muted" style="text-align:center;">
   © 2026 Your Media Company
 </footer>
-
-<!-- ================= LOGIC ================= -->
-<script>
-/* -------- DATE HELPERS -------- */
-const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const today = new Date();
-const todayDay = days[today.getDay()];
-
-/* -------- TASKS (TODAY ONLY) -------- */
-fetch("PASTE_TASKS_CSV_URL")
-.then(r => r.text())
-.then(t => {
-  const rows = t.trim().split("\n").slice(1).map(r=>r.split(","));
-  const todayTasks = rows.filter(r => r[1] === todayDay && r[3] !== "TRUE");
-
-  const ul = document.getElementById("todayTasks");
-  if (todayTasks.length === 0) {
-    ul.innerHTML = "<li class='no-task'>No tasks planned today</li>";
-    return;
-  }
-
-  todayTasks.forEach(r => {
-    ul.innerHTML += `<li>${r[2]}</li>`;
-  });
-});
-
-/* -------- PENDING SCRIPTS (TODAY) -------- */
-fetch("PASTE_SCRIPTS_CSV_URL")
-.then(r => r.text())
-.then(t => {
-  const rows = t.trim().split("\n").slice(1).map(r=>r.split(","));
-  const pending = rows.filter(r => r[2] === "Pending");
-
-  const ul = document.getElementById("pendingScripts");
-  if (pending.length === 0) {
-    ul.innerHTML = "<li class='no-task'>No pending scripts today</li>";
-    return;
-  }
-
-  pending.forEach(r => {
-    ul.innerHTML += `<li>${r[0]} <span class="muted">(${r[1]})</span></li>`;
-  });
-});
-
-/* -------- DARK MODE -------- */
-function toggleDark() {
-  document.body.classList.toggle("dark");
-}
-
-/* -------- ROLE SWITCH -------- */
-function setRole(r) {
-  localStorage.setItem("role", r);
-  if (r === "admin") location.href = "index.html";
-  if (r === "writer") location.href = "scripts.html";
-  if (r === "editor") location.href = "calendar.html";
-}
-</script>
 
 </body>
 </html>
