@@ -4,97 +4,40 @@
   <meta charset="UTF-8">
   <meta name="page" content="writer">
   <title>Script Tracker</title>
-  <link rel="stylesheet" href="css/style.css">
 
-  <style>
-    body {
-      background: #f7f8fc;
-      font-family: "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    nav {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    nav a {
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: 600;
-      color: #555;
-    }
-    .channel-card {
-      background: white;
-      margin-bottom: 30px;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .channel-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .progress-bar {
-      background: #e3e6ef;
-      border-radius: 8px;
-      overflow: hidden;
-      height: 10px;
-      margin-bottom: 15px;
-    }
-    .progress-bar-inner {
-      height: 100%;
-      background: #6c5ce7;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
-    th {
-      text-align: left;
-      color: #555;
-    }
-    .badge {
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-      color: white;
-    }
-    .Ready { background: #00b894; }
-    .Writing { background: #fdcb6e; }
-    .Pending { background: #d63031; }
-  </style>
 </head>
 
 <body>
 
+<!-- ROLE HANDLING -->
+<script>
+(function () {
+  const role = localStorage.getItem("role");
+
+  // If someone tries to access scripts without role, force selection
+  if (!role) {
+    location.href = "index.html";
+  }
+})();
+</script>
+
 <header>
   <h1>✍️ Script Tracker</h1>
-  <p style="text-align:center;">All channels • Ascend-style view</p>
+  <p class="subtitle">All channels • Ascend-style weekly view</p>
 </header>
 
 <nav>
   <a href="index.html">Dashboard</a>
-  <a href="calendar.html">📅 Calendar</a>
-  <a href="scripts.html">Scripts</a>
+  <a href="calendar.html">Calendar</a>
+  <a href="scripts.html" class="active">Scripts</a>
   <a href="goals.html">Daily Goals</a>
 </nav>
 
 <div id="tables"></div>
 
 <script>
+/* ================= CONFIG ================= */
+
 const sheetURL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
 
@@ -106,7 +49,9 @@ const channels = [
   "Touristico"
 ];
 
-// SAFE CSV PARSER
+/* ================= HELPERS ================= */
+
+// Safe CSV parser (handles commas in titles)
 function parseCSV(text) {
   const lines = text.split("\n").filter(l => l.trim());
   const rows = [];
@@ -118,7 +63,7 @@ function parseCSV(text) {
   return rows;
 }
 
-// WEEK RANGE
+// Convert date → Monday–Sunday range
 function getWeekRange(dateStr) {
   const d = new Date(dateStr);
   if (isNaN(d)) return null;
@@ -126,13 +71,15 @@ function getWeekRange(dateStr) {
   const day = d.getDay() || 7;
   const monday = new Date(d);
   monday.setDate(d.getDate() - day + 1);
+
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
 
   return `${monday.toISOString().slice(0,10)} → ${sunday.toISOString().slice(0,10)}`;
 }
 
-// FETCH & RENDER
+/* ================= RENDER ================= */
+
 fetch(sheetURL)
   .then(res => res.text())
   .then(text => {
@@ -140,6 +87,7 @@ fetch(sheetURL)
     const container = document.getElementById("tables");
     container.innerHTML = "";
 
+    // Group by week
     const weekly = {};
     rows.forEach(r => {
       if (!r[4]) return;
@@ -148,6 +96,7 @@ fetch(sheetURL)
       weekly[week].push(r);
     });
 
+    // Render latest week first
     Object.keys(weekly).sort().reverse().forEach(week => {
       container.innerHTML += `<h2>📆 Week: ${week}</h2>`;
 
@@ -155,13 +104,13 @@ fetch(sheetURL)
         const channelRows = weekly[week].filter(r => r[1] === channel);
         if (!channelRows.length) return;
 
-        const ready = channelRows.filter(r => r[2] === "Ready").length;
-        const percent = Math.round((ready / channelRows.length) * 100);
+        const readyCount = channelRows.filter(r => r[2] === "Ready").length;
+        const percent = Math.round((readyCount / channelRows.length) * 100);
 
         container.innerHTML += `
           <div class="channel-card">
             <div class="channel-header">
-              <strong>${channel}</strong>
+              <span>${channel}</span>
               <span>${percent}% Ready</span>
             </div>
 
@@ -176,6 +125,7 @@ fetch(sheetURL)
                 <th>Words</th>
                 <th>Date</th>
               </tr>
+
               ${channelRows.map(r => `
                 <tr>
                   <td>${r[0]}</td>
@@ -190,8 +140,7 @@ fetch(sheetURL)
       });
     });
   })
-  .catch(err => {
-    console.error(err);
+  .catch(() => {
     document.getElementById("tables").innerHTML =
       "<p style='color:red'>❌ Error loading scripts</p>";
   });
