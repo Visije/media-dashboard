@@ -570,3 +570,124 @@ ul {
   cursor: pointer;
   opacity: 0.6;
 }
+
+/* =======================
+   Script Tracker Styles
+   ======================= */
+
+body {
+  background: #f7f8fc;
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+nav {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+nav a {
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #555;
+}
+
+nav a.active {
+  color: #6c5ce7;
+}
+
+h2 {
+  margin-top: 40px;
+  color: #444;
+}
+
+/* Channel cards */
+
+.channel-card {
+  background: white;
+  margin-bottom: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.channel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* Progress bar */
+
+.progress-bar {
+  background: #e3e6ef;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+  margin-bottom: 15px;
+}
+
+.progress-bar-inner {
+  height: 100%;
+  background: #6c5ce7;
+  transition: width 0.3s ease;
+}
+
+/* Table */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+th {
+  text-align: left;
+  color: #555;
+}
+
+/* Status badges */
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  display: inline-block;
+}
+
+.Ready {
+  background: #00b894;
+}
+
+.Writing {
+  background: #fdcb6e;
+  color: #333;
+}
+
+.Pending {
+  background: #d63031;
+}
