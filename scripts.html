@@ -15,10 +15,8 @@
 <script>
 (function () {
   const role = localStorage.getItem("role");
-
-  // If someone tries to access scripts without role, force selection
-  if (!role) {
-    location.href = "scripts.html";
+  if (!role || role === "editor") {
+    location.href = "index.html";
   }
 })();
 </script>
@@ -151,6 +149,7 @@ fetch(sheetURL)
 
 </body>
 </html>
+
 
 
 
