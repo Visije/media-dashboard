@@ -4,21 +4,28 @@
   <meta charset="UTF-8">
   <meta name="page" content="home">
   <title>Home – Daily Focus</title>
+
+  <!-- MAIN STYLES -->
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- FAVICON (prevents console 404 warning) -->
+  <link rel="icon" href="assets/favicon.png">
 </head>
+
 <body>
 
-  <nav class="top-nav">
+<!-- ================= NAV ================= -->
+<nav class="top-nav">
   <a href="index.html" class="active">Home</a>
   <a href="weekly-dashboard.html">Weekly</a>
   <a href="scripts.html">Scripts</a>
   <a href="calendar.html">Calendar</a>
 </nav>
-  
-<!-- FOCUS TOGGLE -->
+
+<!-- ================= FOCUS TOGGLE ================= -->
 <button id="focusToggle">Focus</button>
 
-<!-- ROLE HANDLING -->
+<!-- ================= ROLE HANDLING ================= -->
 <script>
 (function () {
   let role = localStorage.getItem("role");
@@ -28,7 +35,6 @@
     localStorage.setItem("role", role);
   }
 
-  // Redirect only non-admins
   if (role === "writer" && location.pathname.endsWith("index.html")) {
     location.href = "scripts.html";
   }
@@ -39,15 +45,16 @@
 })();
 </script>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 <div class="card" style="text-align:center;">
   <h1 id="greeting"></h1>
   <p class="quote" id="dailyQuote"></p>
   <p class="quote">Focus on execution, not overload.</p>
 </div>
 
-<!-- STREAKS + PROGRESS -->
+<!-- ================= STREAKS + WEEK PROGRESS ================= -->
 <div class="row">
+
   <div class="card">
     <h2>Consistency</h2>
     <div class="coins">
@@ -63,9 +70,10 @@
     <div class="ring" id="weekRing">0%</div>
     <p class="muted" id="weekCount">Progress updates automatically</p>
   </div>
+
 </div>
 
-<!-- TODAY TASKS -->
+<!-- ================= TODAY TASKS ================= -->
 <div class="card">
   <h2>📌 Today’s Tasks</h2>
   <ul id="todayTasks">
@@ -73,7 +81,7 @@
   </ul>
 </div>
 
-<!-- SCRIPTS PENDING -->
+<!-- ================= SCRIPTS PENDING ================= -->
 <div class="card">
   <h2>Scripts Pending Today</h2>
   <ul id="pendingScripts">
@@ -81,44 +89,43 @@
   </ul>
 </div>
 
-<!-- GREETING -->
+<!-- ================= GREETING ================= -->
 <script>
-function setGreeting() {
+(function setGreeting() {
   const hour = new Date().getHours();
-  let greeting = "Hello 👋";
+  let greeting = "Hello";
 
-  if (hour >= 5 && hour < 12) greeting = "Good Morning 👋";
-  else if (hour >= 12 && hour < 17) greeting = "Good Afternoon 👋";
-  else greeting = "Good Evening 👋";
+  if (hour >= 5 && hour < 12) greeting = "Good Morning";
+  else if (hour >= 12 && hour < 17) greeting = "Good Afternoon";
+  else greeting = "Good Evening";
 
   document.getElementById("greeting").innerText = greeting;
-}
-setGreeting();
+})();
 </script>
 
-<!-- QUOTES -->
+<!-- ================= QUOTES ================= -->
 <script>
-const quotes = [
-  "Small actions done daily create massive results.",
-  "Consistency beats intensity every time.",
-  "Win the morning, win the day.",
-  "Do the work even when motivation is missing.",
-  "Future you is watching today’s choices.",
-  "One focused day is better than seven distracted ones.",
-  "Discipline is choosing what you want most over what you want now."
-];
+(function setDailyQuote() {
+  const quotes = [
+    "Small actions done daily create massive results.",
+    "Consistency beats intensity every time.",
+    "Win the morning, win the day.",
+    "Do the work even when motivation is missing.",
+    "Future you is watching today’s choices.",
+    "One focused day is better than seven distracted ones.",
+    "Discipline is choosing what you want most over what you want now."
+  ];
 
-function setDailyQuote() {
   const today = new Date().toDateString();
-  const index =
-    today.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % quotes.length;
+  const index = today
+    .split("")
+    .reduce((a, c) => a + c.charCodeAt(0), 0) % quotes.length;
 
   document.getElementById("dailyQuote").innerText = `“${quotes[index]}”`;
-}
-setDailyQuote();
+})();
 </script>
 
-<!-- FOCUS MODE -->
+<!-- ================= FOCUS MODE ================= -->
 <script>
 (function autoFocusMode() {
   const hour = new Date().getHours();
@@ -137,11 +144,19 @@ document.getElementById("focusToggle").onclick = () => {
   localStorage.setItem("focusMode", isOn ? "on" : "off");
 };
 </script>
-  
-<script src="js/main.js"></script>
-  
+
+<!-- ================= MAIN JS (SAFE LOAD) ================= -->
+<script>
+/* SAFE loader: prevents "Unexpected token <" crash */
+(function loadMainJS() {
+  const script = document.createElement("script");
+  script.src = "js/main.js";
+  script.defer = true;
+  script.onerror = () =>
+    console.warn("main.js not loaded (path issue or file missing)");
+  document.body.appendChild(script);
+})();
+</script>
+
 </body>
 </html>
-
-
-
