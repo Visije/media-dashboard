@@ -2,16 +2,16 @@
 <html>
 <head>
   <title>Weekly Execution Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
   <style>
     body {
-      background: #f6f8fc;
       font-family: Segoe UI, sans-serif;
+      background: #f5f7fb;
       padding: 20px;
     }
-    h1 { margin-bottom: 20px; }
 
-    .top {
+    h2 { margin: 0 0 10px; }
+
+    .grid-2 {
       display: grid;
       grid-template-columns: 2fr 3fr;
       gap: 20px;
@@ -24,6 +24,7 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
 
+    /* OVERALL PROGRESS */
     .ring {
       width: 90px;
       height: 90px;
@@ -33,7 +34,20 @@
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      margin: 10px 0;
+      margin-top: 10px;
+    }
+
+    .bars {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 80px;
+    }
+
+    .bar {
+      width: 12px;
+      background: #6ab04c;
+      border-radius: 4px;
     }
 
     /* HABITS */
@@ -42,16 +56,18 @@
       border-collapse: collapse;
       font-size: 14px;
     }
+
     th, td {
       padding: 6px;
-      text-align: center;
       border-bottom: 1px solid #eee;
+      text-align: center;
     }
+
     th:first-child, td:first-child {
       text-align: left;
     }
 
-    /* DAYS */
+    /* DAY RINGS */
     .days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -67,11 +83,12 @@
       box-shadow: 0 6px 16px rgba(0,0,0,0.05);
     }
 
+    /* TASKS */
     .tasks {
-      margin-top: 25px;
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 12px;
+      margin-top: 20px;
     }
 
     .tasks ul {
@@ -80,41 +97,61 @@
     }
   </style>
 </head>
+
 <body>
 
-<h1>📅 Weekly Execution Dashboard</h1>
+<h1>Weekly Execution Dashboard</h1>
 
 <!-- TOP SECTION -->
-<div class="top">
-  <!-- OVERALL -->
+<div class="grid-2">
+
+  <!-- OVERALL PROGRESS -->
   <div class="card">
-    <h3>Overall Progress</h3>
-    <div class="ring">44%</div>
-    <p>18 / 41 completed</p>
+    <h2>Overall Progress</h2>
+
+    <div class="bars">
+      <div class="bar" style="height:70%"></div>
+      <div class="bar" style="height:80%"></div>
+      <div class="bar" style="height:60%"></div>
+      <div class="bar" style="height:17%"></div>
+      <div class="bar" style="height:0%"></div>
+      <div class="bar" style="height:0%"></div>
+      <div class="bar" style="height:0%"></div>
+    </div>
+
+    <div class="ring" id="overallRing">44%</div>
+    <p id="overallCount">18 / 41 completed</p>
   </div>
 
-  <!-- HABITS -->
+  <!-- HABIT TRACKER -->
   <div class="card">
-    <h3>Habit Tracker</h3>
+    <h2>Habit Tracker</h2>
     <table>
       <tr>
         <th>Habit</th>
         <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+        <th>Streak</th>
       </tr>
       <tr>
         <td>Wake up 6am</td>
-        <td>✔</td><td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td>
+        <td><input type="checkbox" checked></td>
+        <td><input type="checkbox" checked></td>
+        <td><input type="checkbox"></td>
+        <td><input type="checkbox" checked></td>
+        <td></td><td></td><td></td>
+        <td><!-- coin here --></td>
       </tr>
       <tr>
         <td>Gym</td>
-        <td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td><td></td>
-      </tr>
-      <tr>
-        <td>No alcohol</td>
-        <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td>
+        <td><input type="checkbox" checked></td>
+        <td><input type="checkbox"></td>
+        <td><input type="checkbox" checked></td>
+        <td></td><td></td><td></td><td></td>
+        <td></td>
       </tr>
     </table>
   </div>
+
 </div>
 
 <!-- DAY PROGRESS -->
@@ -128,31 +165,45 @@
   <div class="day-card"><strong>Sun</strong><div class="ring">0%</div></div>
 </div>
 
-<!-- TASKS -->
+<!-- TASK LISTS -->
 <div class="tasks">
   <div class="card">
-    <h4>Monday</h4>
+    <h3>Monday</h3>
     <ul>
-      <li>✔ Write scripts</li>
-      <li>✔ Upload shorts</li>
+      <li><input type="checkbox" checked> Write scripts</li>
+      <li><input type="checkbox" checked> Upload shorts</li>
     </ul>
   </div>
 
   <div class="card">
-    <h4>Tuesday</h4>
+    <h3>Tuesday</h3>
     <ul>
-      <li>✔ Research</li>
-      <li>✖ Edit video</li>
+      <li><input type="checkbox"> Edit video</li>
     </ul>
   </div>
 
   <div class="card">
-    <h4>Wednesday</h4>
+    <h3>Wednesday</h3>
     <ul>
-      <li>✔ Gym</li>
-      <li>✖ Client call</li>
+      <li><input type="checkbox" checked> Research</li>
+      <li><input type="checkbox"> Client call</li>
     </ul>
   </div>
+</div>
+
+<!-- SUNDAY REVIEW -->
+<div class="card" style="margin-top:20px;">
+  <h2>Sunday Weekly Review</h2>
+  <p><strong>Score:</strong> 78 / 100</p>
+
+  <h4>Wins</h4>
+  <p>Stayed consistent with gym</p>
+
+  <h4>Needs Improvement</h4>
+  <p>Sleep schedule</p>
+
+  <h4>Notes</h4>
+  <p>Felt focused most days</p>
 </div>
 
 </body>
