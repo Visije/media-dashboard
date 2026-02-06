@@ -3,191 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <title>Weekly Execution Dashboard</title>
-<link rel="stylesheet" href="css/style.css">
+
+<style>
+/* ===== BASE ===== */
+body{
+  margin:0;
+  padding:20px;
+  font-family:"Segoe UI",system-ui,sans-serif;
+  background:#f4f6f8;
+}
+
+.page{
+  max-width:1400px;
+  margin:auto;
+  background:#fff;
+  border:2px solid #000;
+}
+
+/* ===== HEADERS ===== */
+.section-title{
+  background:#4472c4;
+  color:#fff;
+  font-weight:600;
+  text-align:center;
+  padding:6px;
+  border-bottom:2px solid #000;
+}
+
+/* ===== TOP GRID ===== */
+.top-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 2fr;
+  border-bottom:2px dashed #000;
+}
+
+.top-cell{
+  min-height:180px;
+  border-right:2px dashed #000;
+}
+
+.top-cell:last-child{
+  border-right:none;
+}
+
+/* ===== DAYS ROW ===== */
+.days-header{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  border-bottom:2px solid #000;
+}
+
+.day-title{
+  background:#4472c4;
+  color:#fff;
+  text-align:center;
+  padding:6px;
+  font-weight:600;
+  border-right:1px solid #000;
+}
+
+.day-title:last-child{
+  border-right:none;
+}
+
+/* ===== DAY BLOCKS ===== */
+.days-content{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  border-bottom:2px dashed #000;
+}
+
+.day-cell{
+  min-height:140px;
+  border-right:1px solid #000;
+}
+
+.day-cell:last-child{
+  border-right:none;
+}
+
+/* ===== TASK HEADERS ===== */
+.task-header{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  border-bottom:2px solid #000;
+}
+
+.task-title{
+  background:#4472c4;
+  color:#fff;
+  text-align:center;
+  padding:6px;
+  font-weight:600;
+  border-right:1px solid #000;
+}
+
+.task-title:last-child{
+  border-right:none;
+}
+
+/* ===== TASK BLOCKS ===== */
+.tasks-content{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+}
+
+.task-cell{
+  min-height:220px;
+  border-right:1px solid #000;
+}
+
+.task-cell:last-child{
+  border-right:none;
+}
+
+/* ===== OPTIONAL TEXT STYLE ===== */
+.placeholder{
+  color:#aaa;
+  font-size:13px;
+  padding:8px;
+}
+</style>
 </head>
 
 <body>
 
-<nav class="top-nav">
-  <a href="index.html">Home</a>
-  <a href="weekly-dashboard.html">Weekly</a>
-  <a href="scripts.html">Scripts</a>
-</nav>
-
 <div class="page">
 
-<h1>Weekly Execution Dashboard</h1>
-<select id="weekSelector"></select>
+  <!-- ===== TOP SECTION ===== -->
+  <div class="top-grid">
+    <div class="top-cell">
+      <div class="section-title">Notes</div>
+      <div class="placeholder">Weekly notes / reflections</div>
+    </div>
 
-<!-- TOP 3 COLUMN -->
-<div class="top-3">
+    <div class="top-cell">
+      <div class="section-title">Overall Progress</div>
+      <div class="placeholder">Progress chart / %</div>
+    </div>
 
-  <!-- NOTES -->
-  <div class="card notes-card">
-    <h3>Notes</h3>
-    <textarea id="weeklyNotes" rows="8"
-      placeholder="Thoughts, reminders, reflections..."></textarea>
+    <div class="top-cell">
+      <div class="section-title">Habit Tracker</div>
+      <div class="placeholder">Habit grid (Mon–Sun)</div>
+    </div>
   </div>
 
-  <!-- OVERALL -->
-  <div class="card">
-    <h3>Overall Progress</h3>
-    <div class="ring" id="overallRing">0%</div>
-    <p id="overallCount">0 / 0 completed</p>
+  <!-- ===== DAYS HEADER ===== -->
+  <div class="days-header">
+    <div class="day-title">Monday</div>
+    <div class="day-title">Tuesday</div>
+    <div class="day-title">Wednesday</div>
+    <div class="day-title">Thursday</div>
+    <div class="day-title">Friday</div>
+    <div class="day-title">Saturday</div>
+    <div class="day-title">Sunday</div>
   </div>
 
-  <!-- HABITS -->
-  <div class="card">
-    <h3>Habit Tracker</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Habit</th>
-          <th>Mon</th><th>Tue</th><th>Wed</th>
-          <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-          <th>Streak</th>
-        </tr>
-      </thead>
-      <tbody id="habitTable"></tbody>
-    </table>
+  <!-- ===== DAYS CONTENT ===== -->
+  <div class="days-content">
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+  </div>
+
+  <!-- ===== TASK HEADER ===== -->
+  <div class="task-header">
+    <div class="task-title">Task</div>
+    <div class="task-title">Task</div>
+    <div class="task-title">Task</div>
+    <div class="task-title">Task</div>
+    <div class="task-title">Task</div>
+    <div class="task-title">Task</div>
+    <div class="task-title">Task</div>
+  </div>
+
+  <!-- ===== TASK CONTENT ===== -->
+  <div class="tasks-content">
+    <div class="task-cell"></div>
+    <div class="task-cell"></div>
+    <div class="task-cell"></div>
+    <div class="task-cell"></div>
+    <div class="task-cell"></div>
+    <div class="task-cell"></div>
+    <div class="task-cell"></div>
   </div>
 
 </div>
-
-<!-- DAY RINGS -->
-<div class="days">
-  <div class="day-card"><strong>Mon</strong><div class="ring" id="ring-Mon">0%</div></div>
-  <div class="day-card"><strong>Tue</strong><div class="ring" id="ring-Tue">0%</div></div>
-  <div class="day-card"><strong>Wed</strong><div class="ring" id="ring-Wed">0%</div></div>
-  <div class="day-card"><strong>Thu</strong><div class="ring" id="ring-Thu">0%</div></div>
-  <div class="day-card"><strong>Fri</strong><div class="ring" id="ring-Fri">0%</div></div>
-  <div class="day-card"><strong>Sat</strong><div class="ring" id="ring-Sat">0%</div></div>
-  <div class="day-card"><strong>Sun</strong><div class="ring" id="ring-Sun">0%</div></div>
-</div>
-
-<!-- TASKS -->
-<div class="tasks-grid">
-  <div class="card"><h4>Mon</h4><ul id="tasks-Mon"></ul></div>
-  <div class="card"><h4>Tue</h4><ul id="tasks-Tue"></ul></div>
-  <div class="card"><h4>Wed</h4><ul id="tasks-Wed"></ul></div>
-  <div class="card"><h4>Thu</h4><ul id="tasks-Thu"></ul></div>
-  <div class="card"><h4>Fri</h4><ul id="tasks-Fri"></ul></div>
-  <div class="card"><h4>Sat</h4><ul id="tasks-Sat"></ul></div>
-  <div class="card"><h4>Sun</h4><ul id="tasks-Sun"></ul></div>
-</div>
-
-</div>
-
-<script>
-/* ================= CONFIG ================= */
-const HABITS_CSV =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=1148852579&single=true&output=csv";
-
-const TASKS_CSV =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=774223864&single=true&output=csv";
-
-const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-
-/* ================= HELPERS ================= */
-function parseCSV(t){
-  return t.trim().split("\n").slice(1).map(r=>r.split(","));
-}
-
-function setRing(el,p){
-  el.style.background = `conic-gradient(#6ab04c ${p}%, #eaeaea 0)`;
-  el.innerText = p + "%";
-}
-
-function getISOWeek(){
-  const d = new Date();
-  d.setDate(d.getDate()+3-(d.getDay()+6)%7);
-  const w1 = new Date(d.getFullYear(),0,4);
-  const wn = 1 + Math.round(((d-w1)/86400000-3+(w1.getDay()+6)%7)/7);
-  return d.getFullYear()+"-W"+String(wn).padStart(2,"0");
-}
-
-function getStreak(vals){
-  let s=0;
-  for(let i=vals.length-1;i>=0;i--){
-    if(vals[i]==="TRUE") s++;
-    else break;
-  }
-  return s;
-}
-
-function streakCoin(s){
-  if(s>=21) return "🥇";
-  if(s>=7)  return "🥈";
-  if(s>=3)  return "🥉";
-  return "";
-}
-
-/* ================= MAIN ================= */
-const CURRENT_WEEK = getISOWeek();
-
-Promise.all([
-  fetch(HABITS_CSV).then(r=>r.text()),
-  fetch(TASKS_CSV).then(r=>r.text())
-]).then(([hText,tText])=>{
-
-  const habits = parseCSV(hText);
-  const tasks  = parseCSV(tText);
-
-  const weeks = [...new Set(habits.map(r=>r[0]))].sort().reverse();
-  weekSelector.innerHTML = weeks.map(w =>
-    `<option ${w===CURRENT_WEEK?"selected":""}>${w}</option>`
-  ).join("");
-
-  weekSelector.onchange = () => loadWeek(weekSelector.value);
-  loadWeek(weekSelector.value);
-
-  function loadWeek(week){
-    let done=0,total=0;
-    const stats={};DAYS.forEach(d=>stats[d]={done:0,total:0});
-
-    habitTable.innerHTML="";
-    habits.filter(r=>r[0]===week).forEach(r=>{
-      const tr=document.createElement("tr");
-      tr.innerHTML=`<td>${r[1]}</td>`;
-      const vals=r.slice(2);
-
-      DAYS.forEach((d,i)=>{
-        if(vals[i]!==""){
-          total++;stats[d].total++;
-          if(vals[i]==="TRUE"){done++;stats[d].done++}
-          tr.innerHTML+=`<td><input type="checkbox" ${vals[i]==="TRUE"?"checked":""} disabled></td>`;
-        } else tr.innerHTML+="<td></td>";
-      });
-
-      tr.innerHTML+=`<td>${streakCoin(getStreak(vals))}</td>`;
-      habitTable.appendChild(tr);
-    });
-
-    DAYS.forEach(d=>{
-      const ul=document.getElementById("tasks-"+d);
-      ul.innerHTML="";
-      const dayTasks=tasks.filter(r=>r[0]===week && r[1]===d);
-      if(dayTasks.length===0){
-        ul.innerHTML="<li class='no-task'>No tasks planned</li>";
-      } else {
-        dayTasks.forEach(r=>{
-          total++;stats[d].total++;
-          if(r[3]==="TRUE"){done++;stats[d].done++}
-          ul.innerHTML+=`<li><input type="checkbox" ${r[3]==="TRUE"?"checked":""} disabled> ${r[2]}</li>`;
-        });
-      }
-    });
-
-    setRing(overallRing, total?Math.round(done/total*100):0);
-    overallCount.innerText=`${done} / ${total} completed`;
-
-    DAYS.forEach(d=>{
-      const p=stats[d].total?Math.round(stats[d].done/stats[d].total*100):0;
-      setRing(document.getElementById("ring-"+d),p);
-    });
-  }
-});
-</script>
 
 </body>
 </html>
