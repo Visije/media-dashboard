@@ -548,6 +548,14 @@ ul {
   font-style: italic;
 }
 
+body.focus .top-nav {
+  opacity: 0.15;
+}
+
+body.focus .top-nav {
+  display: none;
+}
+
 .priority {
   font-size: 18px;
   font-weight: 600;
@@ -829,3 +837,4 @@ th:first-child,td:first-child{text-align:left}
 input[type=checkbox]{transform:scale(1.1);cursor:pointer}
 input[type=checkbox]:disabled{cursor:not-allowed;opacity:.5}
 select{padding:6px 10px;border-radius:8px}
+
