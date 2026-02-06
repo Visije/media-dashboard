@@ -1,123 +1,113 @@
-// ==================================================
-// GLOBAL FETCH CACHE (FAST LOAD, SAFE)
-// ==================================================
-async function fetchWithCache(url, key, ttl = 60000) {
-  const cached = localStorage.getItem(key);
-  const time = localStorage.getItem(key + "_time");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Content Calendar</title>
 
-  if (cached && time && Date.now() - Number(time) < ttl) {
-    return cached;
-  }
+  <link rel="stylesheet" href="css/style.css">
 
-  const res = await fetch(url);
-  const text = await res.text();
-
-  localStorage.setItem(key, text);
-  localStorage.setItem(key + "_time", Date.now());
-
-  return text;
-}
-
-// ==================================================
-// PAGE DETECTION (SAFE, NO ERRORS)
-// ==================================================
-const pageMeta = document.querySelector('meta[name="page"]');
-const PAGE = pageMeta ? pageMeta.content : null;
-
-// ==================================================
-// ROLE INIT (DECLARE ONCE — NEVER REDECLARE)
-// ==================================================
-(function initRole() {
-  if (!window.appRole) {
-    let storedRole = localStorage.getItem("role");
-
-    if (!storedRole) {
-      storedRole = prompt("Enter role: admin / writer / editor");
-      localStorage.setItem("role", storedRole);
+  <style>
+    body {
+      background: #f6f8fc;
+      font-family: Segoe UI, sans-serif;
+      padding: 20px;
     }
 
-    window.appRole = storedRole;
-  }
-})();
+    header {
+      margin-bottom: 20px;
+    }
 
-const role = window.appRole;
+    nav {
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
 
-// ==================================================
-// ROLE-BASED REDIRECT (ADMIN PAGE ONLY)
-// ==================================================
-if (PAGE === "admin") {
-  if (role === "writer") {
-    window.location.replace("scripts.html");
-  } else if (role === "editor") {
-    window.location.replace("calendar.html");
-  }
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      font-size: 14px;
+    }
+
+    .day {
+      background: white;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
+
+    .day strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>📅 Content Calendar</h1>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  &nbsp;·&nbsp;
+  <a href="weekly-dashboard.html">Weekly</a>
+  &nbsp;·&nbsp;
+  <a href="scripts.html">Scripts</a>
+</nav>
+
+<!-- CALENDAR OUTPUT -->
+<div id="calendar"></div>
+
+<script>
+const sheetURL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
+
+function parseCSV(text) {
+  return text
+    .trim()
+    .split("\n")
+    .slice(1)
+    .map(row => row.split(","));
 }
 
-// ==================================================
-// ADMIN DASHBOARD STATS (CACHED + SAFE)
-// ==================================================
-if (PAGE === "admin") {
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(text => {
+    const rows = parseCSV(text);
+    const byDate = {};
 
-  const weeklyEl = document.getElementById("weeklyUploads");
-  const monthlyEl = document.getElementById("monthlyUploads");
-  const pendingEl = document.getElementById("pendingScripts");
+    rows.forEach(r => {
+      const date = r[4];
+      if (!byDate[date]) byDate[date] = [];
+      byDate[date].push(r);
+    });
 
-  if (!weeklyEl || !monthlyEl || !pendingEl) {
-    console.warn("Admin stats elements not found");
-  } else {
+    const container = document.getElementById("calendar");
+    container.innerHTML = "";
 
-    const STATS_CSV_URL =
-      "https://docs.google.com/spreadsheets/d/e/1fbeWgceLfW_9Nxa7yRQwak-Zuu8q0kw8HOLqIFFfFP4/pub?gid=2143528718&single=true&output=csv";
+    Object.keys(byDate)
+      .sort()
+      .forEach(date => {
+        container.innerHTML += `
+          <div class="day">
+            <strong>${date}</strong>
+            <ul>
+              ${byDate[date]
+                .map(r => `<li>${r[0]} – ${r[1]}</li>`)
+                .join("")}
+            </ul>
+          </div>
+        `;
+      });
+  });
+</script>
 
-    fetchWithCache(STATS_CSV_URL, "admin_stats", 300000) // 5 min cache
-      .then(data => {
-        const rows = data.trim().split("\n").slice(1);
-        const stats = {};
-
-        rows.forEach(row => {
-          const [key, value] = row.split(",");
-          stats[key.trim()] = value.trim();
-        });
-
-        weeklyEl.innerText = stats.weekly_uploads || 0;
-        monthlyEl.innerText = stats.monthly_uploads || 0;
-        pendingEl.innerText = stats.pending_scripts || 0;
-      })
-      .catch(err => console.error("Admin stats sheet error:", err));
-  }
-}
-
-// ==================================================
-// HABIT STREAK + COIN SYSTEM (ASCEND STYLE)
-// ==================================================
-function getStreak(row, startIndex = 1) {
-  // row = [habit, Mon, Tue, Wed, Thu, Fri, Sat, Sun]
-  let streak = 0;
-  for (let i = row.length - 1; i >= startIndex; i--) {
-    if (row[i] === "TRUE") streak++;
-    else break;
-  }
-  return streak;
-}
-
-function streakCoin(streak) {
-  if (streak >= 21) return `<span class="coin gold">21</span>`;
-  if (streak >= 7)  return `<span class="coin silver">7</span>`;
-  if (streak >= 3)  return `<span class="coin bronze">3</span>`;
-  return "";
-}
-
-// ==================================================
-// UTILITIES (OPTIONAL, FUTURE SAFE)
-// ==================================================
-function isAdmin() {
-  return role === "admin";
-}
-
-function isWriter() {
-  return role === "writer";
-}
-
-function isEditor() {
-  return role === "editor";
-}
+</body>
+</html>
