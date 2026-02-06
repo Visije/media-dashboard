@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Weekly Execution Dashboard</title>
 <link rel="stylesheet" href="css/style.css">
-<title>Weekly Habit & Goal Tracker</title>
 </head>
 
 <body>
@@ -11,23 +11,35 @@
 <nav class="top-nav">
   <a href="index.html">Home</a>
   <a href="weekly-dashboard.html">Weekly</a>
-  <a href="scripts.html" class="active">Scripts</a>
+  <a href="scripts.html">Scripts</a>
 </nav>
+
+<div class="page">
 
 <h1>Weekly Execution Dashboard</h1>
 <select id="weekSelector"></select>
 
-<div class="top">
+<!-- TOP 3 COLUMN -->
+<div class="top-3">
 
+  <!-- NOTES -->
+  <div class="card notes-card">
+    <h3>Notes</h3>
+    <textarea id="weeklyNotes" rows="8"
+      placeholder="Thoughts, reminders, reflections..."></textarea>
+  </div>
+
+  <!-- OVERALL -->
   <div class="card">
     <h3>Overall Progress</h3>
-    <div class="ring" id="overallPercent">0%</div>
+    <div class="ring" id="overallRing">0%</div>
     <p id="overallCount">0 / 0 completed</p>
   </div>
 
+  <!-- HABITS -->
   <div class="card">
     <h3>Habit Tracker</h3>
-    <table id="habitTable">
+    <table>
       <thead>
         <tr>
           <th>Habit</th>
@@ -36,7 +48,7 @@
           <th>Streak</th>
         </tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="habitTable"></tbody>
     </table>
   </div>
 
@@ -52,75 +64,18 @@
   <div class="day-card"><strong>Sat</strong><div class="ring" id="ring-Sat">0%</div></div>
   <div class="day-card"><strong>Sun</strong><div class="ring" id="ring-Sun">0%</div></div>
 </div>
-  
-<!-- DAY-WISE TASKS -->
+
+<!-- TASKS -->
 <div class="tasks-grid">
-
-  <div class="task-card">
-    <h4>Tasks</h4>
-    <ul id="tasks-Mon"></ul>
-  </div>
-
-  <div class="task-card">
-    <h4>Tasks</h4>
-    <ul id="tasks-Tue"></ul>
-  </div>
-
-  <div class="task-card">
-    <h4>Tasks</h4>
-    <ul id="tasks-Wed"></ul>
-  </div>
-
-  <div class="task-card">
-    <h4>Tasks</h4>
-    <ul id="tasks-Thu"></ul>
-  </div>
-
-  <div class="task-card">
-    <h4>Tasks</h4>
-    <ul id="tasks-Fri"></ul>
-  </div>
-
-  <div class="task-card">
-    <h4>Tasks</h4>
-    <ul id="tasks-Sat"></ul>
-  </div>
-
-  <div class="task-card">
-    <h4>Tasks</h4>
-    <ul id="tasks-Sun"></ul>
-  </div>
-
+  <div class="card"><h4>Mon</h4><ul id="tasks-Mon"></ul></div>
+  <div class="card"><h4>Tue</h4><ul id="tasks-Tue"></ul></div>
+  <div class="card"><h4>Wed</h4><ul id="tasks-Wed"></ul></div>
+  <div class="card"><h4>Thu</h4><ul id="tasks-Thu"></ul></div>
+  <div class="card"><h4>Fri</h4><ul id="tasks-Fri"></ul></div>
+  <div class="card"><h4>Sat</h4><ul id="tasks-Sat"></ul></div>
+  <div class="card"><h4>Sun</h4><ul id="tasks-Sun"></ul></div>
 </div>
 
-<!-- TASK LISTS -->
-<div class="tasks" id="taskGrid"></div>
-
-<!-- SUNDAY REVIEW -->
-<div class="card">
-  <h3>Sunday Weekly Review</h3>
-  <p><strong>Weekly Score:</strong> <span id="weekScore">--</span>/100</p>
-  <h4>Wins</h4><p id="wins"></p>
-  <h4>Improvements</h4><p id="improve"></p>
-  <h4>Notes</h4><p id="notes"></p>
-</div>
-  
-<!-- PLAN NEXT WEEK -->
-<div class="card" style="margin-top:20px;">
-  <h2>📝 Plan Next Week</h2>
-
-  <input id="nextFocus" placeholder="Weekly focus"
-         style="width:100%;padding:8px;margin-bottom:8px;">
-
-  <textarea id="nextGoals" placeholder="Top goals for next week"
-            style="width:100%;padding:8px;margin-bottom:8px;"></textarea>
-
-  <textarea id="nextNotes" placeholder="Notes / constraints"
-            style="width:100%;padding:8px;margin-bottom:8px;"></textarea>
-
-  <button onclick="saveNextWeek()">
-    Save Plan
-  </button>
 </div>
 
 <script>
@@ -131,10 +86,7 @@ const HABITS_CSV =
 const TASKS_CSV =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=774223864&single=true&output=csv";
 
-const REVIEW_CSV =
-"https://docs.google.com/spreadsheets/d/e/2PACX-1vS6HQvMdJhXvbseQFWwqFgy2jdGckYGNvRIzlYL30Lsbosk6Nxkm5jW172eeOEaAfjahHDhbYzxHYYL/pub?gid=0&single=true&output=csv";
-
-const DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 
 /* ================= HELPERS ================= */
 function parseCSV(t){
@@ -142,15 +94,15 @@ function parseCSV(t){
 }
 
 function setRing(el,p){
-  el.style.background=`conic-gradient(#6ab04c ${p}%,#eaeaea 0)`;
-  el.innerText=p+"%";
+  el.style.background = `conic-gradient(#6ab04c ${p}%, #eaeaea 0)`;
+  el.innerText = p + "%";
 }
 
 function getISOWeek(){
-  const d=new Date();
+  const d = new Date();
   d.setDate(d.getDate()+3-(d.getDay()+6)%7);
-  const w1=new Date(d.getFullYear(),0,4);
-  const wn=1+Math.round(((d-w1)/86400000-3+(w1.getDay()+6)%7)/7);
+  const w1 = new Date(d.getFullYear(),0,4);
+  const wn = 1 + Math.round(((d-w1)/86400000-3+(w1.getDay()+6)%7)/7);
   return d.getFullYear()+"-W"+String(wn).padStart(2,"0");
 }
 
@@ -164,37 +116,36 @@ function getStreak(vals){
 }
 
 function streakCoin(s){
-  if(s>=21) return '<span class="coin gold">21</span>';
-  if(s>=7)  return '<span class="coin silver">7</span>';
-  if(s>=3)  return '<span class="coin bronze">3</span>';
+  if(s>=21) return "🥇";
+  if(s>=7)  return "🥈";
+  if(s>=3)  return "🥉";
   return "";
 }
 
 /* ================= MAIN ================= */
-const CURRENT_WEEK=getISOWeek();
+const CURRENT_WEEK = getISOWeek();
 
 Promise.all([
   fetch(HABITS_CSV).then(r=>r.text()),
-  fetch(TASKS_CSV).then(r=>r.text()),
-  fetch(REVIEW_CSV).then(r=>r.text())
-]).then(([hText,tText,rText])=>{
+  fetch(TASKS_CSV).then(r=>r.text())
+]).then(([hText,tText])=>{
 
-  const habits=parseCSV(hText);
-  const tasks=parseCSV(tText);
-  const reviews=parseCSV(rText);
+  const habits = parseCSV(hText);
+  const tasks  = parseCSV(tText);
 
-  const weeks=[...new Set(habits.map(r=>r[0]))].sort().reverse();
-  weekSelector.innerHTML=weeks.map(w=>`<option ${w===CURRENT_WEEK?"selected":""}>${w}</option>`).join("");
-  weekSelector.onchange=()=>loadWeek(weekSelector.value);
+  const weeks = [...new Set(habits.map(r=>r[0]))].sort().reverse();
+  weekSelector.innerHTML = weeks.map(w =>
+    `<option ${w===CURRENT_WEEK?"selected":""}>${w}</option>`
+  ).join("");
 
+  weekSelector.onchange = () => loadWeek(weekSelector.value);
   loadWeek(weekSelector.value);
 
   function loadWeek(week){
-    const stats={};DAYS.forEach(d=>stats[d]={done:0,total:0});
     let done=0,total=0;
+    const stats={};DAYS.forEach(d=>stats[d]={done:0,total:0});
 
-    /* HABITS */
-    habitTable.querySelector("tbody").innerHTML="";
+    habitTable.innerHTML="";
     habits.filter(r=>r[0]===week).forEach(r=>{
       const tr=document.createElement("tr");
       tr.innerHTML=`<td>${r[1]}</td>`;
@@ -205,112 +156,38 @@ Promise.all([
           total++;stats[d].total++;
           if(vals[i]==="TRUE"){done++;stats[d].done++}
           tr.innerHTML+=`<td><input type="checkbox" ${vals[i]==="TRUE"?"checked":""} disabled></td>`;
-        }else tr.innerHTML+="<td></td>";
+        } else tr.innerHTML+="<td></td>";
       });
 
       tr.innerHTML+=`<td>${streakCoin(getStreak(vals))}</td>`;
-      habitTable.querySelector("tbody").appendChild(tr);
+      habitTable.appendChild(tr);
     });
 
-    /* TASKS */
-    taskGrid.innerHTML="";
     DAYS.forEach(d=>{
-      const card=document.createElement("div");
-      card.className="card";
-      card.innerHTML=`<h4>${d}</h4><ul></ul>`;
-      const ul=card.querySelector("ul");
-
-      tasks.filter(r=>r[0]===week && r[1]===d).forEach(r=>{
-        total++;stats[d].total++;
-        if(r[3]==="TRUE"){done++;stats[d].done++}
-        ul.innerHTML+=`
-          <li>
-            <input type="checkbox" ${r[3]==="TRUE"?"checked":""} disabled>
-            ${r[2]}
-          </li>`;
-      });
-
-      taskGrid.appendChild(card);
+      const ul=document.getElementById("tasks-"+d);
+      ul.innerHTML="";
+      const dayTasks=tasks.filter(r=>r[0]===week && r[1]===d);
+      if(dayTasks.length===0){
+        ul.innerHTML="<li class='no-task'>No tasks planned</li>";
+      } else {
+        dayTasks.forEach(r=>{
+          total++;stats[d].total++;
+          if(r[3]==="TRUE"){done++;stats[d].done++}
+          ul.innerHTML+=`<li><input type="checkbox" ${r[3]==="TRUE"?"checked":""} disabled> ${r[2]}</li>`;
+        });
+      }
     });
 
-    setRing(overallPercent, total?Math.round(done/total*100):0);
+    setRing(overallRing, total?Math.round(done/total*100):0);
     overallCount.innerText=`${done} / ${total} completed`;
 
     DAYS.forEach(d=>{
       const p=stats[d].total?Math.round(stats[d].done/stats[d].total*100):0;
       setRing(document.getElementById("ring-"+d),p);
     });
-
-    const rev=reviews.find(r=>r[0]===week);
-    if(rev){
-      weekScore.innerText=rev[1];
-      wins.innerText=rev[2];
-      improve.innerText=rev[3];
-      notes.innerText=rev[4];
-    }else{
-      weekScore.innerText="--";
-      wins.innerText="";
-      improve.innerText="";
-      notes.innerText="";
-    }
   }
 });
 </script>
 
-<script>
-const TASKS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT4pu5TJ1kHSmb6NnKW5RfevfbDOA9OiePLxSCb2kkvL8wyyjlA5Ay4XBV9W5yKgsWm_4ZilasazuBc/pub?gid=0&single=true&output=csv";
-
-const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-
-fetch(TASKS_URL)
-  .then(r => r.text())
-  .then(csv => {
-    const lines = csv.trim().split("\n");
-    const headers = lines[0].split(",");
-
-    const rows = lines.slice(1).map(line => {
-      const values = line.split(",");
-      const obj = {};
-      headers.forEach((h, i) => obj[h.trim()] = values[i]?.trim());
-      return obj;
-    });
-
-    console.log("Parsed tasks:", rows); // 🔍 debug
-
-    DAYS.forEach(day => {
-      const ul = document.getElementById(`tasks-${day}`);
-      if (!ul) return;
-
-      const dayTasks = rows.filter(r =>
-        r.Day === day || r.day === day
-      );
- 
-      if (dayTasks.length === 0) {
-  ul.innerHTML = "<li class='no-task'>No tasks planned</li>";
-  ul.closest(".card").classList.add("no-tasks");
-  return;
-}
-ul.closest(".card").classList.remove("no-tasks");
-        return;
-      }
-
-      dayTasks.forEach(taskRow => {
-        const li = document.createElement("li");
-        const done =
-          taskRow.Done === "TRUE" ||
-          taskRow.done === "TRUE" ||
-          taskRow.Status === "TRUE";
-
-        li.innerHTML = `
-          <input type="checkbox" ${done ? "checked" : ""}>
-          ${taskRow.Task || taskRow.task}
-        `;
-        ul.appendChild(li);
-      });
-    });
-  });
-</script>
-  
 </body>
 </html>
-
