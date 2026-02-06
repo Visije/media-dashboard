@@ -975,3 +975,93 @@ input[type=checkbox]{transform:scale(1.1);cursor:pointer}
 input[type=checkbox]:disabled{cursor:not-allowed;opacity:.5}
 select{padding:6px 10px;border-radius:8px}
 
+.page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.top-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.day-card {
+  padding: 10px;
+  text-align: center;
+}
+
+.top-3 {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 2.8fr;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+/* NOTES */
+.notes-card textarea {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.notes-card textarea:focus {
+  outline: none;
+  border-color: #6ab04c;
+  box-shadow: 0 0 0 2px rgba(106,176,76,0.15);
+}
+
+/* OVERALL PROGRESS */
+.overall-card {
+  text-align: center;
+}
+
+.overall-card .ring {
+  margin: 16px auto 8px;
+}
+
+/* HABIT TRACKER */
+.habit-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.habit-card th,
+.habit-card td {
+  padding: 6px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.habit-card th:first-child,
+.habit-card td:first-child {
+  text-align: left;
+}
+
+.top-3 > .card {
+  position: relative;
+}
+
+.top-3 > .card:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: #e5e7eb;
+}
