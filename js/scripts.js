@@ -81,7 +81,7 @@ fetch(sheetURL)
       .reverse()
       .forEach(week => {
         const weekTitle = document.createElement("h2");
-        weekTitle.textContent = "📆 Week: " + week;
+        weekTitle.textContent = "Week: " + week;
         weekTitle.style.marginTop = "40px";
         container.appendChild(weekTitle);
 
