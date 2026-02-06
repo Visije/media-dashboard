@@ -838,3 +838,41 @@ input[type=checkbox]{transform:scale(1.1);cursor:pointer}
 input[type=checkbox]:disabled{cursor:not-allowed;opacity:.5}
 select{padding:6px 10px;border-radius:8px}
 
+    body {
+      background: #f6f8fc;
+      font-family: Segoe UI, sans-serif;
+      padding: 20px;
+    }
+
+    header {
+      margin-bottom: 20px;
+    }
+
+    nav {
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      font-size: 14px;
+    }
+
+    .day {
+      background: white;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
+
+    .day strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    ul {
+      padding-left: 18px;
+      margin: 0;
+    }
