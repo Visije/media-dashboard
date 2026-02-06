@@ -22,22 +22,12 @@
 <!-- ================= FOCUS TOGGLE ================= -->
 <button id="focusToggle">Focus</button>
 
-<!-- ================= ROLE HANDLING ================= -->
+<!-- ================= ROLE HANDLING (SAFE) ================= -->
 <script>
 (function () {
-  let role = localStorage.getItem("role");
-
-  if (!role) {
-    role = prompt("Enter role: admin / writer / editor");
-    localStorage.setItem("role", role);
-  }
-
-  if (role === "writer" && location.pathname.endsWith("index.html")) {
-    location.href = "scripts.html";
-  }
-
-  if (role === "editor" && location.pathname.endsWith("index.html")) {
-    location.href = "calendar.html";
+  // Set role once, never redirect from Home
+  if (!localStorage.getItem("role")) {
+    localStorage.setItem("role", "admin");
   }
 })();
 </script>
@@ -157,5 +147,6 @@ document.getElementById("focusToggle").onclick = () => {
 
 </body>
 </html>
+
 
 
