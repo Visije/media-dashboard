@@ -691,3 +691,43 @@ th {
 .Pending {
   background: #d63031;
 }
+
+.top-nav {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  gap: 16px;
+  z-index: 1000;
+}
+
+.top-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.top-nav a.active {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Focus mode friendly */
+body.focus .top-nav {
+  background: #151a21;
+  box-shadow: none;
+}
+
+body.focus .top-nav a {
+  color: #9aa4b2;
+}
+
+body.focus .top-nav a.active {
+  color: #ffffff;
+}
