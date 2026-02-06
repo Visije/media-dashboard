@@ -1,306 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Weekly Execution Dashboard</title>
+  <title>Weekly Execution Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      background: #f6f8fc;
+      font-family: Segoe UI, sans-serif;
+      padding: 20px;
+    }
+    h1 { margin-bottom: 20px; }
 
-<style>
-/* ===== BASE ===== */
-body{
-  margin:0;
-  padding:20px;
-  font-family:Segoe UI, system-ui, sans-serif;
-  background:#f4f7f2;
-}
+    .top {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 20px;
+    }
 
-.dashboard{
-  max-width:1400px;
-  margin:auto;
-}
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
 
-/* ===== SECTION HEADERS ===== */
-.section-header{
-  background:#7bb661;
-  color:#fff;
-  font-weight:600;
-  padding:8px 12px;
-  border-radius:4px 4px 0 0;
-  font-size:15px;
-}
+    .ring {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: conic-gradient(#6ab04c 44%, #eaeaea 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin: 10px 0;
+    }
 
-/* ===== CARDS ===== */
-.card{
-  background:#fff;
-  border-radius:4px;
-  margin-bottom:18px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.1);
-  overflow:hidden;
-}
+    /* HABITS */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      padding: 6px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    th:first-child, td:first-child {
+      text-align: left;
+    }
 
-.card-body{
-  padding:12px;
-}
+    /* DAYS */
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
 
-/* ===== TOP GRID ===== */
-.top-grid{
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:16px;
-}
+    .day-card {
+      background: white;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
 
-/* ===== OVERALL PROGRESS ===== */
-.progress-layout{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:16px;
-}
+    .tasks {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 12px;
+    }
 
-.bar-chart{
-  display:flex;
-  align-items:flex-end;
-  gap:10px;
-  height:120px;
-}
-
-.bar{
-  width:22px;
-  background:#a7d7a5;
-  border-radius:4px 4px 0 0;
-}
-
-.bar.dark{ background:#6aa84f; }
-
-.ring{
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  background:conic-gradient(#6aa84f 44%, #e6efe3 0);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:600;
-  font-size:20px;
-  margin:auto;
-}
-
-.subtext{
-  text-align:center;
-  font-size:13px;
-  color:#555;
-}
-
-/* ===== HABIT TRACKER ===== */
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:13px;
-}
-
-th, td{
-  border-bottom:1px solid #e3e7e0;
-  padding:6px;
-  text-align:center;
-}
-
-th:first-child,
-td:first-child{
-  text-align:left;
-}
-
-input[type=checkbox]{
-  transform:scale(1.1);
-}
-
-/* ===== DAYS ===== */
-.days{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:12px;
-}
-
-.day-card{
-  background:#fff;
-  border-radius:4px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.1);
-  overflow:hidden;
-}
-
-.day-header{
-  background:#7bb661;
-  color:#fff;
-  padding:6px;
-  text-align:center;
-  font-weight:600;
-  font-size:14px;
-}
-
-.day-date{
-  font-size:12px;
-  opacity:0.9;
-}
-
-.day-body{
-  padding:10px;
-  text-align:center;
-}
-
-.day-ring{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  background:conic-gradient(#6aa84f 60%, #e6efe3 0);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:600;
-  margin:auto;
-}
-
-/* ===== TASKS ===== */
-.tasks{
-  margin-top:10px;
-  text-align:left;
-}
-
-.tasks ul{
-  list-style:none;
-  padding:0;
-  margin:0;
-}
-
-.tasks li{
-  font-size:12px;
-  display:flex;
-  gap:6px;
-  align-items:center;
-  margin-bottom:6px;
-}
-</style>
+    .tasks ul {
+      padding-left: 18px;
+      font-size: 14px;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="dashboard">
+<h1>📅 Weekly Execution Dashboard</h1>
 
-  <!-- ===== TOP SECTION ===== -->
-  <div class="top-grid">
-
-    <!-- OVERALL PROGRESS -->
-    <div class="card">
-      <div class="section-header">Overall Progress</div>
-      <div class="card-body progress-layout">
-
-        <div class="bar-chart">
-          <div class="bar dark" style="height:90%"></div>
-          <div class="bar" style="height:70%"></div>
-          <div class="bar dark" style="height:80%"></div>
-          <div class="bar" style="height:60%"></div>
-          <div class="bar" style="height:30%"></div>
-          <div class="bar" style="height:0%"></div>
-          <div class="bar" style="height:0%"></div>
-        </div>
-
-        <div>
-          <div class="ring">44%</div>
-          <div class="subtext">18 / 41 Completed</div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- HABIT TRACKER -->
-    <div class="card">
-      <div class="section-header">Habit Tracker</div>
-      <div class="card-body">
-        <table>
-          <tr>
-            <th>Habit</th>
-            <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th>
-            <th>Fri</th><th>Sat</th><th>Sun</th>
-          </tr>
-          <tr>
-            <td>Wake up at 6:00</td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-          </tr>
-          <tr>
-            <td>Gym</td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox" checked></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
+<!-- TOP SECTION -->
+<div class="top">
+  <!-- OVERALL -->
+  <div class="card">
+    <h3>Overall Progress</h3>
+    <div class="ring">44%</div>
+    <p>18 / 41 completed</p>
   </div>
 
-  <!-- ===== DAYS ===== -->
-  <div class="days">
+  <!-- HABITS -->
+  <div class="card">
+    <h3>Habit Tracker</h3>
+    <table>
+      <tr>
+        <th>Habit</th>
+        <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+      </tr>
+      <tr>
+        <td>Wake up 6am</td>
+        <td>✔</td><td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>Gym</td>
+        <td>✔</td><td>✖</td><td>✔</td><td></td><td></td><td></td><td></td>
+      </tr>
+      <tr>
+        <td>No alcohol</td>
+        <td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td></td><td></td>
+      </tr>
+    </table>
+  </div>
+</div>
 
-    <div class="day-card">
-      <div class="day-header">Wednesday<div class="day-date">19.11.2025</div></div>
-      <div class="day-body">
-        <div class="day-ring">85%</div>
-        <div class="tasks">
-          <ul>
-            <li><input type="checkbox" checked> Write scripts</li>
-            <li><input type="checkbox" checked> Upload shorts</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<!-- DAY PROGRESS -->
+<div class="days">
+  <div class="day-card"><strong>Mon</strong><div class="ring">85%</div></div>
+  <div class="day-card"><strong>Tue</strong><div class="ring">80%</div></div>
+  <div class="day-card"><strong>Wed</strong><div class="ring">60%</div></div>
+  <div class="day-card"><strong>Thu</strong><div class="ring">17%</div></div>
+  <div class="day-card"><strong>Fri</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Sat</strong><div class="ring">0%</div></div>
+  <div class="day-card"><strong>Sun</strong><div class="ring">0%</div></div>
+</div>
 
-    <div class="day-card">
-      <div class="day-header">Thursday<div class="day-date">20.11.2025</div></div>
-      <div class="day-body">
-        <div class="day-ring">80%</div>
-        <div class="tasks">
-          <ul>
-            <li><input type="checkbox" checked> Research</li>
-            <li><input type="checkbox"> Edit video</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="day-card">
-      <div class="day-header">Friday<div class="day-date">21.11.2025</div></div>
-      <div class="day-body">
-        <div class="day-ring">60%</div>
-        <div class="tasks">
-          <ul>
-            <li><input type="checkbox"> Client call</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="day-card">
-      <div class="day-header">Saturday<div class="day-date">22.11.2025</div></div>
-      <div class="day-body">
-        <div class="day-ring">17%</div>
-      </div>
-    </div>
-
-    <div class="day-card">
-      <div class="day-header">Sunday<div class="day-date">23.11.2025</div></div>
-      <div class="day-body">
-        <div class="day-ring">0%</div>
-      </div>
-    </div>
-
+<!-- TASKS -->
+<div class="tasks">
+  <div class="card">
+    <h4>Monday</h4>
+    <ul>
+      <li>✔ Write scripts</li>
+      <li>✔ Upload shorts</li>
+    </ul>
   </div>
 
+  <div class="card">
+    <h4>Tuesday</h4>
+    <ul>
+      <li>✔ Research</li>
+      <li>✖ Edit video</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Wednesday</h4>
+    <ul>
+      <li>✔ Gym</li>
+      <li>✖ Client call</li>
+    </ul>
+  </div>
 </div>
 
 </body>
