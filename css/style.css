@@ -409,3 +409,8 @@ body.focus .coin {
   font-size: 12px;
 }
 
+.tasks .card {
+  min-height: 130px;
+  padding: 14px;
+}
+
