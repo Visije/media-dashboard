@@ -390,3 +390,22 @@ body.focus .coin {
       color: #9aa0a6;
       font-style: italic;
     }
+
+.tasks .card h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.tasks ul {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.tasks li {
+  margin-bottom: 5px;
+}
+
+.no-task {
+  font-size: 12px;
+}
+
