@@ -1,6 +1,6 @@
-/* ==============================
-   ROOT + THEME VARIABLES
-   ============================== */
+/* =========================================
+   ROOT VARIABLES
+========================================= */
 
 :root {
   --bg: #f6f8fc;
@@ -11,6 +11,10 @@
   --border: #e5e7eb;
 }
 
+/* =========================================
+   DARK MODE
+========================================= */
+
 body.dark {
   --bg: #0f1220;
   --card: #181b34;
@@ -19,9 +23,9 @@ body.dark {
   --border: #2a2f55;
 }
 
-/* ==============================
+/* =========================================
    BASE
-   ============================== */
+========================================= */
 
 * {
   box-sizing: border-box;
@@ -33,7 +37,7 @@ body {
   font-family: "Segoe UI", system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
-  transition: background 0.3s, color 0.3s;
+  transition: 0.3s ease;
 }
 
 h1, h2, h3, h4 {
@@ -49,9 +53,9 @@ p {
   font-style: italic;
 }
 
-/* ==============================
-   NAV
-   ============================== */
+/* =========================================
+   NAVIGATION
+========================================= */
 
 .top-nav {
   position: fixed;
@@ -69,8 +73,8 @@ p {
 
 .top-nav a {
   text-decoration: none;
-  font-size: 14px;
   color: var(--muted);
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -83,9 +87,9 @@ body.focus .top-nav {
   display: none;
 }
 
-/* ==============================
+/* =========================================
    CARDS
-   ============================== */
+========================================= */
 
 .card {
   background: var(--card);
@@ -101,9 +105,9 @@ body.focus .top-nav {
   box-shadow: none;
 }
 
-/* ==============================
-   RINGS (Progress)
-   ============================== */
+/* =========================================
+   PROGRESS RINGS
+========================================= */
 
 .ring {
   width: 80px;
@@ -121,9 +125,9 @@ body.focus .ring {
   background: conic-gradient(var(--accent) 0%, #2a2f3a 0);
 }
 
-/* ==============================
-   COINS (Streaks)
-   ============================== */
+/* =========================================
+   STREAK COINS
+========================================= */
 
 .coin {
   width: 22px;
@@ -151,9 +155,9 @@ body.focus .ring {
   color: #4a3b00;
 }
 
-/* ==============================
-   TABLES (Habits + Scripts)
-   ============================== */
+/* =========================================
+   TABLES
+========================================= */
 
 table {
   width: 100%;
@@ -172,6 +176,10 @@ td:first-child {
   text-align: left;
 }
 
+/* =========================================
+   BADGES
+========================================= */
+
 .badge {
   padding: 4px 10px;
   border-radius: 12px;
@@ -180,13 +188,22 @@ td:first-child {
   color: white;
 }
 
-.Ready { background: #00b894; }
-.Writing { background: #fdcb6e; color: #333; }
-.Pending { background: #d63031; }
+.Ready {
+  background: #00b894;
+}
 
-/* ==============================
+.Writing {
+  background: #fdcb6e;
+  color: #333;
+}
+
+.Pending {
+  background: #d63031;
+}
+
+/* =========================================
    WEEKLY DASHBOARD
-   ============================== */
+========================================= */
 
 .top {
   display: grid;
@@ -204,7 +221,7 @@ td:first-child {
 .day-card {
   background: var(--card);
   border-radius: 14px;
-  padding: 10px;
+  padding: 12px;
   text-align: center;
   box-shadow: 0 6px 16px rgba(0,0,0,0.05);
 }
@@ -215,34 +232,54 @@ td:first-child {
   box-shadow: none;
 }
 
+/* =========================================
+   TASK SECTION
+========================================= */
+
 .tasks {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 12px;
 }
 
+.tasks .card {
+  min-height: 140px;
+  padding: 14px;
+}
+
+.tasks .card h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
 .tasks ul {
   list-style: none;
-  padding: 0;
-  font-size: 14px;
+  padding-left: 0;
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .tasks li {
   display: flex;
-  gap: 6px;
   align-items: center;
+  gap: 6px;
   margin-bottom: 6px;
 }
 
-.no-task {
-  list-style: none;
-  color: var(--muted);
-  font-style: italic;
+.tasks input[type="checkbox"] {
+  transform: scale(0.9);
 }
 
-/* ==============================
-   HOME (Motivation Page)
-   ============================== */
+.no-task {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* =========================================
+   HOME PAGE
+========================================= */
 
 .row {
   display: grid;
@@ -255,27 +292,59 @@ td:first-child {
   font-weight: 600;
 }
 
-/* ==============================
+/* =========================================
    INPUTS
-   ============================== */
+========================================= */
 
 input[type="checkbox"] {
-  transform: scale(1.1);
   cursor: pointer;
 }
 
-input[type="checkbox"]:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: inherit;
 }
 
-/* ==============================
-   FOCUS MODE (Morning)
-   ============================== */
+/* =========================================
+   CALENDAR PAGE
+========================================= */
+
+#calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.calendar-day {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+.calendar-day h2 {
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+.calendar-day ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.calendar-day li {
+  margin-bottom: 8px;
+}
+
+.empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* =========================================
+   FOCUS MODE
+========================================= */
 
 body.focus {
   background: #0e1117;
@@ -296,11 +365,49 @@ body.focus .coin {
   opacity: 0.85;
 }
 
-/* ==============================
+/* =========================================
+   CATEGORY COLORS
+========================================= */
+
+.category-red {
+  background: #fbeaea;
+  color: #9b3d3d;
+}
+
+.category-blue {
+  background: #eef3ff;
+  color: #4058a8;
+}
+
+.category-purple {
+  background: #f3eefe;
+  color: #6a4fb3;
+}
+
+.category-green {
+  background: #edf7f1;
+  color: #357a4f;
+}
+
+.category-yellow {
+  background: #fff4df;
+  color: #9a6a00;
+}
+
+/* =========================================
    RESPONSIVE
-   ============================== */
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .days,
+  .tasks {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
 @media (max-width: 900px) {
+
   .top,
   .row {
     grid-template-columns: 1fr;
@@ -313,122 +420,13 @@ body.focus .coin {
 }
 
 @media (max-width: 600px) {
+
   .days,
   .tasks {
     grid-template-columns: 1fr;
   }
+
+  body {
+    padding: 14px;
+  }
 }
-
-    body {
-      font-family: Segoe UI, sans-serif;
-      background: #f6f8fc;
-      padding: 20px;
-      color: #222;
-    }
-
-    header {
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 42px;
-    }
-
-    /* TOP BAR */
-    .topbar {
-      margin-bottom: 28px;
-    }
-
-    .back-btn {
-      text-decoration: none;
-      color: #444;
-      font-size: 14px;
-      background: white;
-      padding: 8px 14px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      transition: 0.2s ease;
-    }
-
-    .back-btn:hover {
-      opacity: 0.8;
-    }
-
-    /* CALENDAR */
-    #calendar {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin-top: 10px;
-    }
-
-    .calendar-day {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
-    }
-
-    .calendar-day h2 {
-      margin: 0 0 14px;
-      font-size: 22px;
-      color: #111;
-    }
-
-    .calendar-day ul {
-      margin: 0;
-      padding-left: 20px;
-    }
-
-    .calendar-day li {
-      margin-bottom: 8px;
-      line-height: 1.5;
-    }
-
-    .empty {
-      color: #9aa0a6;
-      font-style: italic;
-    }
-
-.tasks .card h3 {
-  font-size: 15px;
-  margin-bottom: 8px;
-}
-
-.tasks ul {
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.tasks li {
-  margin-bottom: 5px;
-}
-
-.no-task {
-  font-size: 12px;
-}
-
-.tasks .card {
-  min-height: 130px;
-  padding: 14px;
-}
-
-background:#fbeaea;
-color:#9b3d3d;
-
-background:#eef3ff;
-color:#4058a8;
-
-background:#f3eefe;
-color:#6a4fb3;
-
-background:#edf7f1;
-color:#357a4f;
-
-background:#fff4df;
-color:#9a6a00;
-
-
-
-
