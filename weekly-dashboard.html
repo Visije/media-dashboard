@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Weekly Execution Dashboard</title>
 
-  <link rel="icon" href="data:,">
+  <link rel="icon" href="data:," />
 
   <style>
     * {
@@ -16,11 +16,25 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --green: #69b64f;
+      --green-light: #eef7ea;
+
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --border: #ebedf0;
+
+      --text: #222;
+      --muted: #777;
+
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
     body {
       font-family: "Segoe UI", sans-serif;
-      background: #f5f7fb;
+      background: var(--bg);
+      color: var(--text);
       padding: 20px;
-      color: #222;
     }
 
     h1 {
@@ -35,8 +49,20 @@
     }
 
     h3 {
-      margin-bottom: 10px;
+      font-size: 18px;
+      margin-bottom: 14px;
     }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    /* =========================================
+       TOP GRID
+    ========================================= */
 
     .grid-2 {
       display: grid;
@@ -45,28 +71,21 @@
       margin-bottom: 20px;
     }
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    }
-
-    /* =========================
+    /* =========================================
        OVERALL PROGRESS
-    ========================== */
+    ========================================= */
 
     .overall-wrapper {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      min-height: 220px;
+      min-height: 230px;
     }
 
     .bars {
       display: flex;
       align-items: flex-end;
-      gap: 8px;
+      gap: 10px;
       height: 120px;
     }
 
@@ -79,53 +98,53 @@
 
     .bar {
       width: 18px;
-      background: #69b64f;
       border-radius: 10px;
+      background: var(--green);
     }
 
     .bar-label {
       font-size: 12px;
-      color: #777;
+      color: var(--muted);
     }
 
     .ring {
-      width: 140px;
-      height: 140px;
+      width: 145px;
+      height: 145px;
       border-radius: 50%;
-      background: conic-gradient(#69b64f 44%, #e8e8e8 0);
+      background: conic-gradient(var(--green) 44%, #e8e8e8 0);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 700;
       color: #333;
     }
 
     .overall-count {
       margin-top: 14px;
-      color: #555;
       font-size: 15px;
+      color: #555;
     }
 
-    /* =========================
-       DAILY DISCIPLINE MATRIX
-    ========================== */
+    /* =========================================
+       DISCIPLINE MATRIX
+    ========================================= */
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     th {
-      color: #111;
       font-weight: 700;
+      color: #111;
     }
 
     th,
     td {
       padding: 10px 6px;
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid #f1f1f1;
       text-align: center;
     }
 
@@ -139,12 +158,12 @@
       width: 16px;
       height: 16px;
       cursor: pointer;
-      accent-color: #69b64f;
+      accent-color: var(--green);
     }
 
-    /* =========================
-       STREAK COINS
-    ========================== */
+    /* =========================================
+       COINS
+    ========================================= */
 
     .coin {
       width: 22px;
@@ -172,9 +191,9 @@
       color: #4a3b00;
     }
 
-    /* =========================
+    /* =========================================
        DAY PROGRESS
-    ========================== */
+    ========================================= */
 
     .days {
       display: grid;
@@ -184,11 +203,11 @@
     }
 
     .day-card {
-      background: white;
+      background: var(--card);
       border-radius: 18px;
       padding: 16px;
       text-align: center;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     }
 
     .day-name {
@@ -200,81 +219,93 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      background: conic-gradient(#69b64f 85%, #e8e8e8 0);
       display: flex;
       align-items: center;
       justify-content: center;
       margin: auto;
-      font-weight: 700;
       font-size: 22px;
+      font-weight: 700;
+      color: #222;
     }
 
-    /* =========================
-       TASKS
-    ========================== */
+    /* =========================================
+       WEEKLY FOCUS SYSTEM
+    ========================================= */
 
-    .tasks {
+    .focus-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 14px;
       margin-bottom: 20px;
     }
 
-    .task-card {
+    .focus-card {
       background: white;
       border-radius: 18px;
-      padding: 16px;
+      padding: 18px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      min-height: 220px;
+      min-height: 190px;
     }
 
-    .task-card h3 {
-      margin-bottom: 12px;
+    .focus-card h3 {
+      margin-bottom: 16px;
+      font-size: 18px;
     }
 
-    .task-list {
+    .focus-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
+    }
+
+    .focus-tag {
+      padding: 12px 14px;
+      border-radius: 12px;
       font-size: 14px;
+      font-weight: 600;
     }
 
-    .task-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .martial {
+      background: #fbeaea;
+      color: #9b3d3d;
     }
 
-    .no-task {
-      color: #999;
-      font-style: italic;
-      font-size: 13px;
-      margin-top: 10px;
+    .animation {
+      background: #eef3ff;
+      color: #4058a8;
     }
 
-    .task-card.no-tasks {
-      background: #f1f3f4;
-      border: 1px dashed #d0d7de;
-      box-shadow: none;
+    .music {
+      background: #f3eefe;
+      color: #6a4fb3;
     }
 
-    /* =========================
-       WEEKLY GRAPH
-    ========================== */
+    .editing {
+      background: #edf7f1;
+      color: #357a4f;
+    }
+
+    .design {
+      background: #fff4df;
+      color: #9a6a00;
+    }
+
+    /* =========================================
+       GRAPH
+    ========================================= */
 
     .graph-wrapper {
-      height: 300px;
+      height: 320px;
       position: relative;
     }
 
-    /* =========================
+    /* =========================================
        RESPONSIVE
-    ========================== */
+    ========================================= */
 
-    @media(max-width: 1400px) {
-
+    @media(max-width: 1500px) {
       .days,
-      .tasks {
+      .focus-grid {
         grid-template-columns: repeat(4, 1fr);
       }
     }
@@ -283,13 +314,13 @@
 
       .grid-2,
       .days,
-      .tasks {
+      .focus-grid {
         grid-template-columns: 1fr;
       }
 
       .overall-wrapper {
         flex-direction: column;
-        gap: 20px;
+        gap: 30px;
       }
 
       h1 {
@@ -318,6 +349,7 @@
       <div class="overall-wrapper">
 
         <div>
+
           <div class="bars">
 
             <div class="bar-group">
@@ -360,18 +392,18 @@
           <div class="overall-count">
             18 / 41 completed
           </div>
+
         </div>
 
-        <div>
-          <div class="ring">
-            44%
-          </div>
+        <div class="ring">
+          44%
         </div>
 
       </div>
+
     </div>
 
-    <!-- DAILY DISCIPLINE MATRIX -->
+    <!-- DISCIPLINE MATRIX -->
 
     <div class="card">
 
@@ -400,7 +432,7 @@
           <td><input type="checkbox" checked></td>
           <td><input type="checkbox"></td>
           <td><input type="checkbox"></td>
-          <td><input type="checkbox"></td>
+          <td><input type="checkbox" checked></td>
 
           <td>
             <span class="coin bronze">3</span>
@@ -416,7 +448,7 @@
           <td><input type="checkbox"></td>
           <td><input type="checkbox"></td>
           <td><input type="checkbox"></td>
-          <td><input type="checkbox"></td>
+          <td><input type="checkbox" checked></td>
 
           <td></td>
         </tr>
@@ -487,7 +519,9 @@
         </tr>
 
       </table>
+
     </div>
+
   </div>
 
   <!-- =========================================
@@ -498,47 +532,56 @@
 
     <div class="day-card">
       <div class="day-name">Mon</div>
-      <div class="small-ring">85%</div>
+      <div class="small-ring"
+        style="background:conic-gradient(var(--green) 85%, #e8e8e8 0)">
+        85%
+      </div>
     </div>
 
     <div class="day-card">
       <div class="day-name">Tue</div>
-      <div class="small-ring" style="background:conic-gradient(#69b64f 80%, #e8e8e8 0)">
+      <div class="small-ring"
+        style="background:conic-gradient(var(--green) 80%, #e8e8e8 0)">
         80%
       </div>
     </div>
 
     <div class="day-card">
       <div class="day-name">Wed</div>
-      <div class="small-ring" style="background:conic-gradient(#69b64f 60%, #e8e8e8 0)">
+      <div class="small-ring"
+        style="background:conic-gradient(var(--green) 60%, #e8e8e8 0)">
         60%
       </div>
     </div>
 
     <div class="day-card">
       <div class="day-name">Thu</div>
-      <div class="small-ring" style="background:conic-gradient(#69b64f 17%, #e8e8e8 0)">
+      <div class="small-ring"
+        style="background:conic-gradient(var(--green) 17%, #e8e8e8 0)">
         17%
       </div>
     </div>
 
     <div class="day-card">
       <div class="day-name">Fri</div>
-      <div class="small-ring" style="background:conic-gradient(#69b64f 0%, #e8e8e8 0)">
+      <div class="small-ring"
+        style="background:conic-gradient(var(--green) 0%, #e8e8e8 0)">
         0%
       </div>
     </div>
 
     <div class="day-card">
       <div class="day-name">Sat</div>
-      <div class="small-ring" style="background:conic-gradient(#69b64f 0%, #e8e8e8 0)">
+      <div class="small-ring"
+        style="background:conic-gradient(var(--green) 0%, #e8e8e8 0)">
         0%
       </div>
     </div>
 
     <div class="day-card">
       <div class="day-name">Sun</div>
-      <div class="small-ring" style="background:conic-gradient(#69b64f 0%, #e8e8e8 0)">
+      <div class="small-ring"
+        style="background:conic-gradient(var(--green) 0%, #e8e8e8 0)">
         0%
       </div>
     </div>
@@ -546,78 +589,71 @@
   </div>
 
   <!-- =========================================
-       TASKS
+       WEEKLY FOCUS SYSTEM
   ========================================== -->
 
-  <div class="tasks">
+  <div class="focus-grid">
 
-    <div class="task-card">
+    <div class="focus-card">
       <h3>Monday</h3>
 
-      <div class="task-list">
-
-        <label class="task-item">
-          <input type="checkbox" checked>
-          Write scripts
-        </label>
-
-        <label class="task-item">
-          <input type="checkbox" checked>
-          Upload shorts
-        </label>
-
+      <div class="focus-list">
+        <div class="focus-tag martial">Martial Arts</div>
+        <div class="focus-tag animation">Animation</div>
       </div>
     </div>
 
-    <div class="task-card">
+    <div class="focus-card">
       <h3>Tuesday</h3>
 
-      <div class="task-list">
-
-        <label class="task-item">
-          <input type="checkbox">
-          Edit video
-        </label>
-
+      <div class="focus-list">
+        <div class="focus-tag music">Music Composing</div>
+        <div class="focus-tag editing">Video Editing</div>
       </div>
     </div>
 
-    <div class="task-card">
+    <div class="focus-card">
       <h3>Wednesday</h3>
 
-      <div class="task-list">
-
-        <label class="task-item">
-          <input type="checkbox" checked>
-          Research
-        </label>
-
-        <label class="task-item">
-          <input type="checkbox">
-          Client call
-        </label>
-
+      <div class="focus-list">
+        <div class="focus-tag martial">Martial Arts</div>
+        <div class="focus-tag animation">Animation</div>
       </div>
     </div>
 
-    <div class="task-card no-tasks">
+    <div class="focus-card">
       <h3>Thursday</h3>
-      <div class="no-task">No tasks planned</div>
+
+      <div class="focus-list">
+        <div class="focus-tag music">Music Composing</div>
+        <div class="focus-tag editing">Video Editing</div>
+      </div>
     </div>
 
-    <div class="task-card no-tasks">
+    <div class="focus-card">
       <h3>Friday</h3>
-      <div class="no-task">No tasks planned</div>
+
+      <div class="focus-list">
+        <div class="focus-tag martial">Martial Arts</div>
+        <div class="focus-tag animation">Animation</div>
+      </div>
     </div>
 
-    <div class="task-card no-tasks">
+    <div class="focus-card">
       <h3>Saturday</h3>
-      <div class="no-task">No tasks planned</div>
+
+      <div class="focus-list">
+        <div class="focus-tag music">Music Composing</div>
+        <div class="focus-tag editing">Video Editing</div>
+      </div>
     </div>
 
-    <div class="task-card no-tasks">
+    <div class="focus-card">
       <h3>Sunday</h3>
-      <div class="no-task">No tasks planned</div>
+
+      <div class="focus-list">
+        <div class="focus-tag design">Designing</div>
+      </div>
     </div>
 
   </div>
@@ -636,7 +672,9 @@
 
   </div>
 
-  <!-- CHART JS -->
+  <!-- =========================================
+       CHART JS
+  ========================================== -->
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
