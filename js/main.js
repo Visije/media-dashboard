@@ -1,53 +1,116 @@
+// =====================================
+// CONTENT CALENDAR
+// =====================================
+
 // Run only on calendar page
 if (document.querySelector('meta[name="page"][content="calendar"]')) {
 
-  const sheetURL =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU4yNw1NlyydNT5CH3XZrGYyS27yZXuK6JKfID416K2nFSwtAznHjlYYySULRP7i8ktOIM54bxl2sn/pub?gid=0&single=true&output=csv";
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
 
-  function parseCSV(text) {
-    return text
-      .trim()
-      .split("\n")
-      .slice(1)
-      .map(row => row.split(","));
-  }
+  // Instagram-only accounts
+  // 2 reels daily
+  const dailyIGAccounts = [
+    "Meer Rana",
+    "Topography",
+    "Mixing Masti"
+  ];
 
-  fetch(sheetURL)
-    .then(res => res.text())
-    .then(text => {
-      const rows = parseCSV(text);
-      const byDate = {};
+  // YouTube + Instagram accounts
+  // 4 reels weekly
+  const weeklyAccounts = [
+    "Ender Vij",
+    "I'm Gurey",
+    "CRUST",
+    "Zone-out History",
+    "Touristico"
+  ];
 
-      rows.forEach(r => {
-        const date = r[4];
-        if (!date) return;
+  // Upload days for weekly accounts
+  const weeklyDays = [
+    "Monday",
+    "Wednesday",
+    "Friday",
+    "Sunday"
+  ];
 
-        if (!byDate[date]) byDate[date] = [];
-        byDate[date].push(r);
+  const calendar = document.getElementById("calendar");
+
+  if (!calendar) {
+    console.error("Calendar container not found");
+  } else {
+
+    function uploadCard(name, type, count = 1) {
+
+      return `
+        <div class="upload ${type}">
+
+          <strong>${name}</strong>
+
+          <div class="muted">
+            ${
+              type === "ig"
+                ? "Instagram Reels"
+                : "YouTube + Instagram"
+            }
+          </div>
+
+          <div class="status">
+            ${
+              count > 1
+                ? `${count} Reels Planned`
+                : "1 Reel Planned"
+            }
+          </div>
+
+        </div>
+      `;
+    }
+
+    // Clear calendar first
+    calendar.innerHTML = "";
+
+    // Create each day
+    days.forEach(day => {
+
+      let html = `
+        <div class="day">
+          <h3>${day}</h3>
+      `;
+
+      // =====================================
+      // DAILY INSTAGRAM PAGES
+      // =====================================
+
+      dailyIGAccounts.forEach(account => {
+        html += uploadCard(account, "ig", 2);
       });
 
-      const container = document.getElementById("calendar");
-      if (!container) return;
+      // =====================================
+      // WEEKLY YOUTUBE + INSTAGRAM PAGES
+      // =====================================
 
-      container.innerHTML = "";
+      if (weeklyDays.includes(day)) {
 
-      Object.keys(byDate)
-        .sort()
-        .forEach(date => {
-          container.innerHTML += `
-            <div class="day">
-              <strong>${date}</strong>
-              <ul>
-                ${byDate[date]
-                  .map(r => `<li>${r[0]} – ${r[1]}</li>`)
-                  .join("")}
-              </ul>
-            </div>
-          `;
+        weeklyAccounts.forEach(account => {
+          html += uploadCard(account, "yt", 1);
         });
-    })
-    .catch(err => {
-      console.error("Calendar load failed:", err);
+
+      }
+
+      html += `</div>`;
+
+      calendar.innerHTML += html;
+
     });
+
+  }
 
 }
