@@ -1,27 +1,276 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="page" content="calendar">
-  <title>Content Calendar</title>
+  <title>Creator Flow</title>
 
-  <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: Segoe UI, sans-serif;
+      background: #f6f8fc;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .planner-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    .channel-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .platform {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .target {
+      background: #eef3ff;
+      color: #3f51b5;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+
+    .upload-box {
+      background: #f9fafb;
+      border: 1px solid #eceff3;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .upload-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 70px;
+      border: 1px solid #e1e5ea;
+      border-radius: 10px;
+      padding: 10px;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 14px;
+      background: #ffffff;
+      box-sizing: border-box;
+    }
+
+    details {
+      margin-top: 10px;
+    }
+
+    summary {
+      cursor: pointer;
+      color: #666;
+      font-size: 13px;
+      user-select: none;
+    }
+
+    .notes {
+      margin-top: 8px;
+    }
+
+    .status {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    @media (max-width: 900px) {
+      .planner-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Content Calendar</h1>
-</header>
+<h1> Creator Flow</h1>
 
-<div class="topbar">
-  <a href="index.html" class="back-btn">← Home</a>
+<div class="planner-grid">
+
+  <!-- Meer Rana -->
+  <div class="card">
+    <div class="channel-name">Meer Rana</div>
+    <div class="platform">Instagram</div>
+
+    <div class="target">Daily Target: 2 Reels</div>
+
+    <div class="upload-box">
+      <div class="upload-title">Reel 1</div>
+
+      <div class="status">
+        <label class="checkbox">
+          <input type="checkbox"> Script Ready
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox"> Uploaded
+        </label>
+      </div>
+
+      <details>
+        <summary>Hidden Notes</summary>
+        <div class="notes">
+          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+        </div>
+      </details>
+    </div>
+
+    <div class="upload-box">
+      <div class="upload-title">Reel 2</div>
+
+      <div class="status">
+        <label class="checkbox">
+          <input type="checkbox"> Script Ready
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox"> Uploaded
+        </label>
+      </div>
+
+      <details>
+        <summary>Hidden Notes</summary>
+        <div class="notes">
+          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Topography -->
+  <div class="card">
+    <div class="channel-name">Topography</div>
+    <div class="platform">Instagram</div>
+
+    <div class="target">Daily Target: 2 Reels</div>
+
+    <div class="upload-box">
+      <div class="upload-title">Reel 1</div>
+
+      <div class="status">
+        <label class="checkbox">
+          <input type="checkbox"> Script Ready
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox"> Uploaded
+        </label>
+      </div>
+
+      <details>
+        <summary>Hidden Notes</summary>
+        <div class="notes">
+          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+        </div>
+      </details>
+    </div>
+
+    <div class="upload-box">
+      <div class="upload-title">Reel 2</div>
+
+      <div class="status">
+        <label class="checkbox">
+          <input type="checkbox"> Script Ready
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox"> Uploaded
+        </label>
+      </div>
+
+      <details>
+        <summary>Hidden Notes</summary>
+        <div class="notes">
+          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Mixing Masti -->
+  <div class="card">
+    <div class="channel-name">Mixing Masti</div>
+    <div class="platform">Instagram</div>
+
+    <div class="target">Daily Target: 2 Reels</div>
+
+    <div class="upload-box">
+      <div class="upload-title">Reel 1</div>
+
+      <div class="status">
+        <label class="checkbox">
+          <input type="checkbox"> Script Ready
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox"> Uploaded
+        </label>
+      </div>
+
+      <details>
+        <summary>Hidden Notes</summary>
+        <div class="notes">
+          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+        </div>
+      </details>
+    </div>
+
+    <div class="upload-box">
+      <div class="upload-title">Reel 2</div>
+
+      <div class="status">
+        <label class="checkbox">
+          <input type="checkbox"> Script Ready
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox"> Uploaded
+        </label>
+      </div>
+
+      <details>
+        <summary>Hidden Notes</summary>
+        <div class="notes">
+          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+        </div>
+      </details>
+    </div>
+  </div>
+
 </div>
-
-<div id="calendar" class="calendar-grid"></div>
-
-<script src="js/main.js"></script>
 
 </body>
 </html>
