@@ -1172,3 +1172,58 @@ body.focus .coin{
   color: #6ab04c;
   font-weight: 600;
 }
+
+.account-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.account-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.account-notes {
+  position: relative;
+}
+
+.account-notes summary {
+  list-style: none;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.account-notes summary::-webkit-details-marker {
+  display: none;
+}
+
+.account-notes summary::before {
+  content: "▸";
+  font-size: 16px;
+  color: #777;
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.account-notes[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.account-notes textarea {
+  position: absolute;
+  right: 0;
+  top: 24px;
+  width: 220px;
+  min-height: 100px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  resize: vertical;
+  background: #fafafa;
+  font-family: inherit;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
