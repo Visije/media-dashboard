@@ -21,10 +21,20 @@
   box-sizing:border-box;
 }
 
+:root{
+  --bg:#0f1117;
+  --card:#171b24;
+  --card2:#1d2330;
+  --card3:#11151d;
+  --border:rgba(255,255,255,0.05);
+  --text:#f3f5f7;
+  --muted:#8b93a7;
+}
+
 body{
   font-family: Inter, Segoe UI, sans-serif;
-  background:#0f1117;
-  color:#f3f5f7;
+  background:var(--bg);
+  color:var(--text);
   padding:32px;
 }
 
@@ -33,91 +43,83 @@ body{
 ========================= */
 
 header{
-  margin-bottom:28px;
+  margin-bottom:20px;
 }
 
 h1{
-  font-size:48px;
-  font-weight:700;
-  letter-spacing:-1px;
+  font-size:54px;
+  font-weight:750;
+  letter-spacing:-2px;
+  line-height:1;
 }
 
 .subtitle{
-  margin-top:8px;
-  color:#8b93a7;
+  margin-top:12px;
+  color:var(--muted);
   font-size:15px;
 }
 
 /* =========================
-   NAV
+   WORKSPACE LABEL
 ========================= */
 
-.top-nav{
+.workspace-label{
   display:flex;
-  gap:12px;
-  margin-bottom:28px;
-}
-
-.top-nav a{
-  text-decoration:none;
-  color:#aeb6c7;
-  background:#171b24;
-  padding:10px 16px;
-  border-radius:12px;
-  transition:0.2s ease;
-  border:1px solid rgba(255,255,255,0.05);
-}
-
-.top-nav a:hover{
-  background:#1d2230;
-  color:#fff;
-}
-
-.top-nav .active{
-  background:#f3f5f7;
-  color:#111;
+  align-items:center;
+  gap:10px;
+  margin-bottom:30px;
+  color:#6f7787;
+  font-size:14px;
 }
 
 /* =========================
-   GLOBAL STATS
+   STATS
 ========================= */
 
 .stats-row{
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  gap:14px;
-  margin-bottom:28px;
+  gap:16px;
+  margin-bottom:34px;
 }
 
 .stat-card{
-  background:#171b24;
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:18px;
-  padding:18px;
+  background:linear-gradient(
+    180deg,
+    #171b24,
+    #131822
+  );
+
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
 }
 
 .stat-label{
-  color:#8b93a7;
+  color:#8f98aa;
   font-size:13px;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 
 .stat-value{
-  font-size:28px;
+  font-size:36px;
   font-weight:700;
+  letter-spacing:-1px;
 }
 
 /* =========================
-   WEEK
+   WEEK BLOCK
 ========================= */
 
 .week-block{
-  margin-bottom:44px;
+  margin-bottom:52px;
 }
 
 .week-title{
-  font-size:28px;
-  margin-bottom:22px;
+  font-size:36px;
+  font-weight:700;
+  letter-spacing:-1px;
+  margin-bottom:24px;
 }
 
 /* =========================
@@ -125,86 +127,128 @@ h1{
 ========================= */
 
 .channel-board{
-  background:#171b24;
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:24px;
-  padding:22px;
-  margin-bottom:26px;
+  background:linear-gradient(
+    180deg,
+    #171b24,
+    #141923
+  );
+
+  border:1px solid var(--border);
+  border-radius:30px;
+  padding:28px;
+  margin-bottom:30px;
+  overflow:hidden;
 }
 
-/* HEADER */
+/* =========================
+   CHANNEL HEADER
+========================= */
 
 .channel-top{
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:16px;
+  align-items:flex-start;
+  gap:20px;
+  margin-bottom:20px;
 }
 
 .channel-left{
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:8px;
 }
 
 .channel-name{
-  font-size:22px;
+  font-size:32px;
   font-weight:700;
+  letter-spacing:-1px;
 }
 
 .channel-meta{
   color:#8b93a7;
-  font-size:13px;
+  font-size:14px;
 }
 
-/* PROGRESS */
+.channel-right{
+  text-align:right;
+}
+
+.channel-percent{
+  font-size:30px;
+  font-weight:700;
+}
+
+.channel-ready{
+  color:#7f8a9d;
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* =========================
+   PROGRESS
+========================= */
 
 .progress-wrap{
-  margin-top:10px;
+  margin-bottom:28px;
 }
 
 .progress-bar{
   width:100%;
-  height:10px;
+  height:12px;
   border-radius:999px;
   overflow:hidden;
-  background:#222735;
+  background:#232939;
 }
 
 .progress-fill{
   height:100%;
   border-radius:999px;
+
   background:linear-gradient(
     90deg,
     #6ab04c,
-    #8ddf67
+    #8ce46b
   );
+
+  box-shadow:
+    0 0 12px rgba(106,176,76,0.4);
 }
 
 /* =========================
-   KANBAN
+   KANBAN GRID
 ========================= */
 
 .kanban{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:repeat(6,1fr);
   gap:16px;
-  margin-top:24px;
 }
 
+/* =========================
+   COLUMN
+========================= */
+
 .column{
-  background:#11151d;
-  border-radius:18px;
-  padding:14px;
-  min-height:220px;
+  background:var(--card3);
+  border-radius:22px;
+  padding:16px;
   border:1px solid rgba(255,255,255,0.04);
+  min-height:250px;
 }
 
 .column-title{
   font-size:14px;
-  font-weight:600;
-  color:#d8dce5;
-  margin-bottom:14px;
+  font-weight:650;
+  margin-bottom:16px;
+  color:#dce2ee;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.column-count{
+  color:#758094;
+  font-size:12px;
 }
 
 /* =========================
@@ -212,35 +256,45 @@ h1{
 ========================= */
 
 .script-card{
-  background:#1f2430;
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:12px;
-  transition:0.18s ease;
+  background:var(--card2);
   border:1px solid rgba(255,255,255,0.04);
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:14px;
+  transition:0.18s ease;
+  cursor:pointer;
 }
 
 .script-card:hover{
   transform:translateY(-2px);
-  background:#252b39;
+  background:#252c3a;
 }
 
 .script-title{
   font-size:15px;
-  font-weight:600;
-  line-height:1.4;
-  margin-bottom:12px;
+  font-weight:650;
+  line-height:1.45;
+  margin-bottom:14px;
 }
 
 .script-info{
   display:flex;
   justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+  color:#8d98ad;
   font-size:12px;
-  color:#98a1b3;
-  margin-bottom:12px;
 }
 
-/* STATUS */
+.script-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* =========================
+   BADGES
+========================= */
 
 .badge{
   display:inline-flex;
@@ -249,37 +303,38 @@ h1{
   padding:6px 10px;
   border-radius:999px;
   font-size:11px;
-  font-weight:600;
+  font-weight:700;
+  letter-spacing:0.2px;
 }
 
 .Ideas{
-  background:#2a3242;
-  color:#b9c1d1;
+  background:#2b3342;
+  color:#c4cedf;
 }
 
 .Research{
-  background:#27384a;
-  color:#8dc4ff;
+  background:#23384a;
+  color:#8dc8ff;
 }
 
 .Writing{
-  background:#4a3922;
+  background:#47361f;
   color:#ffcf7a;
 }
 
 .Review{
   background:#3b2d52;
-  color:#d0a8ff;
+  color:#d6b0ff;
 }
 
 .Ready{
-  background:#1f4d38;
-  color:#7ff0b2;
+  background:#1d4c38;
+  color:#83efb5;
 }
 
 .Uploaded{
-  background:#3d4454;
-  color:#d5dae5;
+  background:#3a4355;
+  color:#d4dae7;
 }
 
 /* =========================
@@ -287,22 +342,43 @@ h1{
 ========================= */
 
 .empty{
-  color:#5d6678;
+  color:#5f6a7e;
   font-size:13px;
   padding-top:6px;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+  width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#252b38;
+  border-radius:999px;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 
-@media(max-width:1200px){
+@media(max-width:1450px){
 
   .kanban{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+}
+
+@media(max-width:1100px){
+
+  .stats-row{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .stats-row{
+  .kanban{
     grid-template-columns:repeat(2,1fr);
   }
 
@@ -315,15 +391,28 @@ h1{
   }
 
   h1{
-    font-size:36px;
+    font-size:40px;
+  }
+
+  .week-title{
+    font-size:28px;
+  }
+
+  .channel-name{
+    font-size:24px;
+  }
+
+  .stats-row{
+    grid-template-columns:1fr;
   }
 
   .kanban{
     grid-template-columns:1fr;
   }
 
-  .stats-row{
-    grid-template-columns:1fr;
+  .channel-top{
+    flex-direction:column;
+    align-items:flex-start;
   }
 
 }
@@ -339,10 +428,14 @@ ROLE HANDLING
 
 <script>
 (function () {
-  const role = localStorage.getItem("role");
-  if (!role || role === "editor") {
+
+  const role =
+    localStorage.getItem("role");
+
+  if(!role || role === "editor"){
     location.href = "index.html";
   }
+
 })();
 </script>
 
@@ -351,21 +444,24 @@ HEADER
 ========================= -->
 
 <header>
+
   <h1>Script Tracker</h1>
+
   <p class="subtitle">
     Multi-channel production pipeline
   </p>
+
 </header>
 
 <!-- =========================
-NAV
+WORKSPACE LABEL
 ========================= -->
 
-<nav class="top-nav">
-  <a href="index.html">Home</a>
-  <a href="weekly-dashboard.html">Weekly</a>
-  <a href="scripts.html" class="active">Scripts</a>
-</nav>
+<div class="workspace-label">
+  <span>Workspace</span>
+  <span>•</span>
+  <span>Production Pipeline</span>
+</div>
 
 <!-- =========================
 GLOBAL STATS
@@ -379,13 +475,13 @@ GLOBAL STATS
   </div>
 
   <div class="stat-card">
-    <div class="stat-label">Writing</div>
-    <div class="stat-value" id="writingCount">0</div>
+    <div class="stat-label">Research</div>
+    <div class="stat-value" id="researchCount">0</div>
   </div>
 
   <div class="stat-card">
-    <div class="stat-label">Review</div>
-    <div class="stat-value" id="reviewCount">0</div>
+    <div class="stat-label">Writing</div>
+    <div class="stat-value" id="writingCount">0</div>
   </div>
 
   <div class="stat-card">
@@ -401,7 +497,7 @@ GLOBAL STATS
 </div>
 
 <!-- =========================
-CONTENT
+BOARDS
 ========================= -->
 
 <div id="boards"></div>
@@ -442,7 +538,8 @@ CSV PARSER
 
 function parseCSV(text){
 
-  const lines = text
+  const lines =
+    text
     .split("\n")
     .filter(l => l.trim());
 
@@ -451,14 +548,18 @@ function parseCSV(text){
   for(let i=1;i<lines.length;i++){
 
     const cols =
-      lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+      lines[i].match(
+        /(".*?"|[^",]+)(?=\s*,|\s*$)/g
+      );
 
     if(cols){
+
       rows.push(
         cols.map(c =>
           c.replace(/^"|"$/g,"")
         )
       );
+
     }
 
   }
@@ -480,10 +581,16 @@ function getWeekRange(dateStr){
   const day = d.getDay() || 7;
 
   const monday = new Date(d);
-  monday.setDate(d.getDate() - day + 1);
+
+  monday.setDate(
+    d.getDate() - day + 1
+  );
 
   const sunday = new Date(monday);
-  sunday.setDate(monday.getDate() + 6);
+
+  sunday.setDate(
+    monday.getDate() + 6
+  );
 
   return `
     ${monday.toISOString().slice(0,10)}
@@ -534,11 +641,11 @@ fetch(sheetURL)
   document.getElementById("ideasCount").innerText =
     counts.Ideas;
 
+  document.getElementById("researchCount").innerText =
+    counts.Research;
+
   document.getElementById("writingCount").innerText =
     counts.Writing;
-
-  document.getElementById("reviewCount").innerText =
-    counts.Review;
 
   document.getElementById("readyCount").innerText =
     counts.Ready;
@@ -547,7 +654,7 @@ fetch(sheetURL)
     counts.Uploaded;
 
   /* =========================
-     GROUP BY WEEK
+     GROUP WEEKS
   ========================= */
 
   const weekly = {};
@@ -556,7 +663,8 @@ fetch(sheetURL)
 
     if(!r[4]) return;
 
-    const week = getWeekRange(r[4]);
+    const week =
+      getWeekRange(r[4]);
 
     if(!weekly[week]){
       weekly[week] = [];
@@ -578,7 +686,8 @@ fetch(sheetURL)
       const weekBlock =
         document.createElement("div");
 
-      weekBlock.className = "week-block";
+      weekBlock.className =
+        "week-block";
 
       weekBlock.innerHTML = `
         <h2 class="week-title">
@@ -608,9 +717,11 @@ fetch(sheetURL)
         const board =
           document.createElement("div");
 
-        board.className = "channel-board";
+        board.className =
+          "channel-board";
 
         board.innerHTML = `
+
           <div class="channel-top">
 
             <div class="channel-left">
@@ -627,8 +738,16 @@ fetch(sheetURL)
 
             </div>
 
-            <div>
-              ${percent}% Ready
+            <div class="channel-right">
+
+              <div class="channel-percent">
+                ${percent}%
+              </div>
+
+              <div class="channel-ready">
+                Ready
+              </div>
+
             </div>
 
           </div>
@@ -636,10 +755,12 @@ fetch(sheetURL)
           <div class="progress-wrap">
 
             <div class="progress-bar">
+
               <div
                 class="progress-fill"
                 style="width:${percent}%">
               </div>
+
             </div>
 
           </div>
@@ -654,10 +775,17 @@ fetch(sheetURL)
                 );
 
               return `
+
                 <div class="column">
 
                   <div class="column-title">
-                    ${stage}
+
+                    <span>${stage}</span>
+
+                    <span class="column-count">
+                      ${stageRows.length}
+                    </span>
+
                   </div>
 
                   ${
@@ -666,6 +794,7 @@ fetch(sheetURL)
                     ?
 
                     stageRows.map(r => `
+
                       <div class="script-card">
 
                         <div class="script-title">
@@ -673,15 +802,27 @@ fetch(sheetURL)
                         </div>
 
                         <div class="script-info">
-                          <span>${r[3]} words</span>
-                          <span>${r[4]}</span>
+
+                          <span>
+                            ${r[3]} words
+                          </span>
+
+                          <span>
+                            ${r[4]}
+                          </span>
+
                         </div>
 
-                        <span class="badge ${r[2]}">
-                          ${r[2]}
-                        </span>
+                        <div class="script-bottom">
+
+                          <span class="badge ${r[2]}">
+                            ${r[2]}
+                          </span>
+
+                        </div>
 
                       </div>
+
                     `).join("")
 
                     :
@@ -693,11 +834,13 @@ fetch(sheetURL)
                   }
 
                 </div>
+
               `;
 
             }).join("")}
 
           </div>
+
         `;
 
         weekBlock.appendChild(board);
@@ -713,13 +856,17 @@ fetch(sheetURL)
 .catch(() => {
 
   document.getElementById("boards").innerHTML = `
+
     <div style="
       color:#ff7b7b;
       margin-top:30px;
       font-size:18px;
     ">
+
       Failed to load scripts
+
     </div>
+
   `;
 
 });
