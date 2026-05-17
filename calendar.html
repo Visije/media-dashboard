@@ -1,370 +1,386 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Creator Flow</title>
 
   <style>
-    body {
-      font-family: Segoe UI, sans-serif;
-      background: #f6f8fc;
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-      color: #222;
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    h1 {
-      margin-bottom: 24px;
-      font-size: 42px;
-      font-weight: 800;
+    body{
+      font-family: "Segoe UI", sans-serif;
+      background:#f5f7fb;
+      color:#111827;
+      padding:40px;
     }
 
-    .planner-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+    h1{
+      font-size:48px;
+      font-weight:700;
+      margin-bottom:32px;
+      letter-spacing:-1px;
     }
 
-    .card {
-      background: white;
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease;
+    .planner-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+      gap:24px;
     }
 
-    .card:hover {
-      transform: translateY(-2px);
+    .card{
+      background:#ffffff;
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.05);
     }
 
-    .channel-name {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      letter-spacing: -0.5px;
+    /* TOP */
+
+    .top-section{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin-bottom:10px;
     }
 
-    .platform {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 14px;
+    .channel-name{
+      font-size:20px;
+      font-weight:700;
+      line-height:1.2;
     }
 
-    .target {
-      background: #eef3ff;
-      color: #4054b2;
-      padding: 9px 14px;
-      border-radius: 12px;
-      font-size: 14px;
-      display: inline-block;
-      margin-bottom: 16px;
-      font-weight: 500;
+    .platform{
+      margin-top:6px;
+      font-size:14px;
+      color:#6b7280;
     }
 
-    .upload-box {
-      background: #f9fafc;
-      border: 1px solid #edf0f4;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 14px;
+    .target{
+      display:inline-block;
+      margin-top:18px;
+      background:#eef2ff;
+      color:#4f46e5;
+      padding:10px 14px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:500;
+      margin-bottom:20px;
     }
 
-    .upload-title {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 10px;
+    /* ACCOUNT NOTES */
+
+    .account-notes{
+      position:relative;
     }
 
-    .status {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
+    .account-notes summary{
+      list-style:none;
+      cursor:pointer;
+      width:22px;
+      height:22px;
     }
 
-    .checkbox {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      color: #666;
+    .account-notes summary::-webkit-details-marker{
+      display:none;
     }
 
-    .checkbox input {
-      width: 15px;
-      height: 15px;
-      cursor: pointer;
+    .account-notes summary::before{
+      content:"▸";
+      font-size:18px;
+      color:#6b7280;
+      transition:0.2s ease;
+      display:inline-block;
     }
 
-    /* MINIMAL NOTES */
-
-    .minimal-notes {
-      margin-top: 6px;
+    .account-notes[open] summary::before{
+      transform:rotate(90deg);
     }
 
-    .minimal-notes summary {
-      list-style: none;
-      cursor: pointer;
-      width: 18px;
-      height: 18px;
-      position: relative;
-      user-select: none;
+    .account-notes textarea{
+      position:absolute;
+      right:0;
+      top:30px;
+      width:250px;
+      min-height:120px;
+      background:#fafafa;
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      padding:12px;
+      resize:vertical;
+      outline:none;
+      font-family:inherit;
+      box-shadow:0 10px 24px rgba(0,0,0,0.08);
+      z-index:10;
     }
 
-    .minimal-notes summary::-webkit-details-marker {
-      display: none;
+    /* REEL BOX */
+
+    .upload-box{
+      background:#f8fafc;
+      border:1px solid #edf0f4;
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:16px;
     }
 
-    .minimal-notes summary::before {
-      content: "▸";
-      font-size: 15px;
-      color: #777;
-      transition: transform 0.2s ease;
-      display: inline-block;
+    .upload-title{
+      font-size:16px;
+      font-weight:600;
+      margin-bottom:16px;
     }
 
-    .minimal-notes[open] summary::before {
-      transform: rotate(90deg);
+    .status{
+      display:flex;
+      gap:18px;
+      flex-wrap:wrap;
     }
 
-    .notes {
-      margin-top: 10px;
+    .checkbox{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      color:#4b5563;
     }
 
-    textarea {
-      width: 100%;
-      min-height: 70px;
-      border: 1px solid #e2e6eb;
-      border-radius: 10px;
-      padding: 10px;
-      resize: vertical;
-      font-family: inherit;
-      font-size: 14px;
-      background: white;
-      box-sizing: border-box;
-      outline: none;
-      transition: border 0.2s ease;
+    input[type="checkbox"]{
+      width:16px;
+      height:16px;
+      cursor:pointer;
+      accent-color:#4f46e5;
     }
 
-    textarea:focus {
-      border-color: #8aa4ff;
-    }
+    /* MOBILE */
 
-    @media (max-width: 900px) {
-      .planner-grid {
-        grid-template-columns: 1fr;
+    @media(max-width:768px){
+
+      body{
+        padding:20px;
       }
 
-      h1 {
-        font-size: 34px;
+      h1{
+        font-size:36px;
       }
 
-      .channel-name {
-        font-size: 24px;
+      .planner-grid{
+        grid-template-columns:1fr;
       }
+
+      .account-notes textarea{
+        width:220px;
+      }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
-<h1>Creator Flow</h1>
+  <h1>Creator Flow</h1>
 
-<div class="planner-grid">
+  <div class="planner-grid">
 
-  <!-- Meer Rana -->
-  <div class="card">
+    <!-- Meer Rana -->
+    <div class="card">
 
-    <div class="channel-name">Meer Rana</div>
-    <div class="platform">Instagram</div>
+      <div class="top-section">
 
-    <div class="target">Daily Target: 2 Reels</div>
+        <div>
+          <div class="channel-name">Meer Rana</div>
+          <div class="platform">Instagram</div>
+        </div>
 
-    <!-- Reel 1 -->
-    <div class="upload-box">
+        <details class="account-notes">
+          <summary></summary>
 
-      <div class="upload-title">Reel 1</div>
+          <textarea placeholder="Ideas, hooks, captions, hashtags, audio references..."></textarea>
+        </details>
 
-      <div class="status">
-        <label class="checkbox">
-          <input type="checkbox">
-          Script Ready
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox">
-          Uploaded
-        </label>
       </div>
 
-      <details class="minimal-notes">
-        <summary></summary>
+      <div class="target">Daily Target: 2 Reels</div>
 
-        <div class="notes">
-          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+      <!-- Reel 1 -->
+      <div class="upload-box">
+
+        <div class="upload-title">Reel 1</div>
+
+        <div class="status">
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Script Ready
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Uploaded
+          </label>
+
         </div>
-      </details>
+
+      </div>
+
+      <!-- Reel 2 -->
+      <div class="upload-box">
+
+        <div class="upload-title">Reel 2</div>
+
+        <div class="status">
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Script Ready
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Uploaded
+          </label>
+
+        </div>
+
+      </div>
 
     </div>
 
-    <!-- Reel 2 -->
-    <div class="upload-box">
+    <!-- Topography -->
+    <div class="card">
 
-      <div class="upload-title">Reel 2</div>
+      <div class="top-section">
 
-      <div class="status">
-        <label class="checkbox">
-          <input type="checkbox">
-          Script Ready
-        </label>
+        <div>
+          <div class="channel-name">Topography</div>
+          <div class="platform">Instagram</div>
+        </div>
 
-        <label class="checkbox">
-          <input type="checkbox">
-          Uploaded
-        </label>
+        <details class="account-notes">
+          <summary></summary>
+
+          <textarea placeholder="Ideas, hooks, captions, hashtags, audio references..."></textarea>
+        </details>
+
       </div>
 
-      <details class="minimal-notes">
-        <summary></summary>
+      <div class="target">Daily Target: 2 Reels</div>
 
-        <div class="notes">
-          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
+      <!-- Reel 1 -->
+      <div class="upload-box">
+
+        <div class="upload-title">Reel 1</div>
+
+        <div class="status">
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Script Ready
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Uploaded
+          </label>
+
         </div>
-      </details>
+
+      </div>
+
+      <!-- Reel 2 -->
+      <div class="upload-box">
+
+        <div class="upload-title">Reel 2</div>
+
+        <div class="status">
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Script Ready
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Uploaded
+          </label>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Mixing Masti -->
+    <div class="card">
+
+      <div class="top-section">
+
+        <div>
+          <div class="channel-name">Mixing Masti</div>
+          <div class="platform">Instagram</div>
+        </div>
+
+        <details class="account-notes">
+          <summary></summary>
+
+          <textarea placeholder="Ideas, hooks, captions, hashtags, audio references..."></textarea>
+        </details>
+
+      </div>
+
+      <div class="target">Daily Target: 2 Reels</div>
+
+      <!-- Reel 1 -->
+      <div class="upload-box">
+
+        <div class="upload-title">Reel 1</div>
+
+        <div class="status">
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Script Ready
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Uploaded
+          </label>
+
+        </div>
+
+      </div>
+
+      <!-- Reel 2 -->
+      <div class="upload-box">
+
+        <div class="upload-title">Reel 2</div>
+
+        <div class="status">
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Script Ready
+          </label>
+
+          <label class="checkbox">
+            <input type="checkbox">
+            Uploaded
+          </label>
+
+        </div>
+
+      </div>
 
     </div>
 
   </div>
-
-  <!-- Topography -->
-  <div class="card">
-
-    <div class="channel-name">Topography</div>
-    <div class="platform">Instagram</div>
-
-    <div class="target">Daily Target: 2 Reels</div>
-
-    <!-- Reel 1 -->
-    <div class="upload-box">
-
-      <div class="upload-title">Reel 1</div>
-
-      <div class="status">
-        <label class="checkbox">
-          <input type="checkbox">
-          Script Ready
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox">
-          Uploaded
-        </label>
-      </div>
-
-      <details class="minimal-notes">
-        <summary></summary>
-
-        <div class="notes">
-          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
-        </div>
-      </details>
-
-    </div>
-
-    <!-- Reel 2 -->
-    <div class="upload-box">
-
-      <div class="upload-title">Reel 2</div>
-
-      <div class="status">
-        <label class="checkbox">
-          <input type="checkbox">
-          Script Ready
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox">
-          Uploaded
-        </label>
-      </div>
-
-      <details class="minimal-notes">
-        <summary></summary>
-
-        <div class="notes">
-          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
-        </div>
-      </details>
-
-    </div>
-
-  </div>
-
-  <!-- Mixing Masti -->
-  <div class="card">
-
-    <div class="channel-name">Mixing Masti</div>
-    <div class="platform">Instagram</div>
-
-    <div class="target">Daily Target: 2 Reels</div>
-
-    <!-- Reel 1 -->
-    <div class="upload-box">
-
-      <div class="upload-title">Reel 1</div>
-
-      <div class="status">
-        <label class="checkbox">
-          <input type="checkbox">
-          Script Ready
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox">
-          Uploaded
-        </label>
-      </div>
-
-      <details class="minimal-notes">
-        <summary></summary>
-
-        <div class="notes">
-          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
-        </div>
-      </details>
-
-    </div>
-
-    <!-- Reel 2 -->
-    <div class="upload-box">
-
-      <div class="upload-title">Reel 2</div>
-
-      <div class="status">
-        <label class="checkbox">
-          <input type="checkbox">
-          Script Ready
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox">
-          Uploaded
-        </label>
-      </div>
-
-      <details class="minimal-notes">
-        <summary></summary>
-
-        <div class="notes">
-          <textarea placeholder="Ideas, hook, caption, audio, hashtags..."></textarea>
-        </div>
-      </details>
-
-    </div>
-
-  </div>
-
-</div>
 
 </body>
 </html>
