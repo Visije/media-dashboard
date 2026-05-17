@@ -14,7 +14,7 @@
     }
 
     body{
-      font-family: "Segoe UI", sans-serif;
+      font-family:"Segoe UI",sans-serif;
       background:#f5f7fb;
       color:#111827;
       padding:40px;
@@ -115,6 +115,8 @@
       resize:vertical;
       outline:none;
       font-family:inherit;
+      font-size:14px;
+      line-height:1.5;
       box-shadow:0 10px 24px rgba(0,0,0,0.08);
       z-index:10;
     }
@@ -201,7 +203,10 @@
         <details class="account-notes">
           <summary></summary>
 
-          <textarea placeholder="Ideas, hooks, captions, hashtags, audio references..."></textarea>
+          <textarea
+            id="meer-notes"
+            placeholder="Ideas, hooks, captions, hashtags, audio references..."
+          ></textarea>
         </details>
 
       </div>
@@ -265,7 +270,10 @@
         <details class="account-notes">
           <summary></summary>
 
-          <textarea placeholder="Ideas, hooks, captions, hashtags, audio references..."></textarea>
+          <textarea
+            id="topography-notes"
+            placeholder="Ideas, hooks, captions, hashtags, audio references..."
+          ></textarea>
         </details>
 
       </div>
@@ -329,7 +337,10 @@
         <details class="account-notes">
           <summary></summary>
 
-          <textarea placeholder="Ideas, hooks, captions, hashtags, audio references..."></textarea>
+          <textarea
+            id="mixing-notes"
+            placeholder="Ideas, hooks, captions, hashtags, audio references..."
+          ></textarea>
         </details>
 
       </div>
@@ -381,6 +392,32 @@
     </div>
 
   </div>
+
+  <script>
+
+    // NOTES PERSISTENCE
+
+    const notesAreas = [
+      "meer-notes",
+      "topography-notes",
+      "mixing-notes"
+    ];
+
+    notesAreas.forEach(id => {
+
+      const area = document.getElementById(id);
+
+      // LOAD SAVED NOTES
+      area.value = localStorage.getItem(id) || "";
+
+      // AUTO SAVE WHILE TYPING
+      area.addEventListener("input", () => {
+        localStorage.setItem(id, area.value);
+      });
+
+    });
+
+  </script>
 
 </body>
 </html>
