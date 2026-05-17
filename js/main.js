@@ -51,3 +51,87 @@ if (document.querySelector('meta[name="page"][content="calendar"]')) {
     });
 
 }
+
+// =============================
+// CONTENT CALENDAR
+// =============================
+
+if (document.querySelector('meta[name="page"]')?.content === 'calendar') {
+
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+
+  const dailyIGAccounts = [
+    "Meer Rana",
+    "Topography",
+    "Mixing Masti"
+  ];
+
+  const weeklyAccounts = [
+    "Ender Vij",
+    "I'm Gurey",
+    "CRUST",
+    "Zone-out History",
+    "Touristico"
+  ];
+
+  const weeklyDays = [
+    "Monday",
+    "Wednesday",
+    "Friday",
+    "Sunday"
+  ];
+
+ const calendar = document.getElementById("calendar");
+
+  function uploadCard(name, type, count = 1) {
+    return `
+      <div class="upload ${type}">
+        <strong>${name}</strong>
+
+        <div class="muted">
+          ${type === 'ig'
+            ? 'Instagram Reels'
+            : 'YouTube + Instagram'}
+        </div>
+
+        <div class="status">
+          ${count > 1
+            ? `${count} Reels Planned`
+            : '1 Reel Planned'}
+        </div>
+      </div>
+    `;
+  }
+
+  days.forEach(day => {
+
+    let html = `
+      <div class="day">
+        <h3>${day}</h3>
+    `;
+ // DAILY INSTAGRAM PAGES
+    dailyIGAccounts.forEach(acc => {
+      html += uploadCard(acc, 'ig', 2);
+    });
+
+    // WEEKLY BRAND ACCOUNTS
+    if (weeklyDays.includes(day)) {
+      weeklyAccounts.forEach(acc => {
+        html += uploadCard(acc, 'yt');
+      });
+    }
+
+    html += `</div>`;
+
+    calendar.innerHTML += html;
+  });
+}
+
