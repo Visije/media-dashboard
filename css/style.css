@@ -1434,19 +1434,29 @@ body.focus .coin{
    CREATOR FLOW GRID
 ========================================= */
 
-.creator-grid{
 
-  display:grid;
+/* FORCE 4-COLUMN DAILY FLOW */
 
-  grid-template-columns:repeat(4,minmax(0,1fr));
-
-  gap:18px;
-
-  align-items:start;
+.full-width-section{
 
   width:100%;
 
+  max-width:100%;
+
 }
+
+.creator-grid-4{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,minmax(280px,1fr));
+
+  gap:18px;
+
+  width:100%;
+
+} 
 
 /* =========================================
    DAILY + WEEKLY FLOW CARDS
