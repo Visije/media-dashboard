@@ -1436,10 +1436,14 @@ body.focus .coin{
 
 .creator-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:22px;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:18px;
   align-items:start;
 }
+
+.creator-card{
+  min-width:0;
+} 
 
 /* DAILY FLOW CARD */
 
