@@ -54,92 +54,6 @@ body{
 }
 
 /* =========================================
-   SIDEBAR
-========================================= */
-
-.sidebar{
-
-  width:84px;
-
-  height:100vh;
-
-  background:#ffffff;
-
-  border-right:1px solid #ececec;
-
-  position:fixed;
-
-  left:0;
-
-  top:0;
-
-  padding:20px 10px;
-
-  z-index:100;
-
-}
-
-.logo{
-
-  width:42px;
-
-  height:42px;
-
-  border-radius:14px;
-
-  background:var(--purple);
-
-  margin:auto;
-
-  margin-bottom:34px;
-
-}
-
-.nav{
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:12px;
-
-}
-
-.nav-item{
-
-  text-align:center;
-
-  padding:12px 6px;
-
-  border-radius:14px;
-
-  font-size:11px;
-
-  color:#92929b;
-
-  cursor:pointer;
-
-  transition:.18s ease;
-
-}
-
-.nav-item:hover{
-
-  background:#f5f2ff;
-
-}
-
-.nav-item.active{
-
-  background:#f1edff;
-
-  color:#6f58ff;
-
-  font-weight:600;
-
-}
-
-/* =========================================
    MAIN
 ========================================= */
 
@@ -715,12 +629,5 @@ body{
     font-size:36px;
 
   }
-
-}
-.nav-item{
-
-  text-decoration:none;
-
-  display:block;
 
 }
