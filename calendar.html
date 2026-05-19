@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>Creator Flow</title>
 
 <style>
@@ -20,43 +21,48 @@ body{
   display:flex;
 }
 
-/* SIDEBAR */
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
-  width:90px;
+  width:92px;
   height:100vh;
   background:#ffffff;
   border-right:1px solid #ececec;
-  padding:24px 12px;
   position:fixed;
   left:0;
   top:0;
+  padding:24px 12px;
 }
 
 .logo{
-  width:44px;
-  height:44px;
-  border-radius:14px;
+  width:46px;
+  height:46px;
+  border-radius:16px;
   background:#8b7cf6;
   margin:auto;
-  margin-bottom:40px;
+  margin-bottom:42px;
 }
 
 .nav{
   display:flex;
   flex-direction:column;
-  gap:18px;
-  margin-top:30px;
+  gap:16px;
 }
 
 .nav-item{
   text-align:center;
+  padding:12px 8px;
+  border-radius:16px;
   font-size:12px;
-  color:#7c7c88;
-  padding:12px 6px;
-  border-radius:14px;
+  color:#8a8a95;
   cursor:pointer;
   transition:.2s;
+}
+
+.nav-item:hover{
+  background:#f6f4ff;
 }
 
 .nav-item.active{
@@ -65,35 +71,35 @@ body{
   font-weight:600;
 }
 
-.nav-item:hover{
-  background:#f5f5f7;
-}
-
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 .main{
-  margin-left:90px;
+  margin-left:92px;
   width:100%;
   padding:34px;
 }
 
-/* TOPBAR */
+/* =========================
+   TOPBAR
+========================= */
 
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  margin-bottom:30px;
+  margin-bottom:28px;
 }
 
 .title h1{
-  font-size:62px;
+  font-size:64px;
   line-height:1;
   margin-bottom:10px;
 }
 
 .title p{
-  color:#7e7e89;
+  color:#8b8b95;
   font-size:15px;
 }
 
@@ -104,70 +110,78 @@ body{
 
 .top-card{
   background:#ffffff;
-  border-radius:18px;
+  border-radius:20px;
   padding:14px 18px;
-  min-width:180px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.04);
+  min-width:190px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.04);
 }
 
 .top-card small{
-  color:#90909a;
   display:block;
+  color:#8d8d98;
   margin-bottom:6px;
 }
 
 .top-card strong{
-  font-size:20px;
+  font-size:21px;
 }
 
-/* FLOW STRIP */
+/* =========================
+   FLOW STRIP
+========================= */
 
 .flow-strip{
   background:#ffffff;
-  border-radius:22px;
+  border-radius:24px;
   padding:18px 22px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  box-shadow:0 8px 20px rgba(0,0,0,0.04);
-  margin-bottom:35px;
+  margin-bottom:38px;
+  box-shadow:0 8px 22px rgba(0,0,0,0.04);
 }
 
 .flow-item{
   font-size:15px;
-  color:#555;
+  color:#666;
 }
 
 .flow-item strong{
   color:#111;
 }
 
-/* SECTION */
+/* =========================
+   SECTIONS
+========================= */
 
 .section{
-  margin-bottom:50px;
+  margin-bottom:54px;
 }
 
 .section-title{
-  font-size:28px;
+  font-size:30px;
   margin-bottom:22px;
 }
 
-/* GRID */
+/* =========================
+   GRID
+========================= */
 
 .creator-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:22px;
+  gap:24px;
 }
 
-/* CARD */
+/* =========================
+   CARD
+========================= */
 
 .creator-card{
   background:#ffffff;
-  border-radius:28px;
+  border-radius:30px;
   padding:24px;
-  box-shadow:0 10px 22px rgba(0,0,0,0.05);
+  box-shadow:0 10px 24px rgba(0,0,0,0.05);
   transition:.25s;
 }
 
@@ -175,61 +189,68 @@ body{
   transform:translateY(-4px);
 }
 
+/* =========================
+   HEADER
+========================= */
+
 .creator-head{
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  align-items:flex-start;
   margin-bottom:20px;
 }
 
 .creator-title{
   display:flex;
   align-items:center;
-  gap:10px;
   flex-wrap:wrap;
+  gap:10px;
 }
 
-.creator-head h3{
+.creator-title h3{
   font-size:24px;
+  line-height:1.2;
 }
 
 .creator-note{
   font-size:13px;
-  color:#9a9aa5;
   font-weight:500;
-}
-
-.creator-note.pending{
-  color:#d49b3d;
-}
-
-.creator-note.ready{
-  color:#5da56c;
+  color:#9b9ba5;
 }
 
 .creator-note.focus{
   color:#7d61ff;
 }
 
+.creator-note.ready{
+  color:#58a56a;
+}
+
+.creator-note.pending{
+  color:#d39a3b;
+}
+
 .creator-note.problem{
-  color:#d96c6c;
+  color:#d86b6b;
 }
 
 .arrow{
-  color:#999;
-  font-size:24px;
+  font-size:26px;
+  color:#aaa;
 }
 
-/* TARGET */
+/* =========================
+   TARGET BOX
+========================= */
 
 .target-box{
-  background:#f4efff;
-  border-radius:20px;
+  background:#f3edff;
+  border-radius:22px;
   padding:18px;
-  margin-bottom:18px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  margin-bottom:18px;
 }
 
 .target-box span{
@@ -237,31 +258,33 @@ body{
   font-weight:600;
 }
 
-/* MINI RING */
+/* =========================
+   MINI RING
+========================= */
 
 .mini-ring{
-  width:56px;
-  height:56px;
+  width:58px;
+  height:58px;
   border-radius:50%;
-  background:conic-gradient(
-    #8b7cf6 50%,
-    #e8e3ff 0
-  );
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   font-size:14px;
   font-weight:700;
   color:#6f58ff;
+  background:conic-gradient(
+    #8b7cf6 50%,
+    #e5ddff 0
+  );
 }
 
-/* REEL */
+/* =========================
+   REEL BOX
+========================= */
 
 .reel{
-  border:1px solid #ededf2;
-  border-radius:20px;
+  border:1px solid #ececf3;
+  border-radius:22px;
   padding:18px;
   margin-bottom:14px;
 }
@@ -278,8 +301,8 @@ body{
 }
 
 .status{
-  background:#f3ecff;
-  color:#7d61ff;
+  background:#f1eaff;
+  color:#7b61ff;
   padding:7px 14px;
   border-radius:999px;
   font-size:12px;
@@ -291,6 +314,7 @@ body{
   align-items:center;
   gap:10px;
   color:#666;
+  font-size:15px;
 }
 
 .check input{
@@ -299,10 +323,16 @@ body{
   accent-color:#8b7cf6;
 }
 
-/* WEEKLY CARD */
+/* =========================
+   WEEKLY CARDS
+========================= */
 
 .weekly-card .target-box{
   background:#eef8ef;
+}
+
+.weekly-card .target-box span{
+  color:#4f9a5d;
 }
 
 .weekly-card .mini-ring{
@@ -311,7 +341,7 @@ body{
     #dceedd 0
   );
 
-  color:#3d7a49;
+  color:#458653;
 }
 
 .weekly-card .status{
@@ -319,7 +349,9 @@ body{
   color:#4f9b5d;
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width:1200px){
 
@@ -350,13 +382,13 @@ body{
   }
 
   .title h1{
-    font-size:42px;
+    font-size:44px;
   }
 
   .flow-strip{
     flex-direction:column;
-    gap:10px;
     align-items:flex-start;
+    gap:10px;
   }
 
 }
@@ -366,7 +398,9 @@ body{
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- =========================
+     SIDEBAR
+========================= -->
 
 <aside class="sidebar">
 
@@ -383,7 +417,9 @@ body{
 
 </aside>
 
-<!-- MAIN -->
+<!-- =========================
+     MAIN
+========================= -->
 
 <main class="main">
 
@@ -430,7 +466,9 @@ body{
 
 </div>
 
-<!-- DAILY FLOW -->
+<!-- =========================
+     DAILY FLOW
+========================= -->
 
 <section class="section">
 
@@ -626,7 +664,9 @@ Uploaded
 
 </section>
 
-<!-- WEEKLY FLOW -->
+<!-- =========================
+     WEEKLY FLOW
+========================= -->
 
 <section class="section">
 
@@ -655,12 +695,14 @@ Uploaded
 </div>
 
 <div class="reel">
+
 <div class="reel-top">
 <strong>Weekly Progress</strong>
 <div class="status">Stable</div>
 </div>
 
 <p>1 upload remaining</p>
+
 </div>
 
 </div>
@@ -686,12 +728,14 @@ Uploaded
 </div>
 
 <div class="reel">
+
 <div class="reel-top">
 <strong>Weekly Progress</strong>
 <div class="status">Growing</div>
 </div>
 
 <p>2 uploads remaining</p>
+
 </div>
 
 </div>
@@ -717,12 +761,14 @@ Uploaded
 </div>
 
 <div class="reel">
+
 <div class="reel-top">
 <strong>Weekly Progress</strong>
 <div class="status">Slow</div>
 </div>
 
 <p>3 uploads remaining</p>
+
 </div>
 
 </div>
@@ -748,12 +794,14 @@ Uploaded
 </div>
 
 <div class="reel">
+
 <div class="reel-top">
 <strong>Weekly Progress</strong>
 <div class="status">Excellent</div>
 </div>
 
 <p>Weekly target completed</p>
+
 </div>
 
 </div>
@@ -779,12 +827,14 @@ Uploaded
 </div>
 
 <div class="reel">
+
 <div class="reel-top">
 <strong>Weekly Progress</strong>
 <div class="status">Starting</div>
 </div>
 
 <p>4 uploads remaining</p>
+
 </div>
 
 </div>
