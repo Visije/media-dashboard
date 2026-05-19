@@ -1430,3 +1430,13 @@ body.focus .coin{
   z-index:20;
 }
 
+.creator-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:24px;
+}
+.creator-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:24px;
+}
