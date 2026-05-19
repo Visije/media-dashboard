@@ -872,6 +872,37 @@ Uploaded
 </section>
 
 </main>
+  
+<script>
 
+function toggleNote(button){
+
+  const note = button.nextElementSibling;
+
+  document.querySelectorAll(".hidden-note").forEach(n => {
+    if(n !== note){
+      n.style.display = "none";
+    }
+  });
+
+  note.style.display =
+    note.style.display === "block"
+    ? "none"
+    : "block";
+}
+
+document.addEventListener("click", function(e){
+
+  if(
+    !e.target.closest(".creator-title")
+  ){
+    document.querySelectorAll(".hidden-note")
+      .forEach(n => n.style.display = "none");
+  }
+
+});
+
+</script>
+  
 </body>
 </html>
