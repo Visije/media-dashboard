@@ -1,135 +1,531 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home – Daily Focus</title>
+  <title>Creator Flow</title>
+
   <style>
-    body {
-      font-family: Segoe UI, sans-serif;
-      background: #f6f8fc;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    .card {
-      background: white;
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 18px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    body{
+      font-family: "Segoe UI", sans-serif;
+      background:#f6f7fb;
+      color:#1f1f1f;
+      display:flex;
     }
 
-    h1, h2 { margin: 0 0 10px; }
+    /* SIDEBAR */
 
-    .quote {
-      font-style: italic;
-      color: #555;
+    .sidebar{
+      width:90px;
+      height:100vh;
+      background:#ffffff;
+      border-right:1px solid #ececec;
+      padding:24px 12px;
+      position:fixed;
+      left:0;
+      top:0;
     }
 
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .logo{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:#8b7cf6;
+      margin:auto;
+      margin-bottom:40px;
     }
 
-    .coins span {
-      margin-right: 8px;
+    .nav{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      margin-top:30px;
     }
 
-    .coin {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
+    .nav-item{
+      text-align:center;
+      font-size:12px;
+      color:#7c7c88;
+      padding:12px 6px;
+      border-radius:14px;
+      cursor:pointer;
+      transition:.2s;
     }
 
-    .bronze { background: #cd7f32; color: #3a220f; }
-    .silver { background: #dcdcdc; color: #333; }
-    .gold { background: #ffd700; color: #4a3b00; }
-
-    .ring {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: conic-gradient(#6ab04c 0%, #eaeaea 0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      margin-top: 10px;
+    .nav-item.active{
+      background:#f1edff;
+      color:#6f58ff;
+      font-weight:600;
     }
 
-    ul {
-      padding-left: 18px;
+    .nav-item:hover{
+      background:#f5f5f7;
     }
 
-    .muted {
-      color: #8a8f94;
-      font-style: italic;
+    /* MAIN */
+
+    .main{
+      margin-left:90px;
+      width:100%;
+      padding:34px;
     }
 
-    .priority {
-      font-size: 18px;
-      font-weight: 600;
-      color: #111;
+    /* TOPBAR */
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin-bottom:30px;
     }
+
+    .title h1{
+      font-size:62px;
+      line-height:1;
+      margin-bottom:10px;
+    }
+
+    .title p{
+      color:#7e7e89;
+      font-size:15px;
+    }
+
+    .top-right{
+      display:flex;
+      gap:16px;
+    }
+
+    .top-card{
+      background:#ffffff;
+      border-radius:18px;
+      padding:14px 18px;
+      min-width:180px;
+      box-shadow:0 6px 16px rgba(0,0,0,0.04);
+    }
+
+    .top-card small{
+      color:#90909a;
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .top-card strong{
+      font-size:20px;
+    }
+
+    /* SECTION */
+
+    .section{
+      margin-bottom:40px;
+    }
+
+    .section-title{
+      font-size:24px;
+      margin-bottom:18px;
+    }
+
+    /* GRID */
+
+    .creator-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:22px;
+    }
+
+    /* CARD */
+
+    .creator-card{
+      background:#ffffff;
+      border-radius:28px;
+      padding:24px;
+      box-shadow:0 10px 22px rgba(0,0,0,0.05);
+      transition:.25s;
+    }
+
+    .creator-card:hover{
+      transform:translateY(-4px);
+    }
+
+    .creator-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:20px;
+    }
+
+    .creator-head h3{
+      font-size:22px;
+    }
+
+    .arrow{
+      color:#999;
+      font-size:24px;
+    }
+
+    /* TARGET BOX */
+
+    .target-box{
+      background:#f4efff;
+      border-radius:20px;
+      padding:18px;
+      margin-bottom:18px;
+
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .target-box span{
+      color:#6f58ff;
+      font-weight:600;
+    }
+
+    /* MINI RING */
+
+    .mini-ring{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      background:conic-gradient(
+        #8b7cf6 50%,
+        #e8e3ff 0
+      );
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:14px;
+      font-weight:700;
+      color:#6f58ff;
+    }
+
+    /* REEL */
+
+    .reel{
+      border:1px solid #ededf2;
+      border-radius:20px;
+      padding:18px;
+      margin-bottom:14px;
+    }
+
+    .reel-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:16px;
+    }
+
+    .reel-top strong{
+      font-size:17px;
+    }
+
+    .status{
+      background:#f3ecff;
+      color:#7d61ff;
+      padding:7px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:600;
+    }
+
+    .check{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#666;
+    }
+
+    .check input{
+      width:18px;
+      height:18px;
+      accent-color:#8b7cf6;
+    }
+
+    /* EXTRA */
+
+    .extra{
+      border:2px dashed #ded7ff;
+      padding:16px;
+      border-radius:18px;
+      text-align:center;
+      color:#7d61ff;
+      font-weight:600;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .extra:hover{
+      background:#f7f4ff;
+    }
+
+    /* WEEKLY */
+
+    .weekly-card .target-box{
+      background:#eef8ef;
+    }
+
+    .weekly-card .mini-ring{
+      background:conic-gradient(
+        #7cc98a 75%,
+        #dceedd 0
+      );
+      color:#3d7a49;
+    }
+
+    /* FLOW STATUS */
+
+    .flow-strip{
+      background:#ffffff;
+      border-radius:22px;
+      padding:18px 22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 8px 20px rgba(0,0,0,0.04);
+      margin-bottom:35px;
+    }
+
+    .flow-item{
+      font-size:15px;
+      color:#555;
+    }
+
+    .flow-item strong{
+      color:#111;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:1200px){
+
+      .creator-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+    }
+
+    @media(max-width:760px){
+
+      .sidebar{
+        display:none;
+      }
+
+      .main{
+        margin-left:0;
+        padding:20px;
+      }
+
+      .creator-grid{
+        grid-template-columns:1fr;
+      }
+
+      .topbar{
+        flex-direction:column;
+        gap:20px;
+      }
+
+      .title h1{
+        font-size:44px;
+      }
+
+      .flow-strip{
+        flex-direction:column;
+        gap:10px;
+        align-items:flex-start;
+      }
+
+    }
+
   </style>
 </head>
 
 <body>
 
-<!-- GREETING + QUOTE -->
-<div class="card">
-  <h1>Good Morning 👋</h1>
-  <p class="quote" id="dailyQuote">
-    “Small actions done daily create massive results.”
-  </p>
-</div>
+  <!-- SIDEBAR -->
 
-<!-- STREAKS + PROGRESS -->
-<div class="row">
+  <aside class="sidebar">
 
-  <div class="card">
-    <h2>Consistency</h2>
-    <div class="coins">
-      <span class="coin bronze">3</span>
-      <span class="coin silver">7</span>
-      <span class="coin gold">21</span>
+    <div class="logo"></div>
+
+    <div class="nav">
+      <div class="nav-item">Overview</div>
+      <div class="nav-item active">Creator Flow</div>
+      <div class="nav-item">Scripts</div>
+      <div class="nav-item">Dashboard</div>
+      <div class="nav-item">Assets</div>
+      <div class="nav-item">Settings</div>
     </div>
-    <p class="muted">Coins you’ve earned so far</p>
-  </div>
 
-  <div class="card">
-    <h2>This Week</h2>
-    <div class="ring" id="weekRing">0%</div>
-    <p id="weekCount" class="muted"></p>
-  </div>
+  </aside>
 
-</div>
+  <!-- MAIN -->
 
-<!-- ONE CLEAR PRIORITY -->
-<div class="card">
-  <h2>🎯 One Clear Priority (Today)</h2>
-  <div class="priority" id="todayPriority">
-    Write scripts without distraction
-  </div>
-</div>
+  <main class="main">
 
-<!-- TODAY TASKS -->
-<div class="card">
-  <h2>Today’s Tasks</h2>
-  <ul id="todayTasks"></ul>
-</div>
+    <!-- TOPBAR -->
 
-<!-- SCRIPTS PENDING -->
-<div class="card">
-  <h2>✍️ Scripts Pending Today</h2>
-  <ul id="pendingScripts"></ul>
-</div>
+    <div class="topbar">
+
+      <div class="title">
+        <h1>Creator Flow</h1>
+        <p>Plan • Create • Post • Grow</p>
+      </div>
+
+      <div class="top-right">
+
+        <div class="top-card">
+          <small>Today</small>
+          <strong>Wed, 7 May</strong>
+        </div>
+
+        <div class="top-card">
+          <small>Daily Uploads</small>
+          <strong>5 / 8 Completed</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FLOW STATUS -->
+
+    <div class="flow-strip">
+
+      <div class="flow-item">
+        <strong>3 uploads</strong> pending today
+      </div>
+
+      <div class="flow-item">
+        <strong>2 creators</strong> fully completed
+      </div>
+
+      <div class="flow-item">
+        Best momentum → <strong>Topography</strong>
+      </div>
+
+    </div>
+
+    <!-- DAILY FLOW -->
+
+    <section class="section">
+
+      <h2 class="section-title">Daily Flow</h2>
+
+      <div class="creator-grid">
+
+        <!-- CARD -->
+
+        <div class="creator-card">
+
+          <div class="creator-head">
+            <h3>Meer Rana</h3>
+            <div class="arrow">›</div>
+          </div>
+
+          <div class="target-box">
+            <span>Daily Target: 2 Reels</span>
+            <div class="mini-ring">1/2</div>
+          </div>
+
+          <div class="reel">
+
+            <div class="reel-top">
+              <strong>Reel 1</strong>
+              <div class="status">Uploaded</div>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" checked>
+              Uploaded
+            </label>
+
+          </div>
+
+          <div class="reel">
+
+            <div class="reel-top">
+              <strong>Reel 2</strong>
+              <div class="status">Pending</div>
+            </div>
+
+            <label class="check">
+              <input type="checkbox">
+              Uploaded
+            </label>
+
+          </div>
+
+          <div class="extra">
+            + Add Extra Reel
+          </div>
+
+        </div>
+
+        <!-- DUPLICATE FOR OTHER ACCOUNTS -->
+
+      </div>
+
+    </section>
+
+    <!-- WEEKLY FLOW -->
+
+    <section class="section">
+
+      <h2 class="section-title">Weekly Flow</h2>
+
+      <div class="creator-grid">
+
+        <div class="creator-card weekly-card">
+
+          <div class="creator-head">
+            <h3>CRUST</h3>
+            <div class="arrow">›</div>
+          </div>
+
+          <div class="target-box">
+            <span>4 Reels This Week</span>
+            <div class="mini-ring">3/4</div>
+          </div>
+
+          <div class="reel">
+
+            <div class="reel-top">
+              <strong>Weekly Progress</strong>
+              <div class="status">Stable</div>
+            </div>
+
+            <p style="color:#666;">
+              1 upload remaining this week
+            </p>
+
+          </div>
+
+          <div class="reel">
+
+            <div class="reel-top">
+              <strong>Pending Scripts</strong>
+              <div class="status">2 Left</div>
+            </div>
+
+            <p style="color:#666;">
+              Maintain consistency momentum
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
 
 </body>
 </html>
