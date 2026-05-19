@@ -23,19 +23,19 @@ body{
 /* SIDEBAR */
 
 .sidebar{
-  width:95px;
+  width:90px;
   height:100vh;
   background:#ffffff;
   border-right:1px solid #ececec;
-  padding:22px 12px;
+  padding:24px 12px;
   position:fixed;
   left:0;
   top:0;
 }
 
 .logo{
-  width:46px;
-  height:46px;
+  width:44px;
+  height:44px;
   border-radius:14px;
   background:#8b7cf6;
   margin:auto;
@@ -46,12 +46,13 @@ body{
   display:flex;
   flex-direction:column;
   gap:18px;
+  margin-top:30px;
 }
 
 .nav-item{
   text-align:center;
   font-size:12px;
-  color:#7b7b88;
+  color:#7c7c88;
   padding:12px 6px;
   border-radius:14px;
   cursor:pointer;
@@ -65,13 +66,13 @@ body{
 }
 
 .nav-item:hover{
-  background:#f4f4f7;
+  background:#f5f5f7;
 }
 
 /* MAIN */
 
 .main{
-  margin-left:95px;
+  margin-left:90px;
   width:100%;
   padding:34px;
 }
@@ -82,11 +83,11 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
-  margin-bottom:28px;
+  margin-bottom:30px;
 }
 
 .title h1{
-  font-size:60px;
+  font-size:62px;
   line-height:1;
   margin-bottom:10px;
 }
@@ -103,10 +104,10 @@ body{
 
 .top-card{
   background:#ffffff;
-  border-radius:20px;
+  border-radius:18px;
   padding:14px 18px;
-  min-width:190px;
-  box-shadow:0 8px 18px rgba(0,0,0,0.04);
+  min-width:180px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.04);
 }
 
 .top-card small{
@@ -123,13 +124,13 @@ body{
 
 .flow-strip{
   background:#ffffff;
-  border-radius:24px;
+  border-radius:22px;
   padding:18px 22px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:34px;
   box-shadow:0 8px 20px rgba(0,0,0,0.04);
+  margin-bottom:35px;
 }
 
 .flow-item{
@@ -144,12 +145,12 @@ body{
 /* SECTION */
 
 .section{
-  margin-bottom:40px;
+  margin-bottom:50px;
 }
 
 .section-title{
-  font-size:26px;
-  margin-bottom:18px;
+  font-size:28px;
+  margin-bottom:22px;
 }
 
 /* GRID */
@@ -160,7 +161,7 @@ body{
   gap:22px;
 }
 
-/* CARDS */
+/* CARD */
 
 .creator-card{
   background:#ffffff;
@@ -186,18 +187,17 @@ body{
 }
 
 .arrow{
-  color:#9a9aa3;
-  font-size:26px;
+  color:#999;
+  font-size:24px;
 }
 
-/* TARGET BOX */
+/* TARGET */
 
 .target-box{
   background:#f4efff;
-  border-radius:22px;
+  border-radius:20px;
   padding:18px;
   margin-bottom:18px;
-
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -211,9 +211,13 @@ body{
 /* MINI RING */
 
 .mini-ring{
-  width:58px;
-  height:58px;
+  width:56px;
+  height:56px;
   border-radius:50%;
+  background:conic-gradient(
+    #8b7cf6 50%,
+    #e8e3ff 0
+  );
 
   display:flex;
   align-items:center;
@@ -221,55 +225,7 @@ body{
 
   font-size:14px;
   font-weight:700;
-}
-
-/* DAILY COLORS */
-
-.lavender{
-  background:conic-gradient(#8b7cf6 50%, #e7e1ff 0);
   color:#6f58ff;
-}
-
-.blue{
-  background:conic-gradient(#74b9ff 50%, #dceeff 0);
-  color:#2d7dd2;
-}
-
-.peach{
-  background:conic-gradient(#ffb58c 50%, #ffe7da 0);
-  color:#d86d2d;
-}
-
-.pink{
-  background:conic-gradient(#ff9ed2 50%, #ffe3f2 0);
-  color:#c84b87;
-}
-
-/* WEEKLY COLORS */
-
-.green{
-  background:conic-gradient(#7cc98a 75%, #dceedd 0);
-  color:#3d7a49;
-}
-
-.purple{
-  background:conic-gradient(#8b7cf6 75%, #e7e1ff 0);
-  color:#6f58ff;
-}
-
-.black{
-  background:conic-gradient(#444 75%, #ddd 0);
-  color:#222;
-}
-
-.vintage{
-  background:conic-gradient(#7aa37a 75%, #dce7dc 0);
-  color:#476347;
-}
-
-.brown{
-  background:conic-gradient(#b98b63 75%, #eee0d2 0);
-  color:#7a5535;
 }
 
 /* REEL */
@@ -301,11 +257,6 @@ body{
   font-weight:600;
 }
 
-.status.green-status{
-  background:#eaf8ec;
-  color:#3d7a49;
-}
-
 .check{
   display:flex;
   align-items:center;
@@ -319,7 +270,7 @@ body{
   accent-color:#8b7cf6;
 }
 
-/* EXTRA */
+/* EXTRA BUTTON */
 
 .extra{
   border:2px dashed #ded7ff;
@@ -334,6 +285,26 @@ body{
 
 .extra:hover{
   background:#f7f4ff;
+}
+
+/* WEEKLY CARD */
+
+.weekly-card .target-box{
+  background:#eef8ef;
+}
+
+.weekly-card .mini-ring{
+  background:conic-gradient(
+    #7cc98a 75%,
+    #dceedd 0
+  );
+
+  color:#3d7a49;
+}
+
+.weekly-card .status{
+  background:#edf8ef;
+  color:#4f9b5d;
 }
 
 /* RESPONSIVE */
@@ -438,7 +409,7 @@ body{
   </div>
 
   <div class="flow-item">
-    <strong>2 creators</strong> fully completed
+    <strong>2 creators</strong> completed
   </div>
 
   <div class="flow-item">
@@ -455,181 +426,181 @@ body{
 
 <div class="creator-grid">
 
-<!-- Meer Rana -->
+  <!-- Meer Rana -->
 
-<div class="creator-card">
+  <div class="creator-card">
 
-  <div class="creator-head">
-    <h3>Meer Rana</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>Daily Target: 2 Reels</span>
-    <div class="mini-ring lavender">1/2</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 1</strong>
-      <div class="status green-status">Uploaded</div>
+    <div class="creator-head">
+      <h3>Meer Rana</h3>
+      <div class="arrow">›</div>
     </div>
 
-    <label class="check">
-      <input type="checkbox" checked>
-      Uploaded
-    </label>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 2</strong>
-      <div class="status">Pending</div>
+    <div class="target-box">
+      <span>Daily Target: 2 Reels</span>
+      <div class="mini-ring">1/2</div>
     </div>
 
-    <label class="check">
-      <input type="checkbox">
-      Uploaded
-    </label>
-  </div>
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 1</strong>
+        <div class="status">Uploaded</div>
+      </div>
 
-  <div class="extra">
-    + Add Extra Reel
-  </div>
-
-</div>
-
-<!-- Topography -->
-
-<div class="creator-card">
-
-  <div class="creator-head">
-    <h3>Topography</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>Daily Target: 2 Reels</span>
-    <div class="mini-ring blue">2/2</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 1</strong>
-      <div class="status green-status">Uploaded</div>
+      <label class="check">
+        <input type="checkbox" checked>
+        Uploaded
+      </label>
     </div>
 
-    <label class="check">
-      <input type="checkbox" checked>
-      Uploaded
-    </label>
-  </div>
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 2</strong>
+        <div class="status">Pending</div>
+      </div>
 
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 2</strong>
-      <div class="status green-status">Uploaded</div>
+      <label class="check">
+        <input type="checkbox">
+        Uploaded
+      </label>
     </div>
 
-    <label class="check">
-      <input type="checkbox" checked>
-      Uploaded
-    </label>
-  </div>
-
-  <div class="extra">
-    + Add Extra Reel
-  </div>
-
-</div>
-
-<!-- Mixing Masti -->
-
-<div class="creator-card">
-
-  <div class="creator-head">
-    <h3>Mixing Masti</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>Daily Target: 2 Reels</span>
-    <div class="mini-ring peach">0/2</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 1</strong>
-      <div class="status">Pending</div>
+    <div class="extra">
+      + Add Extra Reel
     </div>
 
-    <label class="check">
-      <input type="checkbox">
-      Uploaded
-    </label>
   </div>
 
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 2</strong>
-      <div class="status">Pending</div>
+  <!-- Topography -->
+
+  <div class="creator-card">
+
+    <div class="creator-head">
+      <h3>Topography</h3>
+      <div class="arrow">›</div>
     </div>
 
-    <label class="check">
-      <input type="checkbox">
-      Uploaded
-    </label>
-  </div>
-
-  <div class="extra">
-    + Add Extra Reel
-  </div>
-
-</div>
-
-<!-- Music Composition -->
-
-<div class="creator-card">
-
-  <div class="creator-head">
-    <h3>Music Composition</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>Daily Target: 2 Reels</span>
-    <div class="mini-ring pink">1/2</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 1</strong>
-      <div class="status green-status">Uploaded</div>
+    <div class="target-box">
+      <span>Daily Target: 2 Reels</span>
+      <div class="mini-ring">2/2</div>
     </div>
 
-    <label class="check">
-      <input type="checkbox" checked>
-      Uploaded
-    </label>
-  </div>
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 1</strong>
+        <div class="status">Uploaded</div>
+      </div>
 
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Reel 2</strong>
-      <div class="status">Pending</div>
+      <label class="check">
+        <input type="checkbox" checked>
+        Uploaded
+      </label>
     </div>
 
-    <label class="check">
-      <input type="checkbox">
-      Uploaded
-    </label>
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 2</strong>
+        <div class="status">Uploaded</div>
+      </div>
+
+      <label class="check">
+        <input type="checkbox" checked>
+        Uploaded
+      </label>
+    </div>
+
+    <div class="extra">
+      + Add Extra Reel
+    </div>
+
   </div>
 
-  <div class="extra">
-    + Add Extra Reel
+  <!-- Mixing Masti -->
+
+  <div class="creator-card">
+
+    <div class="creator-head">
+      <h3>Mixing Masti</h3>
+      <div class="arrow">›</div>
+    </div>
+
+    <div class="target-box">
+      <span>Daily Target: 2 Reels</span>
+      <div class="mini-ring">0/2</div>
+    </div>
+
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 1</strong>
+        <div class="status">Pending</div>
+      </div>
+
+      <label class="check">
+        <input type="checkbox">
+        Uploaded
+      </label>
+    </div>
+
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 2</strong>
+        <div class="status">Pending</div>
+      </div>
+
+      <label class="check">
+        <input type="checkbox">
+        Uploaded
+      </label>
+    </div>
+
+    <div class="extra">
+      + Add Extra Reel
+    </div>
+
   </div>
 
-</div>
+  <!-- Music Composition -->
+
+  <div class="creator-card">
+
+    <div class="creator-head">
+      <h3>Music Composition</h3>
+      <div class="arrow">›</div>
+    </div>
+
+    <div class="target-box">
+      <span>Daily Target: 2 Reels</span>
+      <div class="mini-ring">1/2</div>
+    </div>
+
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 1</strong>
+        <div class="status">Uploaded</div>
+      </div>
+
+      <label class="check">
+        <input type="checkbox" checked>
+        Uploaded
+      </label>
+    </div>
+
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Reel 2</strong>
+        <div class="status">Pending</div>
+      </div>
+
+      <label class="check">
+        <input type="checkbox">
+        Uploaded
+      </label>
+    </div>
+
+    <div class="extra">
+      + Add Extra Reel
+    </div>
+
+  </div>
 
 </div>
 
@@ -643,140 +614,130 @@ body{
 
 <div class="creator-grid">
 
-<!-- Ender Vij -->
+  <!-- Ender Vij -->
 
-<div class="creator-card">
+  <div class="creator-card weekly-card">
 
-  <div class="creator-head">
-    <h3>Ender Vij</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>4 Reels This Week</span>
-    <div class="mini-ring purple">3/4</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Weekly Progress</strong>
-      <div class="status green-status">Stable</div>
+    <div class="creator-head">
+      <h3>Ender Vij</h3>
+      <div class="arrow">›</div>
     </div>
 
-    <p style="color:#666;">
-      1 upload remaining this week
-    </p>
-  </div>
-
-</div>
-
-<!-- I'm Gurey -->
-
-<div class="creator-card">
-
-  <div class="creator-head">
-    <h3>I'm Gurey</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>4 Reels This Week</span>
-    <div class="mini-ring blue">2/4</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Weekly Progress</strong>
-      <div class="status">Behind</div>
+    <div class="target-box">
+      <span>4 Reels This Week</span>
+      <div class="mini-ring">3/4</div>
     </div>
 
-    <p style="color:#666;">
-      2 uploads remaining this week
-    </p>
-  </div>
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Weekly Progress</strong>
+        <div class="status">Stable</div>
+      </div>
 
-</div>
-
-<!-- CRUST -->
-
-<div class="creator-card">
-
-  <div class="creator-head">
-    <h3>CRUST</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>4 Reels This Week</span>
-    <div class="mini-ring black">4/4</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Weekly Progress</strong>
-      <div class="status green-status">Completed</div>
+      <p>1 upload remaining</p>
     </div>
 
-    <p style="color:#666;">
-      Weekly target achieved
-    </p>
   </div>
 
-</div>
+  <!-- I'm Gurey -->
 
-<!-- Zone out History -->
+  <div class="creator-card weekly-card">
 
-<div class="creator-card">
-
-  <div class="creator-head">
-    <h3>Zone out History</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>4 Reels This Week</span>
-    <div class="mini-ring vintage">1/4</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Weekly Progress</strong>
-      <div class="status">Slow</div>
+    <div class="creator-head">
+      <h3>I'm Gurey</h3>
+      <div class="arrow">›</div>
     </div>
 
-    <p style="color:#666;">
-      3 uploads remaining this week
-    </p>
-  </div>
-
-</div>
-
-<!-- Geography -->
-
-<div class="creator-card">
-
-  <div class="creator-head">
-    <h3>Geography</h3>
-    <div class="arrow">›</div>
-  </div>
-
-  <div class="target-box">
-    <span>4 Reels This Week</span>
-    <div class="mini-ring brown">2/4</div>
-  </div>
-
-  <div class="reel">
-    <div class="reel-top">
-      <strong>Weekly Progress</strong>
-      <div class="status">Average</div>
+    <div class="target-box">
+      <span>4 Reels This Week</span>
+      <div class="mini-ring">2/4</div>
     </div>
 
-    <p style="color:#666;">
-      2 uploads remaining this week
-    </p>
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Weekly Progress</strong>
+        <div class="status">Growing</div>
+      </div>
+
+      <p>2 uploads remaining</p>
+    </div>
+
   </div>
 
-</div>
+  <!-- CRUST -->
+
+  <div class="creator-card weekly-card">
+
+    <div class="creator-head">
+      <h3>CRUST</h3>
+      <div class="arrow">›</div>
+    </div>
+
+    <div class="target-box">
+      <span>4 Reels This Week</span>
+      <div class="mini-ring">1/4</div>
+    </div>
+
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Weekly Progress</strong>
+        <div class="status">Slow</div>
+      </div>
+
+      <p>3 uploads remaining</p>
+    </div>
+
+  </div>
+
+  <!-- Zone out History -->
+
+  <div class="creator-card weekly-card">
+
+    <div class="creator-head">
+      <h3>Zone out History</h3>
+      <div class="arrow">›</div>
+    </div>
+
+    <div class="target-box">
+      <span>4 Reels This Week</span>
+      <div class="mini-ring">4/4</div>
+    </div>
+
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Weekly Progress</strong>
+        <div class="status">Excellent</div>
+      </div>
+
+      <p>Weekly target completed</p>
+    </div>
+
+  </div>
+
+  <!-- Geography -->
+
+  <div class="creator-card weekly-card">
+
+    <div class="creator-head">
+      <h3>Geography</h3>
+      <div class="arrow">›</div>
+    </div>
+
+    <div class="target-box">
+      <span>4 Reels This Week</span>
+      <div class="mini-ring">0/4</div>
+    </div>
+
+    <div class="reel">
+      <div class="reel-top">
+        <strong>Weekly Progress</strong>
+        <div class="status">Starting</div>
+      </div>
+
+      <p>4 uploads remaining</p>
+    </div>
+
+  </div>
 
 </div>
 
