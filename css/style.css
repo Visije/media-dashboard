@@ -1777,7 +1777,7 @@ body.focus .coin{
    RESPONSIVE
 ========================================= */
 
-@media(max-width:1400px){
+@media(max-width:1150px){
 
   .creator-grid{
 
@@ -1796,4 +1796,3 @@ body.focus .coin{
   }
 
 }
-
