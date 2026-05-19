@@ -717,3 +717,10 @@ body{
   }
 
 }
+.nav-item{
+
+  text-decoration:none;
+
+  display:block;
+
+}
