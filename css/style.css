@@ -1435,15 +1435,10 @@ body.focus .coin{
 ========================================= */
 
 .creator-grid{
-
   display:grid;
-
-  grid-template-columns:repeat(4,minmax(0,1fr));
-
-  gap:24px;
-
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
   align-items:start;
-
 }
 
 /* DAILY FLOW CARD */
@@ -1454,7 +1449,7 @@ body.focus .coin{
 
   border-radius:28px;
 
-  padding:22px;
+  padding:20px;
 
   border:1px solid var(--border);
 
@@ -1504,7 +1499,7 @@ body.focus .coin{
 
 .creator-title h3{
 
-  font-size:22px;
+  font-size:20px;
 
   font-weight:760;
 
@@ -1537,41 +1532,6 @@ body.focus .coin{
 .note-btn:hover{
 
   color:#6f58ff;
-
-}
-
-/* NOTE POPUP */
-
-.hidden-note{
-
-  position:absolute;
-
-  top:34px;
-
-  left:0;
-
-  width:240px;
-
-  background:var(--card);
-
-  border:1px solid var(--border);
-
-  border-radius:16px;
-
-  padding:14px;
-
-  font-size:13px;
-
-  color:var(--muted);
-
-  line-height:1.6;
-
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.08);
-
-  display:none;
-
-  z-index:999;
 
 }
 
@@ -1749,7 +1709,7 @@ body.focus .coin{
 
 /* RESPONSIVE */
 
-@media(max-width:1400px){
+@media(max-width:1200px){
 
   .creator-grid{
 
