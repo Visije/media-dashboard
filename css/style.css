@@ -1430,13 +1430,341 @@ body.focus .coin{
   z-index:20;
 }
 
+/* =========================================
+   CREATOR FLOW GRID
+========================================= */
+
 .creator-grid{
+
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+
+  grid-template-columns:repeat(4,minmax(0,1fr));
+
   gap:24px;
+
+  align-items:start;
+
 }
-.creator-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:24px;
+
+/* DAILY FLOW CARD */
+
+.creator-card{
+
+  background:var(--card);
+
+  border-radius:28px;
+
+  padding:22px;
+
+  border:1px solid var(--border);
+
+  box-shadow:var(--shadow);
+
+  position:relative;
+
+  overflow:visible;
+
+  transition:.2s ease;
+
+}
+
+.creator-card:hover{
+
+  transform:translateY(-3px);
+
+}
+
+/* HEADER */
+
+.creator-head{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  margin-bottom:18px;
+
+}
+
+.creator-title{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  position:relative;
+
+  flex-wrap:wrap;
+
+}
+
+.creator-title h3{
+
+  font-size:22px;
+
+  font-weight:760;
+
+  letter-spacing:-0.5px;
+
+}
+
+/* HIDDEN NOTE BUTTON */
+
+.note-btn{
+
+  background:none;
+
+  border:none;
+
+  color:#a0a0aa;
+
+  font-size:18px;
+
+  cursor:pointer;
+
+  padding:0;
+
+  line-height:1;
+
+  transition:0.18s ease;
+
+}
+
+.note-btn:hover{
+
+  color:#6f58ff;
+
+}
+
+/* NOTE POPUP */
+
+.hidden-note{
+
+  position:absolute;
+
+  top:34px;
+
+  left:0;
+
+  width:240px;
+
+  background:var(--card);
+
+  border:1px solid var(--border);
+
+  border-radius:16px;
+
+  padding:14px;
+
+  font-size:13px;
+
+  color:var(--muted);
+
+  line-height:1.6;
+
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.08);
+
+  display:none;
+
+  z-index:999;
+
+}
+
+/* TARGET SECTION */
+
+.target-box{
+
+  background:#f4efff;
+
+  border-radius:20px;
+
+  padding:18px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:16px;
+
+}
+
+.target-box span{
+
+  color:#6f58ff;
+
+  font-size:14px;
+
+  font-weight:600;
+
+}
+
+/* MINI RING */
+
+.mini-ring{
+
+  width:56px;
+
+  height:56px;
+
+  border-radius:50%;
+
+  background:
+    conic-gradient(
+      #8b7cf6 50%,
+      #e6deff 0
+    );
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:#6f58ff;
+
+  font-size:14px;
+
+  font-weight:700;
+
+}
+
+/* REEL BOX */
+
+.reel{
+
+  background:var(--card-soft);
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  padding:16px;
+
+  margin-bottom:12px;
+
+}
+
+.reel-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:14px;
+
+}
+
+.reel-top strong{
+
+  font-size:16px;
+
+}
+
+/* STATUS */
+
+.status{
+
+  padding:6px 12px;
+
+  border-radius:999px;
+
+  font-size:11px;
+
+  font-weight:700;
+
+  background:#f1eaff;
+
+  color:#7d61ff;
+
+}
+
+/* CHECKBOX */
+
+.check{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  color:var(--muted);
+
+  font-size:14px;
+
+}
+
+.check input{
+
+  width:16px;
+
+  height:16px;
+
+  accent-color:#8b7cf6;
+
+}
+
+/* WEEKLY FLOW */
+
+.weekly-card .target-box{
+
+  background:#eef8ef;
+
+}
+
+.weekly-card .target-box span{
+
+  color:#4d9960;
+
+}
+
+.weekly-card .mini-ring{
+
+  background:
+    conic-gradient(
+      #7cc98a 75%,
+      #dceedd 0
+    );
+
+  color:#458653;
+
+}
+
+.weekly-card .status{
+
+  background:#edf8ef;
+
+  color:#4f9b5d;
+
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1400px){
+
+  .creator-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+  }
+
+}
+
+@media(max-width:760px){
+
+  .creator-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
 }
