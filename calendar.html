@@ -14,7 +14,7 @@
 }
 
 body{
-  font-family: "Segoe UI", sans-serif;
+  font-family:"Segoe UI",sans-serif;
   background:#f6f7fb;
   color:#1f1f1f;
   display:flex;
@@ -182,8 +182,37 @@ body{
   margin-bottom:20px;
 }
 
+.creator-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
 .creator-head h3{
   font-size:24px;
+}
+
+.creator-note{
+  font-size:13px;
+  color:#9a9aa5;
+  font-weight:500;
+}
+
+.creator-note.pending{
+  color:#d49b3d;
+}
+
+.creator-note.ready{
+  color:#5da56c;
+}
+
+.creator-note.focus{
+  color:#7d61ff;
+}
+
+.creator-note.problem{
+  color:#d96c6c;
 }
 
 .arrow{
@@ -409,165 +438,189 @@ body{
 
 <div class="creator-grid">
 
-  <!-- Meer Rana -->
+<!-- Meer Rana -->
 
-  <div class="creator-card">
+<div class="creator-card">
 
-    <div class="creator-head">
-      <h3>Meer Rana</h3>
-      <div class="arrow">›</div>
-    </div>
+<div class="creator-head">
 
-    <div class="target-box">
-      <span>Daily Target: 2 Reels</span>
-      <div class="mini-ring">1/2</div>
-    </div>
+<div class="creator-title">
+<h3>Meer Rana</h3>
+<span class="creator-note focus">| Focus Today</span>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 1</strong>
-        <div class="status">Uploaded</div>
-      </div>
+<div class="arrow">›</div>
 
-      <label class="check">
-        <input type="checkbox" checked>
-        Uploaded
-      </label>
-    </div>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 2</strong>
-        <div class="status">Pending</div>
-      </div>
+<div class="target-box">
+<span>Daily Target: 2 Reels</span>
+<div class="mini-ring">1/2</div>
+</div>
 
-      <label class="check">
-        <input type="checkbox">
-        Uploaded
-      </label>
-    </div>
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 1</strong>
+<div class="status">Uploaded</div>
+</div>
 
-  </div>
+<label class="check">
+<input type="checkbox" checked>
+Uploaded
+</label>
+</div>
 
-  <!-- Topography -->
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 2</strong>
+<div class="status">Pending</div>
+</div>
 
-  <div class="creator-card">
+<label class="check">
+<input type="checkbox">
+Uploaded
+</label>
+</div>
 
-    <div class="creator-head">
-      <h3>Topography</h3>
-      <div class="arrow">›</div>
-    </div>
+</div>
 
-    <div class="target-box">
-      <span>Daily Target: 2 Reels</span>
-      <div class="mini-ring">2/2</div>
-    </div>
+<!-- Topography -->
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 1</strong>
-        <div class="status">Uploaded</div>
-      </div>
+<div class="creator-card">
 
-      <label class="check">
-        <input type="checkbox" checked>
-        Uploaded
-      </label>
-    </div>
+<div class="creator-head">
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 2</strong>
-        <div class="status">Uploaded</div>
-      </div>
+<div class="creator-title">
+<h3>Topography</h3>
+<span class="creator-note ready">| Momentum Strong</span>
+</div>
 
-      <label class="check">
-        <input type="checkbox" checked>
-        Uploaded
-      </label>
-    </div>
+<div class="arrow">›</div>
 
-  </div>
+</div>
 
-  <!-- Mixing Masti -->
+<div class="target-box">
+<span>Daily Target: 2 Reels</span>
+<div class="mini-ring">2/2</div>
+</div>
 
-  <div class="creator-card">
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 1</strong>
+<div class="status">Uploaded</div>
+</div>
 
-    <div class="creator-head">
-      <h3>Mixing Masti</h3>
-      <div class="arrow">›</div>
-    </div>
+<label class="check">
+<input type="checkbox" checked>
+Uploaded
+</label>
+</div>
 
-    <div class="target-box">
-      <span>Daily Target: 2 Reels</span>
-      <div class="mini-ring">0/2</div>
-    </div>
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 2</strong>
+<div class="status">Uploaded</div>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 1</strong>
-        <div class="status">Pending</div>
-      </div>
+<label class="check">
+<input type="checkbox" checked>
+Uploaded
+</label>
+</div>
 
-      <label class="check">
-        <input type="checkbox">
-        Uploaded
-      </label>
-    </div>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 2</strong>
-        <div class="status">Pending</div>
-      </div>
+<!-- Mixing Masti -->
 
-      <label class="check">
-        <input type="checkbox">
-        Uploaded
-      </label>
-    </div>
+<div class="creator-card">
 
-  </div>
+<div class="creator-head">
 
-  <!-- Music Composition -->
+<div class="creator-title">
+<h3>Mixing Masti</h3>
+<span class="creator-note pending">| Audio Pending</span>
+</div>
 
-  <div class="creator-card">
+<div class="arrow">›</div>
 
-    <div class="creator-head">
-      <h3>Music Composition</h3>
-      <div class="arrow">›</div>
-    </div>
+</div>
 
-    <div class="target-box">
-      <span>Daily Target: 2 Reels</span>
-      <div class="mini-ring">1/2</div>
-    </div>
+<div class="target-box">
+<span>Daily Target: 2 Reels</span>
+<div class="mini-ring">0/2</div>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 1</strong>
-        <div class="status">Uploaded</div>
-      </div>
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 1</strong>
+<div class="status">Pending</div>
+</div>
 
-      <label class="check">
-        <input type="checkbox" checked>
-        Uploaded
-      </label>
-    </div>
+<label class="check">
+<input type="checkbox">
+Uploaded
+</label>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Reel 2</strong>
-        <div class="status">Pending</div>
-      </div>
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 2</strong>
+<div class="status">Pending</div>
+</div>
 
-      <label class="check">
-        <input type="checkbox">
-        Uploaded
-      </label>
-    </div>
+<label class="check">
+<input type="checkbox">
+Uploaded
+</label>
+</div>
 
-  </div>
+</div>
+
+<!-- Music Composition -->
+
+<div class="creator-card">
+
+<div class="creator-head">
+
+<div class="creator-title">
+<h3>Music Composition</h3>
+<span class="creator-note ready">| Script Ready</span>
+</div>
+
+<div class="arrow">›</div>
+
+</div>
+
+<div class="target-box">
+<span>Daily Target: 2 Reels</span>
+<div class="mini-ring">1/2</div>
+</div>
+
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 1</strong>
+<div class="status">Uploaded</div>
+</div>
+
+<label class="check">
+<input type="checkbox" checked>
+Uploaded
+</label>
+</div>
+
+<div class="reel">
+<div class="reel-top">
+<strong>Reel 2</strong>
+<div class="status">Pending</div>
+</div>
+
+<label class="check">
+<input type="checkbox">
+Uploaded
+</label>
+</div>
+
+</div>
 
 </div>
 
@@ -581,130 +634,160 @@ body{
 
 <div class="creator-grid">
 
-  <!-- Ender Vij -->
+<!-- Ender Vij -->
 
-  <div class="creator-card weekly-card">
+<div class="creator-card weekly-card">
 
-    <div class="creator-head">
-      <h3>Ender Vij</h3>
-      <div class="arrow">›</div>
-    </div>
+<div class="creator-head">
 
-    <div class="target-box">
-      <span>4 Reels This Week</span>
-      <div class="mini-ring">3/4</div>
-    </div>
+<div class="creator-title">
+<h3>Ender Vij</h3>
+<span class="creator-note ready">| Stable Growth</span>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Weekly Progress</strong>
-        <div class="status">Stable</div>
-      </div>
+<div class="arrow">›</div>
 
-      <p>1 upload remaining</p>
-    </div>
+</div>
 
-  </div>
+<div class="target-box">
+<span>4 Reels This Week</span>
+<div class="mini-ring">3/4</div>
+</div>
 
-  <!-- I'm Gurey -->
+<div class="reel">
+<div class="reel-top">
+<strong>Weekly Progress</strong>
+<div class="status">Stable</div>
+</div>
 
-  <div class="creator-card weekly-card">
+<p>1 upload remaining</p>
+</div>
 
-    <div class="creator-head">
-      <h3>I'm Gurey</h3>
-      <div class="arrow">›</div>
-    </div>
+</div>
 
-    <div class="target-box">
-      <span>4 Reels This Week</span>
-      <div class="mini-ring">2/4</div>
-    </div>
+<!-- I'm Gurey -->
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Weekly Progress</strong>
-        <div class="status">Growing</div>
-      </div>
+<div class="creator-card weekly-card">
 
-      <p>2 uploads remaining</p>
-    </div>
+<div class="creator-head">
 
-  </div>
+<div class="creator-title">
+<h3>I'm Gurey</h3>
+<span class="creator-note focus">| Priority This Week</span>
+</div>
 
-  <!-- CRUST -->
+<div class="arrow">›</div>
 
-  <div class="creator-card weekly-card">
+</div>
 
-    <div class="creator-head">
-      <h3>CRUST</h3>
-      <div class="arrow">›</div>
-    </div>
+<div class="target-box">
+<span>4 Reels This Week</span>
+<div class="mini-ring">2/4</div>
+</div>
 
-    <div class="target-box">
-      <span>4 Reels This Week</span>
-      <div class="mini-ring">1/4</div>
-    </div>
+<div class="reel">
+<div class="reel-top">
+<strong>Weekly Progress</strong>
+<div class="status">Growing</div>
+</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Weekly Progress</strong>
-        <div class="status">Slow</div>
-      </div>
+<p>2 uploads remaining</p>
+</div>
 
-      <p>3 uploads remaining</p>
-    </div>
+</div>
 
-  </div>
+<!-- CRUST -->
 
-  <!-- Zone out History -->
+<div class="creator-card weekly-card">
 
-  <div class="creator-card weekly-card">
+<div class="creator-head">
 
-    <div class="creator-head">
-      <h3>Zone out History</h3>
-      <div class="arrow">›</div>
-    </div>
+<div class="creator-title">
+<h3>CRUST</h3>
+<span class="creator-note pending">| 2 Scripts Left</span>
+</div>
 
-    <div class="target-box">
-      <span>4 Reels This Week</span>
-      <div class="mini-ring">4/4</div>
-    </div>
+<div class="arrow">›</div>
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Weekly Progress</strong>
-        <div class="status">Excellent</div>
-      </div>
+</div>
 
-      <p>Weekly target completed</p>
-    </div>
+<div class="target-box">
+<span>4 Reels This Week</span>
+<div class="mini-ring">1/4</div>
+</div>
 
-  </div>
+<div class="reel">
+<div class="reel-top">
+<strong>Weekly Progress</strong>
+<div class="status">Slow</div>
+</div>
 
-  <!-- Geography -->
+<p>3 uploads remaining</p>
+</div>
 
-  <div class="creator-card weekly-card">
+</div>
 
-    <div class="creator-head">
-      <h3>Geography</h3>
-      <div class="arrow">›</div>
-    </div>
+<!-- Zone out History -->
 
-    <div class="target-box">
-      <span>4 Reels This Week</span>
-      <div class="mini-ring">0/4</div>
-    </div>
+<div class="creator-card weekly-card">
 
-    <div class="reel">
-      <div class="reel-top">
-        <strong>Weekly Progress</strong>
-        <div class="status">Starting</div>
-      </div>
+<div class="creator-head">
 
-      <p>4 uploads remaining</p>
-    </div>
+<div class="creator-title">
+<h3>Zone out History</h3>
+<span class="creator-note ready">| Weekly Target Hit</span>
+</div>
 
-  </div>
+<div class="arrow">›</div>
+
+</div>
+
+<div class="target-box">
+<span>4 Reels This Week</span>
+<div class="mini-ring">4/4</div>
+</div>
+
+<div class="reel">
+<div class="reel-top">
+<strong>Weekly Progress</strong>
+<div class="status">Excellent</div>
+</div>
+
+<p>Weekly target completed</p>
+</div>
+
+</div>
+
+<!-- Geography -->
+
+<div class="creator-card weekly-card">
+
+<div class="creator-head">
+
+<div class="creator-title">
+<h3>Geography</h3>
+<span class="creator-note pending">| Uploads Pending</span>
+</div>
+
+<div class="arrow">›</div>
+
+</div>
+
+<div class="target-box">
+<span>4 Reels This Week</span>
+<div class="mini-ring">0/4</div>
+</div>
+
+<div class="reel">
+<div class="reel-top">
+<strong>Weekly Progress</strong>
+<div class="status">Starting</div>
+</div>
+
+<p>4 uploads remaining</p>
+</div>
+
+</div>
 
 </div>
 
