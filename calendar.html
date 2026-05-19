@@ -133,6 +133,10 @@ body{
 
   transition:.18s ease;
 
+  text-decoration:none;
+
+  display:block;
+
 }
 
 .nav-item:hover{
@@ -736,6 +740,48 @@ body{
 
 <body>
 
+<!-- =========================================
+     SIDEBAR
+========================================= -->
+
+<aside class="sidebar">
+
+  <div class="logo"></div>
+
+  <div class="nav">
+
+    <a href="index.html" class="nav-item">
+      Overview
+    </a>
+
+    <a href="creator-flow.html" class="nav-item active">
+      Creator Flow
+    </a>
+
+    <a href="scripts.html" class="nav-item">
+      Scripts
+    </a>
+
+    <a href="dashboard.html" class="nav-item">
+      Dashboard
+    </a>
+
+    <a href="assets.html" class="nav-item">
+      Assets
+    </a>
+
+    <a href="settings.html" class="nav-item">
+      Settings
+    </a>
+
+  </div>
+
+</aside>
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
 <main class="main">
 
 <div class="topbar">
@@ -787,6 +833,10 @@ body{
 
 </div>
 
+<!-- =========================================
+     DAILY FLOW
+========================================= -->
+
 <section class="section">
 
   <h2 class="section-title">
@@ -794,8 +844,6 @@ body{
   </h2>
 
   <div class="creator-grid">
-
-    <!-- Meer Rana -->
 
     <div class="creator-card">
 
@@ -846,10 +894,7 @@ body{
 
         <label class="check">
 
-          <input
-            type="checkbox"
-            checked
-          >
+          <input type="checkbox" checked>
 
           Uploaded
 
@@ -879,8 +924,6 @@ body{
 
     </div>
 
-    <!-- Topography -->
-
     <div class="creator-card">
 
       <div class="creator-head">
@@ -892,17 +935,6 @@ body{
           <span class="creator-note ready">
             Momentum Strong
           </span>
-
-          <button
-            class="note-btn"
-            onclick="toggleNote(this)"
-          >
-            •
-          </button>
-
-          <div class="hidden-note">
-            Best performing account this week
-          </div>
 
         </div>
 
@@ -930,10 +962,7 @@ body{
 
         <label class="check">
 
-          <input
-            type="checkbox"
-            checked
-          >
+          <input type="checkbox" checked>
 
           Uploaded
 
@@ -953,10 +982,7 @@ body{
 
         <label class="check">
 
-          <input
-            type="checkbox"
-            checked
-          >
+          <input type="checkbox" checked>
 
           Uploaded
 
@@ -965,8 +991,6 @@ body{
       </div>
 
     </div>
-
-    <!-- Mixing Masti -->
 
     <div class="creator-card">
 
@@ -979,17 +1003,6 @@ body{
           <span class="creator-note pending">
             Audio Pending
           </span>
-
-          <button
-            class="note-btn"
-            onclick="toggleNote(this)"
-          >
-            •
-          </button>
-
-          <div class="hidden-note">
-            Voiceover still pending
-          </div>
 
         </div>
 
@@ -1047,8 +1060,6 @@ body{
 
     </div>
 
-    <!-- Music Composition -->
-
     <div class="creator-card">
 
       <div class="creator-head">
@@ -1060,17 +1071,6 @@ body{
           <span class="creator-note ready">
             Script Ready
           </span>
-
-          <button
-            class="note-btn"
-            onclick="toggleNote(this)"
-          >
-            •
-          </button>
-
-          <div class="hidden-note">
-            Upload planned for evening
-          </div>
 
         </div>
 
@@ -1098,10 +1098,7 @@ body{
 
         <label class="check">
 
-          <input
-            type="checkbox"
-            checked
-          >
+          <input type="checkbox" checked>
 
           Uploaded
 
@@ -1135,15 +1132,17 @@ body{
 
 </section>
 
-  <section class="section">
+<!-- =========================================
+     WEEKLY FLOW
+========================================= -->
+
+<section class="section">
 
   <h2 class="section-title">
     Weekly Flow
   </h2>
 
   <div class="creator-grid">
-
-    <!-- Ender Vij -->
 
     <div class="creator-card weekly-card">
 
@@ -1177,9 +1176,7 @@ body{
 
           <strong>Weekly Progress</strong>
 
-          <div class="status">
-            Stable
-          </div>
+          <div class="status">Stable</div>
 
         </div>
 
@@ -1188,8 +1185,6 @@ body{
       </div>
 
     </div>
-
-    <!-- I'm Gurey -->
 
     <div class="creator-card weekly-card">
 
@@ -1223,9 +1218,7 @@ body{
 
           <strong>Weekly Progress</strong>
 
-          <div class="status">
-            Growing
-          </div>
+          <div class="status">Growing</div>
 
         </div>
 
@@ -1234,8 +1227,6 @@ body{
       </div>
 
     </div>
-
-    <!-- CRUST -->
 
     <div class="creator-card weekly-card">
 
@@ -1269,9 +1260,7 @@ body{
 
           <strong>Weekly Progress</strong>
 
-          <div class="status">
-            Slow
-          </div>
+          <div class="status">Slow</div>
 
         </div>
 
@@ -1280,8 +1269,6 @@ body{
       </div>
 
     </div>
-
-    <!-- Zone out History -->
 
     <div class="creator-card weekly-card">
 
@@ -1315,9 +1302,7 @@ body{
 
           <strong>Weekly Progress</strong>
 
-          <div class="status">
-            Excellent
-          </div>
+          <div class="status">Excellent</div>
 
         </div>
 
@@ -1326,8 +1311,6 @@ body{
       </div>
 
     </div>
-
-    <!-- Geography -->
 
     <div class="creator-card weekly-card">
 
@@ -1361,9 +1344,7 @@ body{
 
           <strong>Weekly Progress</strong>
 
-          <div class="status">
-            Starting
-          </div>
+          <div class="status">Starting</div>
 
         </div>
 
@@ -1375,7 +1356,8 @@ body{
 
   </div>
 
-</section> 
+</section>
+
 </main>
 
 <script>
