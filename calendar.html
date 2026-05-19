@@ -3,585 +3,207 @@
 <head>
   <title>Creator Flow</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Inter', sans-serif;
-      background: #f7f7fb;
-      color: #171717;
-      display: flex;
+      font-family: Segoe UI, sans-serif;
+      background: #f6f8fc;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    /* SIDEBAR */
-
-    .sidebar {
-      width: 90px;
-      background: white;
-      height: 100vh;
-      border-right: 1px solid #ececf2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 22px;
-      position: fixed;
-      left: 0;
-      top: 0;
-    }
-
-    .menu {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 26px;
-      width: 100%;
-      align-items: center;
-    }
-
-    .menu-item {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 12px;
-      color: #71717a;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .menu-item.active {
-      background: #f2ebff;
-      color: #6d4aff;
-      font-weight: 600;
-    }
-
-    /* MAIN */
-
-    .main {
-      margin-left: 90px;
-      width: calc(100% - 90px);
-      padding: 28px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 28px;
-    }
-
-    .logo-section h1 {
-      font-size: 54px;
-      font-weight: 700;
-      letter-spacing: -2px;
-    }
-
-    .subtitle {
-      color: #7a7a88;
-      margin-top: 6px;
-      font-size: 15px;
-    }
-
-    .date-box {
-      background: white;
-      padding: 14px 18px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      border: 1px solid #ececf2;
-    }
-
-    .calendar-btn {
-      background: #f3edff;
-      color: #6d4aff;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    /* CARDS */
-
-    .creator-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .creator-card {
-      background: white;
-      border-radius: 28px;
-      padding: 24px;
-      border: 1px solid #ececf2;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-    }
-
-    .creator-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    h1 {
       margin-bottom: 20px;
     }
 
-    .creator-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .avatar {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 24px;
-    }
-
-    .purple { background: linear-gradient(135deg,#7c4dff,#6d4aff); }
-    .green { background: linear-gradient(135deg,#22c55e,#10b981); }
-    .pink { background: linear-gradient(135deg,#ff4da6,#d946ef); }
-
-    .creator-name {
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: -1px;
-    }
-
-    .platform {
-      margin-top: 4px;
-      color: #7a7a88;
-      font-size: 15px;
-    }
-
-    .target-box {
-      background: #f4efff;
-      border-radius: 20px;
-      padding: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .target-title {
-      color: #6d4aff;
-      font-weight: 600;
-      font-size: 17px;
-    }
-
-    .progress-circle {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      border: 4px solid #d9ccff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #6d4aff;
-      font-weight: 700;
-    }
-
-    /* REELS */
-
-    .reel-card {
-      border: 1px solid #ececf2;
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 18px;
-    }
-
-    .reel-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .reel-title {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -1px;
-    }
-
-    .status {
-      background: #f1eaff;
-      color: #7c4dff;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 13px;
+    .section-title {
+      margin: 30px 0 14px;
+      font-size: 20px;
       font-weight: 600;
     }
 
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      color: #5a5a67;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 16px;
     }
 
-    .circle {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      border: 2px solid #bcbcc8;
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.06);
     }
 
-    details {
-      margin-top: 12px;
-      border-top: 1px solid #ececf2;
-      padding-top: 14px;
+    .account-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
-    summary {
-      cursor: pointer;
+    .meta {
       color: #6b7280;
       font-size: 14px;
-      font-weight: 500;
     }
 
-    textarea {
-      margin-top: 12px;
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid #ececf2;
-      padding: 14px;
-      min-height: 90px;
-      resize: vertical;
-      font-family: inherit;
-      background: #fafafa;
-    }
-
-    .extra-btn {
-      width: 100%;
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid #ddd6fe;
-      background: #faf7ff;
-      color: #6d4aff;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 8px;
-    }
-
-    /* BOTTOM STATS */
-
-    .stats {
-      background: white;
-      margin-top: 28px;
-      border-radius: 28px;
-      border: 1px solid #ececf2;
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
+    .progress-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
       overflow: hidden;
+      margin-top: 12px;
     }
 
-    .stat {
-      padding: 26px;
-      border-right: 1px solid #ececf2;
+    .progress-fill {
+      height: 100%;
+      background: #6ab04c;
+      width: 0%;
     }
 
-    .stat:last-child {
-      border-right: none;
-    }
-
-    .stat-title {
-      color: #7a7a88;
-      margin-bottom: 10px;
+    .count {
+      margin-top: 10px;
       font-size: 14px;
+      color: #374151;
     }
 
-    .stat-value {
-      font-size: 34px;
-      font-weight: 700;
-      letter-spacing: -1px;
+    .pending {
+      margin-top: 40px;
     }
 
-    .purple-text { color: #6d4aff; }
-    .green-text { color: #16a34a; }
-    .orange-text { color: #f59e0b; }
-    .blue-text { color: #2563eb; }
-
+    ul {
+      padding-left: 18px;
+    }
   </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
+<h1>🎬 Creator Flow</h1>
 
-  <div style="font-size:28px;font-weight:700;color:#6d4aff;">▶</div>
+<!-- DAILY ACCOUNTS -->
+<div class="section-title">Daily Reel Accounts</div>
 
-  <div class="menu">
+<div class="grid">
 
-    <div class="menu-item active">
-      Overview
+  <div class="card">
+    <div class="account-name">Meer Rana</div>
+    <div class="meta">2 reels/day</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:50%"></div>
     </div>
 
-    <div class="menu-item">
-      Creator Flow
+    <div class="count">1 / 2 uploaded today</div>
+  </div>
+
+  <div class="card">
+    <div class="account-name">Topography</div>
+    <div class="meta">2 reels/day</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:100%"></div>
     </div>
 
-    <div class="menu-item">
-      Scripts
+    <div class="count">2 / 2 uploaded today</div>
+  </div>
+
+  <div class="card">
+    <div class="account-name">Mixing Masti</div>
+    <div class="meta">2 reels/day</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:0%"></div>
     </div>
 
-    <div class="menu-item">
-      Tasks
+    <div class="count">0 / 2 uploaded today</div>
+  </div>
+
+  <div class="card">
+    <div class="account-name">Music Composition</div>
+    <div class="meta">2 reels/day</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:50%"></div>
     </div>
 
-    <div class="menu-item">
-      Analytics
-    </div>
-
-    <div class="menu-item">
-      Assets
-    </div>
-
-    <div class="menu-item">
-      Settings
-    </div>
-
+    <div class="count">1 / 2 uploaded today</div>
   </div>
 
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- WEEKLY ACCOUNTS -->
+<div class="section-title">Weekly Reel Accounts</div>
 
-  <!-- TOPBAR -->
-  <div class="topbar">
+<div class="grid">
 
-    <div class="logo-section">
-      <h1>Creator Flow</h1>
-      <div class="subtitle">Plan • Create • Post • Grow</div>
+  <div class="card">
+    <div class="account-name">Ender Vij</div>
+    <div class="meta">4 reels/week</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:75%"></div>
     </div>
 
-    <div class="date-box">
-      <div>
-        <div style="font-size:13px;color:#7a7a88;">Today</div>
-        <div style="font-weight:700;font-size:18px;">Wed, 7 May 2025</div>
-      </div>
-
-      <button class="calendar-btn">View Calendar</button>
-    </div>
-
+    <div class="count">3 / 4 uploaded this week</div>
   </div>
 
-  <!-- CREATOR GRID -->
-  <div class="creator-grid">
+  <div class="card">
+    <div class="account-name">I'm Gurey</div>
+    <div class="meta">4 reels/week</div>
 
-    <!-- MEER RANA -->
-    <div class="creator-card">
-
-      <div class="creator-top">
-
-        <div class="creator-left">
-          <div class="avatar purple">MR</div>
-
-          <div>
-            <div class="creator-name">Meer Rana</div>
-            <div class="platform">Instagram</div>
-          </div>
-        </div>
-
-        <div style="font-size:26px;color:#7a7a88;">›</div>
-
-      </div>
-
-      <div class="target-box">
-        <div class="target-title">Daily Target: 2 Reels</div>
-        <div class="progress-circle">0/2</div>
-      </div>
-
-      <!-- REEL 1 -->
-      <div class="reel-card">
-
-        <div class="reel-top">
-          <div class="reel-title">Reel 1</div>
-          <div class="status">Pending</div>
-        </div>
-
-        
-
-        <div class="check-item">
-          <div class="circle"></div>
-          Uploaded
-        </div>
-
-        
-
-      </div>
-
-      <!-- REEL 2 -->
-      <div class="reel-card">
-
-        <div class="reel-top">
-          <div class="reel-title">Reel 2</div>
-          <div class="status">Pending</div>
-        </div>
-
-        
-
-        <div class="check-item">
-          <div class="circle"></div>
-          Uploaded
-        </div>
-
-        
-
-      </div>
-
-      <button class="extra-btn">＋ Add Extra Reel (Optional)</button>
-
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:50%"></div>
     </div>
 
-    <!-- TOPOGRAPHY -->
-    <div class="creator-card">
-
-      <div class="creator-top">
-
-        <div class="creator-left">
-          <div class="avatar green">TO</div>
-
-          <div>
-            <div class="creator-name">Topography</div>
-            <div class="platform">Instagram</div>
-          </div>
-        </div>
-
-        <div style="font-size:26px;color:#7a7a88;">›</div>
-
-      </div>
-
-      <div class="target-box">
-        <div class="target-title">Daily Target: 2 Reels</div>
-        <div class="progress-circle">0/2</div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-top">
-          <div class="reel-title">Reel 1</div>
-          <div class="status">Pending</div>
-        </div>
-
-        
-        <div class="check-item"><div class="circle"></div>Uploaded</div>
-
-        
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-top">
-          <div class="reel-title">Reel 2</div>
-          <div class="status">Pending</div>
-        </div>
-
-        
-        <div class="check-item"><div class="circle"></div>Uploaded</div>
-
-        
-      </div>
-
-      <button class="extra-btn">＋ Add Extra Reel (Optional)</button>
-
-    </div>
-
-    <!-- MIXING MASTI -->
-    <div class="creator-card">
-
-      <div class="creator-top">
-
-        <div class="creator-left">
-          <div class="avatar pink">MM</div>
-
-          <div>
-            <div class="creator-name">Mixing Masti</div>
-            <div class="platform">Instagram</div>
-          </div>
-        </div>
-
-        <div style="font-size:26px;color:#7a7a88;">›</div>
-
-      </div>
-
-      <div class="target-box">
-        <div class="target-title">Daily Target: 2 Reels</div>
-        <div class="progress-circle">0/2</div>
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-top">
-          <div class="reel-title">Reel 1</div>
-          <div class="status">Pending</div>
-        </div>
-
-        
-        <div class="check-item"><div class="circle"></div>Uploaded</div>
-
-        
-      </div>
-
-      <div class="reel-card">
-        <div class="reel-top">
-          <div class="reel-title">Reel 2</div>
-          <div class="status">Pending</div>
-        </div>
-
-        
-        <div class="check-item"><div class="circle"></div>Uploaded</div>
-
-        
-      </div>
-
-      <button class="extra-btn">＋ Add Extra Reel (Optional)</button>
-
-    </div>
-
+    <div class="count">2 / 4 uploaded this week</div>
   </div>
 
-  <!-- BOTTOM STATS -->
-  <div class="stats">
+  <div class="card">
+    <div class="account-name">CRUST</div>
+    <div class="meta">4 reels/week</div>
 
-    <div class="stat">
-      <div class="stat-title">Total Daily Target</div>
-      <div class="stat-value purple-text">6 Reels</div>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:25%"></div>
     </div>
 
-    <div class="stat">
-      <div class="stat-title">Completed Today</div>
-      <div class="stat-value green-text">0 Reels</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">Pending</div>
-      <div class="stat-value orange-text">6 Reels</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-title">This Week's Target</div>
-      <div class="stat-value blue-text">42 Reels</div>
-    </div>
-
+    <div class="count">1 / 4 uploaded this week</div>
   </div>
 
+  <div class="card">
+    <div class="account-name">Zone out History</div>
+    <div class="meta">4 reels/week</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:100%"></div>
+    </div>
+
+    <div class="count">4 / 4 uploaded this week</div>
+  </div>
+
+  <div class="card">
+    <div class="account-name">Geography</div>
+    <div class="meta">4 reels/week</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" style="width:50%"></div>
+    </div>
+
+    <div class="count">2 / 4 uploaded this week</div>
+  </div>
+
+</div>
+
+<!-- PENDING QUEUE -->
+<div class="pending">
+  <div class="section-title">Pending Upload Queue</div>
+
+  <div class="card">
+    <ul>
+      <li>Meer Rana → 1 reel pending today</li>
+      <li>Mixing Masti → 2 reels pending today</li>
+      <li>CRUST → 3 reels pending this week</li>
+    </ul>
+  </div>
 </div>
 
 </body>
