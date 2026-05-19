@@ -8,15 +8,733 @@
 
 <title>Creator Flow</title>
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+/* =========================================
+   ROOT VARIABLES
+========================================= */
+
+:root{
+
+  --bg:#f6f7fb;
+
+  --card:#ffffff;
+
+  --card-soft:#fafbfd;
+
+  --text:#1f1f1f;
+
+  --muted:#8d8d98;
+
+  --border:#ececf3;
+
+  --purple:#8b7cf6;
+
+  --purple-soft:#f3edff;
+
+  --green:#7cc98a;
+
+  --green-soft:#eef8ef;
+
+  --shadow:
+    0 10px 24px rgba(0,0,0,0.05);
+
+}
+
+/* =========================================
+   RESET
+========================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+
+  font-family:"Segoe UI",sans-serif;
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  display:flex;
+
+  overflow-x:hidden;
+
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.sidebar{
+
+  width:84px;
+
+  height:100vh;
+
+  background:#ffffff;
+
+  border-right:1px solid #ececec;
+
+  position:fixed;
+
+  left:0;
+
+  top:0;
+
+  padding:20px 10px;
+
+  z-index:100;
+
+}
+
+.logo{
+
+  width:42px;
+
+  height:42px;
+
+  border-radius:14px;
+
+  background:var(--purple);
+
+  margin:auto;
+
+  margin-bottom:34px;
+
+}
+
+.nav{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:12px;
+
+}
+
+.nav-item{
+
+  text-align:center;
+
+  padding:12px 6px;
+
+  border-radius:14px;
+
+  font-size:11px;
+
+  color:#92929b;
+
+  cursor:pointer;
+
+  transition:.18s ease;
+
+}
+
+.nav-item:hover{
+
+  background:#f5f2ff;
+
+}
+
+.nav-item.active{
+
+  background:#f1edff;
+
+  color:#6f58ff;
+
+  font-weight:600;
+
+}
+
+/* =========================================
+   MAIN
+========================================= */
+
+.main{
+
+  margin-left:84px;
+
+  width:calc(100% - 84px);
+
+  padding:20px;
+
+}
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  margin-bottom:24px;
+
+}
+
+.title h1{
+
+  font-size:48px;
+
+  line-height:1;
+
+  letter-spacing:-1.5px;
+
+  margin-bottom:8px;
+
+}
+
+.title p{
+
+  color:var(--muted);
+
+  font-size:14px;
+
+}
+
+.top-right{
+
+  display:flex;
+
+  gap:12px;
+
+}
+
+.top-card{
+
+  background:#ffffff;
+
+  border-radius:18px;
+
+  padding:14px 16px;
+
+  min-width:160px;
+
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.04);
+
+}
+
+.top-card small{
+
+  display:block;
+
+  color:var(--muted);
+
+  margin-bottom:5px;
+
+  font-size:12px;
+
+}
+
+.top-card strong{
+
+  font-size:18px;
+
+}
+
+/* =========================================
+   FLOW STRIP
+========================================= */
+
+.flow-strip{
+
+  background:#ffffff;
+
+  border-radius:22px;
+
+  padding:16px 20px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:34px;
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,0.04);
+
+}
+
+.flow-item{
+
+  font-size:14px;
+
+  color:#666;
+
+}
+
+.flow-item strong{
+
+  color:#111;
+
+}
+
+/* =========================================
+   SECTIONS
+========================================= */
+
+.section{
+
+  margin-bottom:44px;
+
+}
+
+.section-title{
+
+  font-size:24px;
+
+  margin-bottom:18px;
+
+  letter-spacing:-0.5px;
+
+}
+
+/* =========================================
+   GRID
+========================================= */
+
+.creator-grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  gap:14px;
+
+  align-items:start;
+
+}
+
+/* =========================================
+   CARDS
+========================================= */
+
+.creator-card{
+
+  background:#ffffff;
+
+  border-radius:24px;
+
+  padding:14px;
+
+  box-shadow:var(--shadow);
+
+  transition:.2s ease;
+
+  min-width:0;
+
+}
+
+.creator-card:hover{
+
+  transform:translateY(-3px);
+
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.creator-head{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:flex-start;
+
+  gap:8px;
+
+  margin-bottom:14px;
+
+}
+
+.creator-title{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:6px;
+
+  flex-wrap:wrap;
+
+  position:relative;
+
+}
+
+.creator-title h3{
+
+  font-size:18px;
+
+  line-height:1.2;
+
+  font-weight:700;
+
+}
+
+.creator-note{
+
+  font-size:11px;
+
+  font-weight:600;
+
+}
+
+.creator-note.focus{
+  color:#6f58ff;
+}
+
+.creator-note.ready{
+  color:#4f9b5d;
+}
+
+.creator-note.pending{
+  color:#d59a3b;
+}
+
+.creator-note.problem{
+  color:#d86b6b;
+}
+
+.arrow{
+
+  font-size:20px;
+
+  color:#aaa;
+
+}
+
+/* =========================================
+   NOTE BUTTON
+========================================= */
+
+.note-btn{
+
+  background:none;
+
+  border:none;
+
+  color:#999;
+
+  font-size:14px;
+
+  cursor:pointer;
+
+}
+
+.note-btn:hover{
+
+  color:#6f58ff;
+
+}
+
+.hidden-note{
+
+  position:absolute;
+
+  top:28px;
+
+  left:0;
+
+  width:180px;
+
+  background:#ffffff;
+
+  border:1px solid #ececec;
+
+  border-radius:14px;
+
+  padding:12px;
+
+  font-size:12px;
+
+  color:#666;
+
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.08);
+
+  display:none;
+
+  z-index:20;
+
+}
+
+/* =========================================
+   TARGET BOX
+========================================= */
+
+.target-box{
+
+  background:var(--purple-soft);
+
+  border-radius:18px;
+
+  padding:12px 14px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:12px;
+
+}
+
+.target-box span{
+
+  color:#6f58ff;
+
+  font-size:12px;
+
+  font-weight:600;
+
+}
+
+/* =========================================
+   MINI RING
+========================================= */
+
+.mini-ring{
+
+  width:46px;
+
+  height:46px;
+
+  border-radius:50%;
+
+  background:
+    conic-gradient(
+      #8b7cf6 50%,
+      #e5ddff 0
+    );
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:#6f58ff;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  flex-shrink:0;
+
+}
+
+/* =========================================
+   REEL BOX
+========================================= */
+
+.reel{
+
+  border:1px solid var(--border);
+
+  border-radius:18px;
+
+  padding:12px;
+
+  margin-bottom:10px;
+
+  background:#fff;
+
+}
+
+.reel:last-child{
+
+  margin-bottom:0;
+
+}
+
+.reel-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:8px;
+
+  margin-bottom:10px;
+
+}
+
+.reel-top strong{
+
+  font-size:14px;
+
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.status{
+
+  background:#f1eaff;
+
+  color:#7b61ff;
+
+  padding:5px 10px;
+
+  border-radius:999px;
+
+  font-size:10px;
+
+  font-weight:700;
+
+  white-space:nowrap;
+
+}
+
+/* =========================================
+   CHECKBOX
+========================================= */
+
+.check{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  color:#666;
+
+  font-size:13px;
+
+}
+
+.check input{
+
+  width:15px;
+
+  height:15px;
+
+  accent-color:#8b7cf6;
+
+}
+
+/* =========================================
+   WEEKLY FLOW
+========================================= */
+
+.weekly-card .target-box{
+
+  background:var(--green-soft);
+
+}
+
+.weekly-card .target-box span{
+
+  color:#4f9a5d;
+
+}
+
+.weekly-card .mini-ring{
+
+  background:
+    conic-gradient(
+      #7cc98a 75%,
+      #dceedd 0
+    );
+
+  color:#458653;
+
+}
+
+.weekly-card .status{
+
+  background:#edf8ef;
+
+  color:#4f9b5d;
+
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:1350px){
+
+  .creator-grid{
+
+    grid-template-columns:repeat(2,1fr);
+
+  }
+
+}
+
+@media(max-width:760px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+
+    margin-left:0;
+
+    width:100%;
+
+    padding:16px;
+
+  }
+
+  .creator-grid{
+
+    grid-template-columns:1fr;
+
+  }
+
+  .topbar{
+
+    flex-direction:column;
+
+    gap:18px;
+
+  }
+
+  .flow-strip{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:8px;
+
+  }
+
+  .title h1{
+
+    font-size:36px;
+
+  }
+
+}
+
+</style>
 
 </head>
 
 <body>
-
-<!-- =========================================
-     SIDEBAR
-========================================= -->
 
 <aside class="sidebar">
 
@@ -24,55 +742,31 @@
 
   <div class="nav">
 
-    <div class="nav-item">
-      Overview
-    </div>
+    <div class="nav-item">Overview</div>
 
-    <div class="nav-item active">
-      Creator Flow
-    </div>
+    <div class="nav-item active">Creator Flow</div>
 
-    <div class="nav-item">
-      Scripts
-    </div>
+    <div class="nav-item">Scripts</div>
 
-    <div class="nav-item">
-      Dashboard
-    </div>
+    <div class="nav-item">Dashboard</div>
 
-    <div class="nav-item">
-      Assets
-    </div>
+    <div class="nav-item">Assets</div>
 
-    <div class="nav-item">
-      Settings
-    </div>
+    <div class="nav-item">Settings</div>
 
   </div>
 
 </aside>
 
-<!-- =========================================
-     MAIN
-========================================= -->
-
 <main class="main">
-
-<!-- =========================================
-     TOPBAR
-========================================= -->
 
 <div class="topbar">
 
   <div class="title">
 
-    <h1>
-      Creator Flow
-    </h1>
+    <h1>Creator Flow</h1>
 
-    <p>
-      Plan • Create • Post • Grow
-    </p>
+    <p>Plan • Create • Post • Grow</p>
 
   </div>
 
@@ -80,35 +774,23 @@
 
     <div class="top-card">
 
-      <small>
-        Today
-      </small>
+      <small>Today</small>
 
-      <strong>
-        Wed, 7 May
-      </strong>
+      <strong>Wed, 7 May</strong>
 
     </div>
 
     <div class="top-card">
 
-      <small>
-        Daily Uploads
-      </small>
+      <small>Daily Uploads</small>
 
-      <strong>
-        5 / 8 Completed
-      </strong>
+      <strong>5 / 8 Completed</strong>
 
     </div>
 
   </div>
 
 </div>
-
-<!-- =========================================
-     FLOW STRIP
-========================================= -->
 
 <div class="flow-strip">
 
@@ -127,10 +809,6 @@
 
 </div>
 
-<!-- =========================================
-     DAILY FLOW
-========================================= -->
-
 <section class="section">
 
   <h2 class="section-title">
@@ -147,9 +825,7 @@
 
         <div class="creator-title">
 
-          <h3>
-            Meer Rana
-          </h3>
+          <h3>Meer Rana</h3>
 
           <span class="creator-note focus">
             Focus Today
@@ -168,21 +844,15 @@
 
         </div>
 
-        <div class="arrow">
-          ›
-        </div>
+        <div class="arrow">›</div>
 
       </div>
 
       <div class="target-box">
 
-        <span>
-          Daily Target: 2 Reels
-        </span>
+        <span>Daily Target: 2 Reels</span>
 
-        <div class="mini-ring">
-          1/2
-        </div>
+        <div class="mini-ring">1/2</div>
 
       </div>
 
@@ -190,13 +860,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 1
-          </strong>
+          <strong>Reel 1</strong>
 
-          <div class="status">
-            Uploaded
-          </div>
+          <div class="status">Uploaded</div>
 
         </div>
 
@@ -217,13 +883,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 2
-          </strong>
+          <strong>Reel 2</strong>
 
-          <div class="status">
-            Pending
-          </div>
+          <div class="status">Pending</div>
 
         </div>
 
@@ -247,9 +909,7 @@
 
         <div class="creator-title">
 
-          <h3>
-            Topography
-          </h3>
+          <h3>Topography</h3>
 
           <span class="creator-note ready">
             Momentum Strong
@@ -268,21 +928,15 @@
 
         </div>
 
-        <div class="arrow">
-          ›
-        </div>
+        <div class="arrow">›</div>
 
       </div>
 
       <div class="target-box">
 
-        <span>
-          Daily Target: 2 Reels
-        </span>
+        <span>Daily Target: 2 Reels</span>
 
-        <div class="mini-ring">
-          2/2
-        </div>
+        <div class="mini-ring">2/2</div>
 
       </div>
 
@@ -290,13 +944,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 1
-          </strong>
+          <strong>Reel 1</strong>
 
-          <div class="status">
-            Uploaded
-          </div>
+          <div class="status">Uploaded</div>
 
         </div>
 
@@ -317,13 +967,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 2
-          </strong>
+          <strong>Reel 2</strong>
 
-          <div class="status">
-            Uploaded
-          </div>
+          <div class="status">Uploaded</div>
 
         </div>
 
@@ -350,9 +996,7 @@
 
         <div class="creator-title">
 
-          <h3>
-            Mixing Masti
-          </h3>
+          <h3>Mixing Masti</h3>
 
           <span class="creator-note pending">
             Audio Pending
@@ -371,21 +1015,15 @@
 
         </div>
 
-        <div class="arrow">
-          ›
-        </div>
+        <div class="arrow">›</div>
 
       </div>
 
       <div class="target-box">
 
-        <span>
-          Daily Target: 2 Reels
-        </span>
+        <span>Daily Target: 2 Reels</span>
 
-        <div class="mini-ring">
-          0/2
-        </div>
+        <div class="mini-ring">0/2</div>
 
       </div>
 
@@ -393,13 +1031,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 1
-          </strong>
+          <strong>Reel 1</strong>
 
-          <div class="status">
-            Pending
-          </div>
+          <div class="status">Pending</div>
 
         </div>
 
@@ -417,13 +1051,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 2
-          </strong>
+          <strong>Reel 2</strong>
 
-          <div class="status">
-            Pending
-          </div>
+          <div class="status">Pending</div>
 
         </div>
 
@@ -447,9 +1077,7 @@
 
         <div class="creator-title">
 
-          <h3>
-            Music Composition
-          </h3>
+          <h3>Music Composition</h3>
 
           <span class="creator-note ready">
             Script Ready
@@ -468,21 +1096,15 @@
 
         </div>
 
-        <div class="arrow">
-          ›
-        </div>
+        <div class="arrow">›</div>
 
       </div>
 
       <div class="target-box">
 
-        <span>
-          Daily Target: 2 Reels
-        </span>
+        <span>Daily Target: 2 Reels</span>
 
-        <div class="mini-ring">
-          1/2
-        </div>
+        <div class="mini-ring">1/2</div>
 
       </div>
 
@@ -490,13 +1112,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 1
-          </strong>
+          <strong>Reel 1</strong>
 
-          <div class="status">
-            Uploaded
-          </div>
+          <div class="status">Uploaded</div>
 
         </div>
 
@@ -517,13 +1135,9 @@
 
         <div class="reel-top">
 
-          <strong>
-            Reel 2
-          </strong>
+          <strong>Reel 2</strong>
 
-          <div class="status">
-            Pending
-          </div>
+          <div class="status">Pending</div>
 
         </div>
 
@@ -534,66 +1148,6 @@
           Uploaded
 
         </label>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- =========================================
-     WEEKLY FLOW
-========================================= -->
-
-<section class="section">
-
-  <h2 class="section-title">
-    Weekly Flow
-  </h2>
-
-  <div class="creator-grid">
-
-    <div class="creator-card weekly-card">
-
-      <div class="creator-head">
-
-        <div class="creator-title">
-
-          <h3>Ender Vij</h3>
-
-          <span class="creator-note ready">
-            Stable Growth
-          </span>
-
-        </div>
-
-        <div class="arrow">›</div>
-
-      </div>
-
-      <div class="target-box">
-
-        <span>4 Reels This Week</span>
-
-        <div class="mini-ring">3/4</div>
-
-      </div>
-
-      <div class="reel">
-
-        <div class="reel-top">
-
-          <strong>Weekly Progress</strong>
-
-          <div class="status">
-            Stable
-          </div>
-
-        </div>
-
-        <p>1 upload remaining</p>
 
       </div>
 
