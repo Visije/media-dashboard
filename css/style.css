@@ -814,3 +814,53 @@ a{
   }
 
 }
+
+.nav-item.active{
+
+  background:#f2edff;
+  color:#7a63ff;
+
+  position:relative;
+}
+
+.nav-item.active::after{
+
+  content:"";
+
+  position:absolute;
+
+  bottom:-6px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  width:24px;
+  height:4px;
+
+  border-radius:999px;
+
+  background:#8b7cf6;
+}
+
+.nav-item{
+
+  text-decoration:none;
+
+  padding:
+  12px 24px;
+
+  border-radius:18px;
+
+  font-weight:600;
+
+  color:#777;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
