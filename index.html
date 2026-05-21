@@ -56,28 +56,68 @@
 
     .nav-item{
 
-      padding:
-      12px 24px;
+  text-decoration:none;
 
-      border-radius:18px;
+  padding:
+  12px 24px;
 
-      font-weight:600;
+  border-radius:18px;
 
-      color:#777;
+  font-weight:600;
 
-      cursor:pointer;
+  color:#777;
 
-      transition:.2s;
+  cursor:pointer;
 
-    }
+  transition:.2s;
 
-    .nav-item.active{
+  display:flex;
 
-      background:#f2edff;
+  align-items:center;
 
-      color:#7a63ff;
+  justify-content:center;
 
-    }
+}
+
+.nav-item:hover{
+
+  background:#f5f2ff;
+
+  color:#7a63ff;
+
+}
+
+.nav-item.active{
+
+  background:#f2edff;
+
+  color:#7a63ff;
+
+  position:relative;
+
+}
+
+.nav-item.active::after{
+
+  content:"";
+
+  position:absolute;
+
+  bottom:-6px;
+
+  left:50%;
+
+  transform:translateX(-50%);
+
+  width:24px;
+
+  height:4px;
+
+  border-radius:999px;
+
+  background:#8b7cf6;
+
+}
 
     /* MAIN GRID */
 
@@ -533,24 +573,26 @@
 
   <!-- NAV -->
 
-  <div class="top-nav">
+  <!-- NAV -->
 
-  <a href="index.html"
+<div class="top-nav">
+
+  <a href="./index.html"
      class="nav-item active">
      Home
   </a>
 
-  <a href="weekly-dashboard.html"
+  <a href="./weekly-dashboard.html"
      class="nav-item">
      Weekly
   </a>
 
-  <a href="script-library.html"
+  <a href="./script-library.html"
      class="nav-item">
      Library
   </a>
 
-  <a href="creator-flow.html"
+  <a href="./creator-flow.html"
      class="nav-item">
      Creator
   </a>
