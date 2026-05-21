@@ -858,48 +858,77 @@ The Real Meaning of Borders
 
 </div>
 
-<div class="workspace-columns">
-
 <div class="workspace-column">
 
-<div class="column-header">
-Concepts
-</div>
+  <div class="column-header">
+    Ender Vij
+  </div>
 
-<textarea placeholder="Raw concepts, thoughts, ideas..."></textarea>
+  <!-- SAVE STATUS -->
+  <div class="save-status">
+    Saved
+  </div>
 
-</div>
-
-<div class="workspace-column">
-
-<div class="column-header">
-Research Vault
-</div>
-
-<textarea placeholder="References, facts, links..."></textarea>
+  <textarea
+    id="Ender Vij"
+    placeholder="Raw concepts, topics, thoughts..."
+  ></textarea>
 
 </div>
 
 <div class="workspace-column">
 
-<div class="column-header">
-Hooks & Angles
-</div>
+  <div class="column-header">
+    CRUST
+  </div>
 
-<textarea placeholder="Viral hooks & openings..."></textarea>
+  <!-- SAVE STATUS -->
+  <div class="save-status">
+    Saved
+  </div>
+
+  <textarea
+    id="CRUST"
+    placeholder="Raw concepts, topics, thoughts..."
+  ></textarea>
 
 </div>
 
 <div class="workspace-column">
 
-<div class="column-header">
-Narrative Flow
+  <div class="column-header">
+    Zone-out History
+  </div>
+
+  <!-- SAVE STATUS -->
+  <div class="save-status">
+    Saved
+  </div>
+
+  <textarea
+    id="Zone-out History"
+    placeholder="Raw concepts, topics, thoughts..."
+  ></textarea>
+
 </div>
 
-<textarea placeholder="Structure the full script..."></textarea>
+  <div class="workspace-column">
+
+  <div class="column-header">
+    Geography
+  </div>
+
+  <!-- SAVE STATUS -->
+  <div class="save-status">
+    Saved
+  </div>
+
+  <textarea
+    id="Geography"
+    placeholder="Raw concepts, topics, thoughts..."
+  ></textarea>
 
 </div>
-
 </div>
 
 </div>
@@ -1007,5 +1036,43 @@ document
 
 </script>
 
+  <script>
+
+/* ALL NOTE FIELDS */
+
+const fields = [
+
+  "Ender Vij",
+  "CRUST",
+  "Zone-out History",
+  "Geography"
+
+];
+
+/* LOAD SAVED NOTES */
+
+fields.forEach(id => {
+
+  const el = document.getElementById(id);
+
+  /* restore */
+
+  el.value =
+    localStorage.getItem(id) || "";
+
+  /* auto save */
+
+  el.addEventListener("input", () => {
+
+    localStorage.setItem(
+      id,
+      el.value
+    );
+
+  });
+
+});
+
+</script>
 </body>
 </html>
