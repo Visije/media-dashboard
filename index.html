@@ -1,624 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home — Daily Focus</title>
 
-<style>
+  <meta charset="UTF-8">
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-body{
-  font-family:"Segoe UI",sans-serif;
-  background:#f6f7fb;
-  color:#181818;
-  padding:34px;
-}
+  <meta name="page" content="home">
 
-/* TOP NAV */
+  <title>Home – Daily Focus</title>
 
-.top-nav{
+  <link rel="icon" href="data:,">
 
-  width:max-content;
+  <link rel="stylesheet" href="css/style.css">
 
-  margin:auto;
-  margin-bottom:34px;
-
-  background:white;
-
-  padding:10px;
-
-  border-radius:22px;
-
-  display:flex;
-  gap:8px;
-
-  box-shadow:
-  0 8px 20px rgba(0,0,0,.04);
-
-}
-
-.top-nav button{
-
-  border:none;
-  background:none;
-
-  padding:14px 26px;
-
-  border-radius:14px;
-
-  cursor:pointer;
-
-  font-weight:600;
-
-  color:#6d6d78;
-
-  transition:.2s;
-
-}
-
-.top-nav button.active{
-
-  background:#f1edff;
-  color:#7b61ff;
-
-}
-
-/* DASHBOARD */
-
-.dashboard{
-
-  display:grid;
-
-  grid-template-columns:
-  360px 1fr;
-
-  gap:26px;
-
-}
-
-/* LEFT */
-
-.left-column{
-
-  display:flex;
-  flex-direction:column;
-
-  gap:20px;
-
-}
-
-/* RIGHT */
-
-.right-column{
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-}
-
-/* CARD */
-
-.card{
-
-  background:white;
-
-  border-radius:30px;
-
-  padding:24px;
-
-  box-shadow:
-  0 10px 24px rgba(0,0,0,.04);
-
-}
-
-/* MAIN FOCUS */
-
-.main-focus{
-
-  margin-bottom:26px;
-
-  background:
-  linear-gradient(
-    135deg,
-    #f3efff,
-    #ffffff
-  );
-
-  border:1px solid #ece7ff;
-
-}
-
-.main-focus small{
-
-  color:#7d61ff;
-
-  letter-spacing:1px;
-
-  font-weight:700;
-
-  text-transform:uppercase;
-
-  display:block;
-
-  margin-bottom:16px;
-
-}
-
-.main-focus h1{
-
-  font-size:46px;
-
-  line-height:1.1;
-
-  max-width:900px;
-
-}
-
-/* TASKS */
-
-.section-title{
-
-  font-size:26px;
-
-  margin-bottom:18px;
-
-}
-
-.task-list{
-
-  display:flex;
-  flex-direction:column;
-
-  gap:14px;
-
-}
-
-.task{
-
-  background:#f7f7fb;
-
-  border-radius:18px;
-
-  padding:16px;
-
-  display:flex;
-  align-items:center;
-
-  gap:14px;
-
-}
-
-.task input{
-
-  width:18px;
-  height:18px;
-
-  accent-color:#7b61ff;
-}
-
-.task p{
-
-  font-size:15px;
-}
-
-/* SCRIPTS */
-
-.script-item{
-
-  background:#f7f7fb;
-
-  border-radius:18px;
-
-  padding:16px;
-
-  margin-bottom:14px;
-}
-
-.script-item strong{
-
-  display:block;
-
-  margin-bottom:8px;
-}
-
-.script-item span{
-
-  color:#787887;
-  font-size:14px;
-}
-
-/* MOMENTUM */
-
-.momentum-item{
-
-  display:flex;
-  justify-content:space-between;
-
-  padding:14px 0;
-
-  border-bottom:1px solid #ececf1;
-}
-
-.momentum-item:last-child{
-  border-bottom:none;
-}
-
-.momentum-item strong{
-  font-size:15px;
-}
-
-.momentum-item span{
-  color:#777;
-  font-size:14px;
-}
-
-/* BIG RING */
-
-.progress-wrap{
-
-  width:100%;
-  height:100%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.big-ring{
-
-  width:380px;
-  height:380px;
-
-  border-radius:50%;
-
-  background:
-  conic-gradient(
-    #7b61ff 72%,
-    #ece8ff 0
-  );
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  position:relative;
-
-  box-shadow:
-  0 18px 40px rgba(123,97,255,.15);
-}
-
-.big-ring::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:280px;
-  height:280px;
-
-  border-radius:50%;
-
-  background:white;
-}
-
-.ring-content{
-
-  position:relative;
-
-  text-align:center;
-
-  z-index:2;
-}
-
-.ring-content h2{
-
-  font-size:72px;
-
-  color:#7b61ff;
-
-  line-height:1;
-}
-
-.ring-content p{
-
-  margin-top:10px;
-
-  color:#666;
-
-  font-size:15px;
-
-  letter-spacing:.5px;
-}
-
-/* FOCUS BUTTON */
-
-.focus-btn{
-
-  position:fixed;
-
-  top:24px;
-  left:24px;
-
-  border:none;
-
-  background:#111;
-
-  color:white;
-
-  padding:10px 18px;
-
-  border-radius:14px;
-
-  cursor:pointer;
-
-  font-weight:600;
-}
-
-/* DARK FOCUS MODE */
-
-body.focus{
-
-  background:#0f1117;
-  color:#f5f5f5;
-}
-
-body.focus .card{
-
-  background:#171b23;
-
-  box-shadow:none;
-
-  border:1px solid #242937;
-}
-
-body.focus .main-focus{
-
-  background:
-  linear-gradient(
-    135deg,
-    #1f2230,
-    #171b23
-  );
-
-  border-color:#2a3040;
-}
-
-body.focus .task,
-body.focus .script-item{
-
-  background:#1d222d;
-}
-
-body.focus .big-ring::before{
-
-  background:#171b23;
-}
-
-body.focus .ring-content p,
-body.focus .script-item span,
-body.focus .momentum-item span{
-
-  color:#9ba3b2;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:1100px){
-
-  .dashboard{
-
-    grid-template-columns:1fr;
-  }
-
-  .right-column{
-
-    margin-top:10px;
-  }
-
-}
-
-@media(max-width:700px){
-
-  body{
-    padding:18px;
-  }
-
-  .main-focus h1{
-    font-size:32px;
-  }
-
-  .big-ring{
-
-    width:280px;
-    height:280px;
-  }
-
-  .big-ring::before{
-
-    width:210px;
-    height:210px;
-  }
-
-  .ring-content h2{
-    font-size:52px;
-  }
-
-}
-
-</style>
 </head>
 
 <body>
 
-<!-- FOCUS BUTTON -->
+<!-- =========================================
+     FLOATING TOP NAV
+========================================= -->
 
-<button class="focus-btn" onclick="toggleFocus()">
+<nav class="top-nav">
+
+  <a href="index.html" class="active">
+    Home
+  </a>
+
+  <a href="weekly-dashboard.html">
+    Weekly
+  </a>
+
+  <a href="scripts.html">
+    Library
+  </a>
+
+  <a href="calendar.html">
+    Creator
+  </a>
+
+</nav>
+
+<!-- =========================================
+     FOCUS TOGGLE
+========================================= -->
+
+<button id="focusToggle">
   Focus
 </button>
 
-<!-- NAV -->
+<!-- =========================================
+     MAIN CONTAINER
+========================================= -->
 
-<div class="top-nav">
+<main class="main">
 
-  <button class="active">Home</button>
-  <button>Weekly</button>
-  <button>Library</button>
-  <button>Creator</button>
+  <!-- =========================================
+       HEADER / MORNING CARD
+  ========================================= -->
 
-</div>
+  <section class="card hero-card">
 
-<!-- MAIN FOCUS -->
+    <div class="hero-content">
 
-<div class="card main-focus">
+      <h1 id="greeting">
+        Good Morning
+      </h1>
 
-  <small>Today's Main Focus</small>
+      <p class="quote" id="dailyQuote">
+        “Small actions done daily create massive results.”
+      </p>
 
-  <h1>
-    Finish 4 scripts before editing
-  </h1>
-
-</div>
-
-<!-- DASHBOARD -->
-
-<div class="dashboard">
-
-  <!-- LEFT -->
-
-  <div class="left-column">
-
-    <!-- TASKS -->
-
-    <div class="card">
-
-      <h2 class="section-title">
-        Today's Essential Tasks
-      </h2>
-
-      <div class="task-list">
-
-        <div class="task">
-          <input type="checkbox">
-          <p>Upload Meer Rana Reel 2</p>
-        </div>
-
-        <div class="task">
-          <input type="checkbox">
-          <p>Write CRUST intro script</p>
-        </div>
-
-        <div class="task">
-          <input type="checkbox">
-          <p>Review Geography draft</p>
-        </div>
-
-        <div class="task">
-          <input type="checkbox">
-          <p>Finalize Music Composition hooks</p>
-        </div>
-
-      </div>
+      <p class="quote secondary-quote">
+        Focus on execution, not overload.
+      </p>
 
     </div>
 
-    <!-- SCRIPTS -->
+  </section>
 
-    <div class="card">
+  <!-- =========================================
+       MAIN GRID
+  ========================================= -->
 
-      <h2 class="section-title">
-        Scripts Pending
-      </h2>
+  <section class="home-grid">
 
-      <div class="script-item">
+    <!-- LEFT COLUMN -->
 
-        <strong>CRUST — Street Culture Explained</strong>
+    <div class="home-stack">
 
-        <span>
-          Waiting for final review
-        </span>
+      <!-- CONSISTENCY -->
 
-      </div>
+      <div class="card">
 
-      <div class="script-item">
+        <div class="section-head">
 
-        <strong>Geography — Ancient Roads</strong>
+          <h2>
+            Consistency
+          </h2>
 
-        <span>
-          Ready for upload
-        </span>
+          <span class="pill">
+            Momentum
+          </span>
 
-      </div>
+        </div>
 
-      <div class="script-item">
+        <div class="coins">
 
-        <strong>Topography — Hidden Borders</strong>
+          <div class="coin bronze">
+            3
+          </div>
 
-        <span>
-          Needs stronger hook
-        </span>
+          <div class="coin silver">
+            7
+          </div>
 
-      </div>
+          <div class="coin gold">
+            21
+          </div>
 
-    </div>
+        </div>
 
-    <!-- MOMENTUM -->
-
-    <div class="card">
-
-      <h2 class="section-title">
-        Creator Momentum
-      </h2>
-
-      <div class="momentum-item">
-
-        <strong>Topography</strong>
-
-        <span>5 days consistent</span>
+        <p class="muted">
+          Coins earned through consistency
+        </p>
 
       </div>
 
-      <div class="momentum-item">
+      <!-- WEEK PROGRESS -->
 
-        <strong>CRUST</strong>
+      <div class="card">
 
-        <span>Stable this week</span>
+        <div class="section-head">
 
-      </div>
+          <h2>
+            This Week
+          </h2>
 
-      <div class="momentum-item">
+          <span class="pill purple-pill">
+            Live
+          </span>
 
-        <strong>Music Composition</strong>
+        </div>
 
-        <span>Completed yesterday</span>
+        <div class="week-progress">
 
-      </div>
+          <div class="ring" id="weekRing">
+            0%
+          </div>
 
-    </div>
+          <div>
 
-  </div>
+            <h3 class="progress-title">
+              Weekly Progress
+            </h3>
 
-  <!-- RIGHT -->
+            <p class="muted" id="weekCount">
+              Progress updates automatically
+            </p>
 
-  <div class="right-column">
-
-    <div class="progress-wrap">
-
-      <div class="big-ring">
-
-        <div class="ring-content">
-
-          <h2>72%</h2>
-
-          <p>
-            WEEKLY EXECUTION
-          </p>
+          </div>
 
         </div>
 
@@ -626,17 +170,244 @@ body.focus .momentum-item span{
 
     </div>
 
-  </div>
+    <!-- RIGHT COLUMN -->
 
-</div>
+    <div class="home-stack">
+
+      <!-- TODAY TASKS -->
+
+      <div class="card">
+
+        <div class="section-head">
+
+          <h2>
+            Today’s Tasks
+          </h2>
+
+          <span class="pill green-pill">
+            Focus
+          </span>
+
+        </div>
+
+        <ul id="todayTasks"
+            class="clean-list">
+
+          <li class="no-task">
+            No tasks planned today
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- PENDING SCRIPTS -->
+
+      <div class="card">
+
+        <div class="section-head">
+
+          <h2>
+            Scripts Pending Today
+          </h2>
+
+          <span class="pill orange-pill">
+            Writing
+          </span>
+
+        </div>
+
+        <ul id="pendingScripts"
+            class="clean-list">
+
+          <li class="no-task">
+            No pending scripts today
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<!-- =========================================
+     ROLE HANDLING
+========================================= -->
 
 <script>
 
-function toggleFocus(){
+(function () {
 
-  document.body.classList.toggle("focus");
+  if (!localStorage.getItem("role")) {
 
-}
+    localStorage.setItem("role", "admin");
+
+  }
+
+})();
+
+</script>
+
+<!-- =========================================
+     GREETING
+========================================= -->
+
+<script>
+
+(function setGreeting() {
+
+  const hour = new Date().getHours();
+
+  let greeting = "Hello";
+
+  if (hour >= 5 && hour < 12) {
+
+    greeting = "Good Morning";
+
+  }
+
+  else if (hour >= 12 && hour < 17) {
+
+    greeting = "Good Afternoon";
+
+  }
+
+  else {
+
+    greeting = "Good Evening";
+
+  }
+
+  document
+    .getElementById("greeting")
+    .innerText = greeting;
+
+})();
+
+</script>
+
+<!-- =========================================
+     DAILY QUOTES
+========================================= -->
+
+<script>
+
+(function setDailyQuote() {
+
+  const quotes = [
+
+    "Small actions done daily create massive results.",
+
+    "Consistency beats intensity every time.",
+
+    "Win the morning, win the day.",
+
+    "Do the work even when motivation is missing.",
+
+    "Future you is watching today’s choices.",
+
+    "One focused day is better than seven distracted ones.",
+
+    "Discipline is choosing what you want most over what you want now."
+
+  ];
+
+  const today = new Date().toDateString();
+
+  const index = today
+    .split("")
+    .reduce((a, c) => a + c.charCodeAt(0), 0)
+      % quotes.length;
+
+  document
+    .getElementById("dailyQuote")
+    .innerText = `“${quotes[index]}”`;
+
+})();
+
+</script>
+
+<!-- =========================================
+     AUTO FOCUS MODE
+========================================= -->
+
+<script>
+
+(function autoFocusMode() {
+
+  const hour = new Date().getHours();
+
+  const saved =
+    localStorage.getItem("focusMode");
+
+  if (
+    saved === null &&
+    hour >= 5 &&
+    hour < 10
+  ) {
+
+    document.body.classList.add("focus");
+
+  }
+
+  if (saved === "on") {
+
+    document.body.classList.add("focus");
+
+  }
+
+  if (saved === "off") {
+
+    document.body.classList.remove("focus");
+
+  }
+
+})();
+
+document
+  .getElementById("focusToggle")
+  .onclick = () => {
+
+    const isOn =
+      document.body.classList.toggle("focus");
+
+    localStorage.setItem(
+      "focusMode",
+      isOn ? "on" : "off"
+    );
+
+};
+
+</script>
+
+<!-- =========================================
+     SAFE MAIN JS LOADER
+========================================= -->
+
+<script>
+
+(function loadMainJS() {
+
+  const script =
+    document.createElement("script");
+
+  script.src = "js/main.js";
+
+  script.defer = true;
+
+  script.onerror = () =>
+
+    console.warn(
+      "main.js not loaded (path issue or file missing)"
+    );
+
+  document.body.appendChild(script);
+
+})();
 
 </script>
 
