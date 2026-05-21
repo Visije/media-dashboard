@@ -871,10 +871,14 @@ li{
 
 }
 
-/* FLOAT BUTTON */
+/* =========================================
+   FLOAT BUTTON
+========================================= */
 
 .floating-add{
+
   position:fixed;
+
   right:30px;
   bottom:30px;
 
@@ -882,6 +886,7 @@ li{
   height:64px;
 
   border-radius:50%;
+
   background:#8b7cf6;
   color:white;
 
@@ -890,112 +895,320 @@ li{
   justify-content:center;
 
   font-size:34px;
+
   cursor:pointer;
 
-  box-shadow:0 10px 24px rgba(139,124,246,.35);
+  box-shadow:
+    0 10px 24px rgba(139,124,246,.35);
 
   transition:.25s;
+
+  z-index:9999;
+
 }
 
 .floating-add:hover{
+
   transform:scale(1.06);
+
 }
 
-/* PANEL */
+/* =========================================
+   WORKSPACE PANEL
+========================================= */
 
 #workspacePanel{
 
   position:fixed;
-  top:0;
-  right:-50%;
 
-  width:50%;
+  top:0;
+  right:-100%;
+
+  width:100%;
   height:100vh;
 
-  background:#ffffff;
+  background:#f6f7fb;
 
-  box-shadow:-10px 0 30px rgba(0,0,0,.08);
+  z-index:99999;
 
   transition:.35s ease;
 
-  z-index:999;
+  display:flex;
+  flex-direction:column;
+
+  overflow:hidden;
+
+}
+
+/* =========================================
+   OPEN STATE
+========================================= */
+
+#workspacePanel.open{
+
+  right:0;
+
+}
+
+/* =========================================
+   TOP BAR
+========================================= */
+
+.workspace-top{
+
+  height:90px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 34px;
+
+  background:rgba(255,255,255,.92);
+
+  backdrop-filter:blur(10px);
+
+  border-bottom:1px solid #ececf2;
+
+  flex-shrink:0;
+
+}
+
+.workspace-top h2{
+
+  font-size:34px;
+
+  letter-spacing:-1px;
+
+}
+
+/* CLOSE BUTTON */
+
+.workspace-top button{
+
+  width:46px;
+  height:46px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:#f2f3f7;
+
+  cursor:pointer;
+
+  font-size:18px;
+
+  transition:.2s;
+
+}
+
+.workspace-top button:hover{
+
+  background:#e9ebf1;
+
+}
+
+/* =========================================
+   COLUMNS WRAPPER
+========================================= */
+
+.workspace-columns{
+
+  flex:1;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,minmax(340px,1fr));
+
+  gap:24px;
 
   padding:28px;
 
-  overflow-y:auto;
+  overflow-x:auto;
+  overflow-y:hidden;
 
 }
 
-/* OPEN */
+/* CUSTOM SCROLL */
 
-#workspacePanel.open{
-  right:0;
+.workspace-columns::-webkit-scrollbar{
+
+  height:10px;
+
 }
 
-/* HEADER */
+.workspace-columns::-webkit-scrollbar-thumb{
 
-.workspace-header{
+  background:#d7dbe7;
+
+  border-radius:999px;
+
+}
+
+/* =========================================
+   SINGLE COLUMN
+========================================= */
+
+.workspace-column{
+
+  background:white;
+
+  border-radius:30px;
+
+  padding:24px;
+
   display:flex;
-  justify-content:space-between;
-  align-items:center;
+  flex-direction:column;
 
-  margin-bottom:30px;
+  min-height:100%;
+
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.05);
+
+  border:1px solid #f0f0f4;
+
+  position:relative;
+
+  overflow:hidden;
+
 }
 
-.workspace-header h2{
-  font-size:32px;
-}
+/* TOP ACCENT */
 
-.workspace-header button{
+.workspace-column::before{
 
-  border:none;
-  background:#f3f3f7;
+  content:"";
 
-  width:42px;
-  height:42px;
+  position:absolute;
 
-  border-radius:12px;
-
-  cursor:pointer;
-}
-
-/* GRID */
-
-.workspace-grid{
-
-  display:grid;
-  grid-template-columns:1fr 1fr;
-
-  gap:22px;
-}
-
-/* NOTES */
-
-.note-column{
-
-  background:#f7f7fb;
-
-  border-radius:22px;
-
-  padding:20px;
-}
-
-.note-column h3{
-  margin-bottom:14px;
-}
-
-.note-column textarea{
+  top:0;
+  left:0;
 
   width:100%;
-  min-height:240px;
+  height:5px;
+
+  background:#8b7cf6;
+
+}
+
+/* DIFFERENT COLUMN COLORS */
+
+.workspace-column:nth-child(2)::before{
+
+  background:#68a7ff;
+
+}
+
+.workspace-column:nth-child(3)::before{
+
+  background:#f0b35d;
+
+}
+
+.workspace-column:nth-child(4)::before{
+
+  background:#7cc98a;
+
+}
+
+/* =========================================
+   COLUMN HEADER
+========================================= */
+
+.column-header{
+
+  font-size:24px;
+
+  font-weight:700;
+
+  margin-bottom:18px;
+
+  letter-spacing:-0.5px;
+
+}
+
+/* =========================================
+   TEXTAREA
+========================================= */
+
+.workspace-column textarea{
+
+  flex:1;
+
+  width:100%;
 
   border:none;
-  background:transparent;
 
   resize:none;
 
+  outline:none;
+
+  background:transparent;
+
   font-family:inherit;
+
   font-size:15px;
 
-  outline:none;
+  line-height:1.8;
+
+  color:#333;
+
+  padding-right:4px;
+
+}
+
+/* PLACEHOLDER */
+
+.workspace-column textarea::placeholder{
+
+  color:#a1a5b0;
+
+}
+
+/* =========================================
+   RESPONSIVE WORKSPACE
+========================================= */
+
+@media(max-width:1200px){
+
+  .workspace-columns{
+
+    grid-template-columns:
+      repeat(2,minmax(320px,1fr));
+
+  }
+
+}
+
+@media(max-width:760px){
+
+  .workspace-top{
+
+    padding:0 20px;
+
+  }
+
+  .workspace-top h2{
+
+    font-size:26px;
+
+  }
+
+  .workspace-columns{
+
+    grid-template-columns:1fr;
+
+    padding:18px;
+
+  }
+
+  .workspace-column{
+
+    min-width:100%;
+
+  }
+
 }
