@@ -878,15 +878,43 @@ body{
 <button class="add-script">+</button>
   
 <script>
-const searchInput = document.querySelector(".search-input");
-const creatorFilter = document.querySelector(".creator-filter");
 
-function filterScripts() {
+const searchInput =
+  document.querySelector(".search");
 
-  const search = searchInput.value.toLowerCase();
-  const creator = creatorFilter.value.toLowerCase();
+const creatorFilter =
+  document.querySelector(".creator-filter");
 
-  const cards = document.querySelectorAll(".script-card");
+/* ADD DATA ATTRIBUTES AUTOMATICALLY */
+
+document.querySelectorAll(".script-card")
+.forEach(card => {
+
+  const title =
+    card.querySelector(".script-title")
+    ?.innerText || "";
+
+  const creator =
+    card.querySelector(".creator")
+    ?.innerText || "";
+
+  card.dataset.title = title;
+  card.dataset.creator = creator;
+
+});
+
+/* FILTER FUNCTION */
+
+function filterScripts(){
+
+  const search =
+    searchInput.value.toLowerCase();
+
+  const creator =
+    creatorFilter.value.toLowerCase();
+
+  const cards =
+    document.querySelectorAll(".script-card");
 
   cards.forEach(card => {
 
@@ -913,8 +941,41 @@ function filterScripts() {
 
 }
 
-searchInput.addEventListener("input", filterScripts);
-creatorFilter.addEventListener("change", filterScripts);
+/* EVENTS */
+
+searchInput.addEventListener(
+  "input",
+  filterScripts
+);
+
+creatorFilter.addEventListener(
+  "change",
+  filterScripts
+);
+
+/* ADD SCRIPT BUTTON */
+
+const addBtn =
+  document.querySelector(".add-script");
+
+addBtn.addEventListener("click", () => {
+
+  const title =
+    prompt("Script title");
+
+  if(!title) return;
+
+  const creator =
+    prompt("Creator name");
+
+  if(!creator) return;
+
+  alert(
+    `New script added for ${creator}`
+  );
+
+});
+
 </script>
   
 </body>
