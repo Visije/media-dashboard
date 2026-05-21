@@ -465,18 +465,25 @@ body{
           placeholder="Search scripts..."
         >
 
-        <select class="filter">
-          <option>All Creators</option>
-          <option>Ender Vij</option>
-          <option>I'm Gurey</option>
-          <option>CRUST</option>
-          <option>Zone out History</option>
-          <option>Geography</option>
-          <option>Meer Rana</option>
-          <option>Topography</option>
-          <option>Mixing Masti</option>
-          <option>Music Composition</option>
-        </select>
+        <select class="creator-filter">
+
+  <option value="all">
+    All Creators
+  </option>
+
+  <option value="meer rana">
+    Meer Rana
+  </option>
+
+  <option value="topography">
+    Topography
+  </option>
+
+  <option value="crust">
+    CRUST
+  </option>
+
+</select>
 
       </div>
 
@@ -861,6 +868,46 @@ body{
 </div>
 
 <button class="add-script">+</button>
+  
+<script>
+const searchInput = document.querySelector(".search-input");
+const creatorFilter = document.querySelector(".creator-filter");
 
+function filterScripts() {
+
+  const search = searchInput.value.toLowerCase();
+  const creator = creatorFilter.value.toLowerCase();
+
+  const cards = document.querySelectorAll(".script-card");
+
+  cards.forEach(card => {
+
+    const title =
+      card.dataset.title.toLowerCase();
+
+    const author =
+      card.dataset.creator.toLowerCase();
+
+    const matchesSearch =
+      title.includes(search) ||
+      author.includes(search);
+
+    const matchesCreator =
+      creator === "all" ||
+      author === creator;
+
+    card.style.display =
+      matchesSearch && matchesCreator
+      ? "block"
+      : "none";
+
+  });
+
+}
+
+searchInput.addEventListener("input", filterScripts);
+creatorFilter.addEventListener("change", filterScripts);
+</script>
+  
 </body>
 </html>
