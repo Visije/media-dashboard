@@ -870,3 +870,132 @@ li{
   }
 
 }
+
+/* FLOAT BUTTON */
+
+.floating-add{
+  position:fixed;
+  right:30px;
+  bottom:30px;
+
+  width:64px;
+  height:64px;
+
+  border-radius:50%;
+  background:#8b7cf6;
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:34px;
+  cursor:pointer;
+
+  box-shadow:0 10px 24px rgba(139,124,246,.35);
+
+  transition:.25s;
+}
+
+.floating-add:hover{
+  transform:scale(1.06);
+}
+
+/* PANEL */
+
+#workspacePanel{
+
+  position:fixed;
+  top:0;
+  right:-50%;
+
+  width:50%;
+  height:100vh;
+
+  background:#ffffff;
+
+  box-shadow:-10px 0 30px rgba(0,0,0,.08);
+
+  transition:.35s ease;
+
+  z-index:999;
+
+  padding:28px;
+
+  overflow-y:auto;
+
+}
+
+/* OPEN */
+
+#workspacePanel.open{
+  right:0;
+}
+
+/* HEADER */
+
+.workspace-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:30px;
+}
+
+.workspace-header h2{
+  font-size:32px;
+}
+
+.workspace-header button{
+
+  border:none;
+  background:#f3f3f7;
+
+  width:42px;
+  height:42px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+}
+
+/* GRID */
+
+.workspace-grid{
+
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:22px;
+}
+
+/* NOTES */
+
+.note-column{
+
+  background:#f7f7fb;
+
+  border-radius:22px;
+
+  padding:20px;
+}
+
+.note-column h3{
+  margin-bottom:14px;
+}
+
+.note-column textarea{
+
+  width:100%;
+  min-height:240px;
+
+  border:none;
+  background:transparent;
+
+  resize:none;
+
+  font-family:inherit;
+  font-size:15px;
+
+  outline:none;
+}
