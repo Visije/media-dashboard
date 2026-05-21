@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -15,6 +16,7 @@
 }
 
 :root{
+
   --bg:#f6f7fb;
   --card:#ffffff;
   --border:#ececf2;
@@ -38,6 +40,7 @@
 
   --uploaded:#ececec;
   --uploaded-text:#555;
+
 }
 
 body{
@@ -250,19 +253,6 @@ body{
   padding-right:2px;
 }
 
-.cards::-webkit-scrollbar{
-  width:0;
-}
-
-.cards:hover::-webkit-scrollbar{
-  width:6px;
-}
-
-.cards::-webkit-scrollbar-thumb{
-  background:#d7d9e2;
-  border-radius:999px;
-}
-
 /* SCRIPT CARD */
 
 .script-card{
@@ -362,20 +352,161 @@ body{
   position:fixed;
   right:24px;
   bottom:24px;
-  width:56px;
-  height:56px;
+
+  width:62px;
+  height:62px;
+
   border:none;
   border-radius:50%;
+
   background:#8b7cf6;
   color:white;
-  font-size:28px;
+
+  font-size:30px;
   cursor:pointer;
+
   box-shadow:0 12px 24px rgba(139,124,246,.28);
+
   transition:.22s;
+  z-index:999;
 }
 
 .add-script:hover{
   transform:scale(1.06);
+}
+
+/* WORKSPACE PANEL */
+
+#workspacePanel{
+
+  position:fixed;
+
+  top:0;
+  right:-100%;
+
+  width:100%;
+  height:100vh;
+
+  background:#f6f7fb;
+
+  z-index:9999;
+
+  transition:.35s ease;
+
+  display:flex;
+  flex-direction:column;
+
+}
+
+/* OPEN */
+
+#workspacePanel.open{
+  right:0;
+}
+
+/* TOP */
+
+.workspace-top{
+
+  height:90px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 30px;
+
+  background:white;
+
+  border-bottom:1px solid #ececec;
+}
+
+.workspace-top h2{
+  font-size:32px;
+}
+
+.workspace-top button{
+
+  width:44px;
+  height:44px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:#f0f1f6;
+
+  cursor:pointer;
+
+  font-size:18px;
+}
+
+/* COLUMNS */
+
+.workspace-columns{
+
+  flex:1;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:24px;
+
+  padding:28px;
+
+  overflow-x:auto;
+}
+
+/* COLUMN */
+
+.workspace-column{
+
+  background:white;
+
+  border-radius:28px;
+
+  padding:22px;
+
+  display:flex;
+  flex-direction:column;
+
+  min-width:320px;
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.04);
+}
+
+/* HEADER */
+
+.column-header{
+
+  font-size:22px;
+  font-weight:700;
+
+  margin-bottom:18px;
+}
+
+/* TEXTAREA */
+
+.workspace-column textarea{
+
+  flex:1;
+
+  border:none;
+
+  resize:none;
+
+  outline:none;
+
+  font-family:inherit;
+
+  font-size:15px;
+
+  line-height:1.7;
+
+  background:transparent;
 }
 
 /* RESPONSIVE */
@@ -403,635 +534,478 @@ body{
     width:100%;
   }
 
+  .workspace-columns{
+    grid-template-columns:1fr;
+  }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="page">
 
-  <!-- HEADER -->
-
-  <header class="header">
-
-    <div class="header-top">
-
-      <div class="title">
-        <h1>Script Library</h1>
-        <p>Production Pipeline</p>
-      </div>
-
-      <div class="stats">
-
-        <div class="stat-card">
-          <small>Ideas</small>
-          <strong>12</strong>
-        </div>
-
-        <div class="stat-card">
-          <small>Research</small>
-          <strong>6</strong>
-        </div>
-
-        <div class="stat-card">
-          <small>Writing</small>
-          <strong>5</strong>
-        </div>
-
-        <div class="stat-card">
-          <small>Ready</small>
-          <strong>8</strong>
-        </div>
-
-        <div class="stat-card">
-          <small>Uploaded</small>
-          <strong>32</strong>
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- CONTROLS -->
-
-    <div class="controls">
-
-      <div class="left-controls">
-
-        <input
-          class="search"
-          placeholder="Search scripts..."
-        >
-
-        <select class="creator-filter">
-
-  <option value="All">
-    All Creators
-  </option>
-          
-  <option value="Ender Vij">
-    Ender Vij
-  </option>
-
-  <option value="I'm Gurey">
-    I'm Gurey
-  </option>
-
-   <option value="Crust">
-    CRUST
-  </option>
-
-  <option value="Zone-out History">
-    Zone-out History
-  </option>
-
-   <option value="Geography">
-    Geography
-  </option>
-
-</select>
-
-      </div>
-
-      <div class="momentum">
-        Momentum → <strong>8 scripts ready this week</strong>
-      </div>
-
-    </div>
-
-  </header>
-
-  <!-- PIPELINE -->
-
-  <div class="pipeline-wrapper">
-
-    <div class="pipeline">
-
-      <!-- IDEAS -->
-
-      <div class="column idea-column">
-
-        <div class="column-head">
-          <div class="column-title">Ideas</div>
-          <div class="column-count">3</div>
-        </div>
-
-        <div class="cards">
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Ancient Cities Hidden Under Modern Worlds
-            </div>
-
-            <div class="meta">
-              <div class="creator">Zone out History</div>
-              <div>700 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status idea">Idea</div>
-              <div class="updated">Today</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Why Geography Controls Empires
-            </div>
-
-            <div class="meta">
-              <div class="creator">Geography</div>
-              <div>900 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status idea">Idea</div>
-              <div class="updated">2d ago</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Underground Street Fashion Evolution
-            </div>
-
-            <div class="meta">
-              <div class="creator">CRUST</div>
-              <div>800 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status idea">Idea</div>
-              <div class="updated">4h ago</div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- RESEARCH -->
-
-      <div class="column research-column">
-
-        <div class="column-head">
-          <div class="column-title">Research</div>
-          <div class="column-count">2</div>
-        </div>
-
-        <div class="cards">
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Psychology Behind Viral Reels
-            </div>
-
-            <div class="meta">
-              <div class="creator">I'm Gurey</div>
-              <div>1200 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status research">Research</div>
-              <div class="updated">Yesterday</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              How Music Shapes Memory
-            </div>
-
-            <div class="meta">
-              <div class="creator">Music Composition</div>
-              <div>1400 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status research">Research</div>
-              <div class="updated">Today</div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- WRITING -->
-
-      <div class="column writing-column">
-
-        <div class="column-head">
-          <div class="column-title">Writing</div>
-          <div class="column-count">4</div>
-        </div>
-
-        <div class="cards">
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Street Culture Explained
-            </div>
-
-            <div class="meta">
-              <div class="creator">CRUST</div>
-              <div>900 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status writing">Writing</div>
-              <div class="updated">Today</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Reality of Living Abroad
-            </div>
-
-            <div class="meta">
-              <div class="creator">I'm Gurey</div>
-              <div>1100 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status writing">Writing</div>
-              <div class="updated">3h ago</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Why Maps Manipulate Perspective
-            </div>
-
-            <div class="meta">
-              <div class="creator">Topography</div>
-              <div>1000 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status writing">Writing</div>
-              <div class="updated">5h ago</div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- REVIEW -->
-
-      <div class="column review-column">
-
-        <div class="column-head">
-          <div class="column-title">Review</div>
-          <div class="column-count">2</div>
-        </div>
-
-        <div class="cards">
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Why Some Songs Never Die
-            </div>
-
-            <div class="meta">
-              <div class="creator">Music Composition</div>
-              <div>1400 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status review">Review</div>
-              <div class="updated">1d ago</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Ancient Border Mysteries
-            </div>
-
-            <div class="meta">
-              <div class="creator">Zone out History</div>
-              <div>1700 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status review">Review</div>
-              <div class="updated">Today</div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- READY -->
-
-      <div class="column ready-column">
-
-        <div class="column-head">
-          <div class="column-title">Ready</div>
-          <div class="column-count">5</div>
-        </div>
-
-        <div class="cards">
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Life Abroad Reality
-            </div>
-
-            <div class="meta">
-              <div class="creator">I'm Gurey</div>
-              <div>1100 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status ready">Ready</div>
-              <div class="updated">Today</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Hidden History of Borders
-            </div>
-
-            <div class="meta">
-              <div class="creator">Zone out History</div>
-              <div>1500 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status ready">Ready</div>
-              <div class="updated">2d ago</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Why Ancient Roads Still Matter
-            </div>
-
-            <div class="meta">
-              <div class="creator">Geography</div>
-              <div>1300 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status ready">Ready</div>
-              <div class="updated">5h ago</div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- UPLOADED -->
-
-      <div class="column uploaded-column">
-
-        <div class="column-head">
-          <div class="column-title">Uploaded</div>
-          <div class="column-count">8</div>
-        </div>
-
-        <div class="cards">
-
-          <div class="script-card">
-
-            <div class="script-title">
-              The Real Meaning of Borders
-            </div>
-
-            <div class="meta">
-              <div class="creator">Geography</div>
-              <div>1300 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status uploaded">Uploaded</div>
-              <div class="updated">5d ago</div>
-            </div>
-
-          </div>
-
-          <div class="script-card">
-
-            <div class="script-title">
-              Rise of Street Subcultures
-            </div>
-
-            <div class="meta">
-              <div class="creator">CRUST</div>
-              <div>1000 words</div>
-            </div>
-
-            <div class="card-foot">
-              <div class="status uploaded">Uploaded</div>
-              <div class="updated">1w ago</div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
+<header class="header">
+
+<div class="header-top">
+
+<div class="title">
+  <h1>Script Library</h1>
+  <p>Production Pipeline</p>
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+  <small>Ideas</small>
+  <strong>12</strong>
+</div>
+
+<div class="stat-card">
+  <small>Research</small>
+  <strong>6</strong>
+</div>
+
+<div class="stat-card">
+  <small>Writing</small>
+  <strong>5</strong>
+</div>
+
+<div class="stat-card">
+  <small>Ready</small>
+  <strong>8</strong>
+</div>
+
+<div class="stat-card">
+  <small>Uploaded</small>
+  <strong>32</strong>
+</div>
 
 </div>
 
+</div>
+
+<div class="controls">
+
+<div class="left-controls">
+
+<input
+class="search"
+placeholder="Search scripts..."
+>
+
+<select class="filter creator-filter">
+
+<option value="all">All Creators</option>
+<option value="Ender Vij">Ender Vij</option>
+<option value="I'm Gurey">I'm Gurey</option>
+<option value="CRUST">CRUST</option>
+<option value="Zone out History">Zone out History</option>
+<option value="Geography">Geography</option>
+
+</select>
+
+</div>
+
+<div class="momentum">
+Momentum → <strong>8 scripts ready this week</strong>
+</div>
+
+</div>
+
+</header>
+
+<!-- PIPELINE -->
+
+<div class="pipeline-wrapper">
+
+<div class="pipeline">
+
+<!-- IDEAS -->
+
+<div class="column idea-column">
+
+<div class="column-head">
+<div class="column-title">Ideas</div>
+<div class="column-count">3</div>
+</div>
+
+<div class="cards">
+
+<div class="script-card">
+<div class="script-title">
+Ancient Cities Hidden Under Modern Worlds
+</div>
+
+<div class="meta">
+<div class="creator">Zone out History</div>
+<div>700 words</div>
+</div>
+
+<div class="card-foot">
+<div class="status idea">Idea</div>
+<div class="updated">Today</div>
+</div>
+</div>
+
+<div class="script-card">
+<div class="script-title">
+Why Geography Controls Empires
+</div>
+
+<div class="meta">
+<div class="creator">Geography</div>
+<div>900 words</div>
+</div>
+
+<div class="card-foot">
+<div class="status idea">Idea</div>
+<div class="updated">2d ago</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- RESEARCH -->
+
+<div class="column research-column">
+
+<div class="column-head">
+<div class="column-title">Research</div>
+<div class="column-count">2</div>
+</div>
+
+<div class="cards">
+
+<div class="script-card">
+
+<div class="script-title">
+Psychology Behind Viral Reels
+</div>
+
+<div class="meta">
+<div class="creator">I'm Gurey</div>
+<div>1200 words</div>
+</div>
+
+<div class="card-foot">
+<div class="status research">Research</div>
+<div class="updated">Yesterday</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- WRITING -->
+
+<div class="column writing-column">
+
+<div class="column-head">
+<div class="column-title">Writing</div>
+<div class="column-count">4</div>
+</div>
+
+<div class="cards">
+
+<div class="script-card">
+
+<div class="script-title">
+Street Culture Explained
+</div>
+
+<div class="meta">
+<div class="creator">CRUST</div>
+<div>900 words</div>
+</div>
+
+<div class="card-foot">
+<div class="status writing">Writing</div>
+<div class="updated">Today</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- REVIEW -->
+
+<div class="column review-column">
+
+<div class="column-head">
+<div class="column-title">Review</div>
+<div class="column-count">2</div>
+</div>
+
+<div class="cards">
+
+<div class="script-card">
+
+<div class="script-title">
+Why Some Songs Never Die
+</div>
+
+<div class="meta">
+<div class="creator">Music Composition</div>
+<div>1400 words</div>
+</div>
+
+<div class="card-foot">
+<div class="status review">Review</div>
+<div class="updated">1d ago</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- READY -->
+
+<div class="column ready-column">
+
+<div class="column-head">
+<div class="column-title">Ready</div>
+<div class="column-count">5</div>
+</div>
+
+<div class="cards">
+
+<div class="script-card">
+
+<div class="script-title">
+Life Abroad Reality
+</div>
+
+<div class="meta">
+<div class="creator">I'm Gurey</div>
+<div>1100 words</div>
+</div>
+
+<div class="card-foot">
+<div class="status ready">Ready</div>
+<div class="updated">Today</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- UPLOADED -->
+
+<div class="column uploaded-column">
+
+<div class="column-head">
+<div class="column-title">Uploaded</div>
+<div class="column-count">8</div>
+</div>
+
+<div class="cards">
+
+<div class="script-card">
+
+<div class="script-title">
+The Real Meaning of Borders
+</div>
+
+<div class="meta">
+<div class="creator">Geography</div>
+<div>1300 words</div>
+</div>
+
+<div class="card-foot">
+<div class="status uploaded">Uploaded</div>
+<div class="updated">5d ago</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BUTTON -->
+
 <button class="add-script">+</button>
-  
+
+<!-- WORKSPACE -->
+
+<div id="workspacePanel">
+
+<div class="workspace-top">
+
+<h2>Script Workspace</h2>
+
+<button onclick="closeWorkspace()">✕</button>
+
+</div>
+
+<div class="workspace-columns">
+
+<div class="workspace-column">
+
+<div class="column-header">
+Concepts
+</div>
+
+<textarea placeholder="Raw concepts, thoughts, ideas..."></textarea>
+
+</div>
+
+<div class="workspace-column">
+
+<div class="column-header">
+Research Vault
+</div>
+
+<textarea placeholder="References, facts, links..."></textarea>
+
+</div>
+
+<div class="workspace-column">
+
+<div class="column-header">
+Hooks & Angles
+</div>
+
+<textarea placeholder="Viral hooks & openings..."></textarea>
+
+</div>
+
+<div class="workspace-column">
+
+<div class="column-header">
+Narrative Flow
+</div>
+
+<textarea placeholder="Structure the full script..."></textarea>
+
+</div>
+
+</div>
+
+</div>
+
 <script>
 
+/* SEARCH */
+
 const searchInput =
-  document.querySelector(".search");
+document.querySelector(".search");
 
 const creatorFilter =
-  document.querySelector(".creator-filter");
+document.querySelector(".creator-filter");
 
-/* ADD DATA ATTRIBUTES AUTOMATICALLY */
+/* AUTO DATA */
 
 document.querySelectorAll(".script-card")
 .forEach(card => {
 
-  const title =
-    card.querySelector(".script-title")
-    ?.innerText || "";
+const title =
+card.querySelector(".script-title")
+?.innerText || "";
 
-  const creator =
-    card.querySelector(".creator")
-    ?.innerText || "";
+const creator =
+card.querySelector(".creator")
+?.innerText || "";
 
-  card.dataset.title = title;
-  card.dataset.creator = creator;
+card.dataset.title = title;
+card.dataset.creator = creator;
 
 });
 
-/* FILTER FUNCTION */
+/* FILTER */
 
 function filterScripts(){
 
-  const search =
-    searchInput.value.toLowerCase();
+const search =
+searchInput.value.toLowerCase();
 
-  const creator =
-    creatorFilter.value.toLowerCase();
+const creator =
+creatorFilter.value.toLowerCase();
 
-  const cards =
-    document.querySelectorAll(".script-card");
+const cards =
+document.querySelectorAll(".script-card");
 
-  cards.forEach(card => {
+cards.forEach(card => {
 
-    const title =
-      card.dataset.title.toLowerCase();
+const title =
+card.dataset.title.toLowerCase();
 
-    const author =
-      card.dataset.creator.toLowerCase();
+const author =
+card.dataset.creator.toLowerCase();
 
-    const matchesSearch =
-      title.includes(search) ||
-      author.includes(search);
+const matchesSearch =
+title.includes(search) ||
+author.includes(search);
 
-    const matchesCreator =
-      creator === "all" ||
-      author === creator;
+const matchesCreator =
+creator === "all" ||
+author === creator;
 
-    card.style.display =
-      matchesSearch && matchesCreator
-      ? "block"
-      : "none";
+card.style.display =
+matchesSearch && matchesCreator
+? "block"
+: "none";
 
-  });
+});
 
 }
 
 /* EVENTS */
 
 searchInput.addEventListener(
-  "input",
-  filterScripts
+"input",
+filterScripts
 );
 
 creatorFilter.addEventListener(
-  "change",
-  filterScripts
+"change",
+filterScripts
 );
 
-/* ADD SCRIPT BUTTON */
+/* OPEN PANEL */
 
 const addBtn =
-  document.querySelector(".add-script");
+document.querySelector(".add-script");
 
 addBtn.addEventListener("click", () => {
 
-  const title =
-    prompt("Script title");
-
-  if(!title) return;
-
-  const creator =
-    prompt("Creator name");
-
-  if(!creator) return;
-
-  alert(
-    `New script added for ${creator}`
-  );
+document
+.getElementById("workspacePanel")
+.classList.add("open");
 
 });
 
-</script>
-  
-  <div id="workspacePanel">
-
-  <div class="workspace-header">
-
-    <h2>Script Workspace</h2>
-
-    <button onclick="closeWorkspace()">✕</button>
-
-  </div>
-
-  <div class="workspace-grid">
-
-    <div class="note-column">
-      <h3>Ideas</h3>
-      <textarea placeholder="Raw ideas..."></textarea>
-    </div>
-
-    <div class="note-column">
-      <h3>Hooks</h3>
-      <textarea placeholder="Strong openings..."></textarea>
-    </div>
-
-    <div class="note-column">
-      <h3>Research</h3>
-      <textarea placeholder="References & notes..."></textarea>
-    </div>
-
-    <div class="note-column">
-      <h3>Draft Flow</h3>
-      <textarea placeholder="Structure & flow..."></textarea>
-    </div>
-
-  </div>
-
-</div>
-  <script>
-
-function openWorkspace(){
-
-  document
-    .getElementById("workspacePanel")
-    .classList.add("open");
-
-}
+/* CLOSE PANEL */
 
 function closeWorkspace(){
 
-  document
-    .getElementById("workspacePanel")
-    .classList.remove("open");
+document
+.getElementById("workspacePanel")
+.classList.remove("open");
 
 }
 
 </script>
-  
+
 </body>
 </html>
