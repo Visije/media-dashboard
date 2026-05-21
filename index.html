@@ -2,750 +2,164 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Home — Daily Focus</title>
+  <meta charset="UTF-8">
 
-  <style>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+  <meta name="page" content="home">
 
-    body{
+  <title>Home – Daily Focus</title>
 
-      font-family:
-      "Segoe UI",
-      sans-serif;
+  <link rel="icon" href="data:,">
 
-      background:#f6f7fb;
+  <link rel="stylesheet" href="css/style.css">
 
-      color:#161616;
-
-      padding:40px;
-
-    }
-
-    /* NAV */
-
-    .top-nav{
-
-      width:max-content;
-
-      margin:auto;
-
-      background:white;
-
-      border-radius:26px;
-
-      padding:10px;
-
-      display:flex;
-
-      gap:8px;
-
-      box-shadow:
-      0 8px 24px rgba(0,0,0,.05);
-
-      margin-bottom:40px;
-
-    }
-
-    .nav-item{
-
-  text-decoration:none;
-
-  padding:
-  12px 24px;
-
-  border-radius:18px;
-
-  font-weight:600;
-
-  color:#777;
-
-  cursor:pointer;
-
-  transition:.2s;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-}
-
-.nav-item:hover{
-
-  background:#f5f2ff;
-
-  color:#7a63ff;
-
-}
-
-.nav-item.active{
-
-  background:#f2edff;
-
-  color:#7a63ff;
-
-  position:relative;
-
-}
-
-.nav-item.active::after{
-
-  content:"";
-
-  position:absolute;
-
-  bottom:-6px;
-
-  left:50%;
-
-  transform:translateX(-50%);
-
-  width:24px;
-
-  height:4px;
-
-  border-radius:999px;
-
-  background:#8b7cf6;
-
-}
-
-    /* MAIN GRID */
-
-    .dashboard{
-
-      display:grid;
-
-      grid-template-columns:
-      1.1fr
-      1fr;
-
-      gap:30px;
-
-      align-items:start;
-
-    }
-
-    /* LEFT */
-
-    .left-column{
-
-      display:flex;
-
-      flex-direction:column;
-
-      gap:24px;
-
-    }
-
-    /* RIGHT */
-
-    .right-column{
-
-      display:flex;
-
-      align-items:center;
-      justify-content:center;
-
-      height:100%;
-
-    }
-
-    /* CARDS */
-
-    .card{
-
-      background:white;
-
-      border-radius:32px;
-
-      padding:28px;
-
-      box-shadow:
-      0 10px 28px rgba(0,0,0,.04);
-
-    }
-
-    /* HERO */
-
-    .hero{
-
-      width:100%;
-
-      background:
-      linear-gradient(
-      135deg,
-      #f2edff,
-      #f9f8ff
-      );
-
-      border-radius:34px;
-
-      padding:42px;
-
-      margin-bottom:34px;
-
-      text-align:center;
-
-      box-shadow:
-      0 10px 28px rgba(0,0,0,.04);
-
-    }
-
-    .hero small{
-
-      color:#7f7f89;
-
-      letter-spacing:1px;
-
-      text-transform:uppercase;
-
-      font-size:12px;
-
-    }
-
-    .hero h1{
-
-      font-size:54px;
-
-      margin-top:12px;
-
-      margin-bottom:14px;
-
-      line-height:1.1;
-
-    }
-
-    .hero p{
-
-      color:#72727d;
-
-      font-size:18px;
-
-    }
-
-    /* TASKS */
-
-    .section-title{
-
-      font-size:28px;
-
-      margin-bottom:18px;
-
-    }
-
-    .task-list{
-
-      display:flex;
-
-      flex-direction:column;
-
-      gap:14px;
-
-    }
-
-    .task{
-
-      display:flex;
-
-      align-items:center;
-
-      gap:14px;
-
-      padding:16px 18px;
-
-      background:#fafaff;
-
-      border-radius:18px;
-
-      transition:.2s;
-
-    }
-
-    .task:hover{
-
-      transform:translateX(4px);
-
-    }
-
-    .task input{
-
-      width:20px;
-      height:20px;
-
-      accent-color:#8b7cf6;
-    }
-
-    .task span{
-
-      font-size:16px;
-      font-weight:500;
-    }
-
-    /* SCRIPT MOMENTUM */
-
-    .stats{
-
-      display:flex;
-
-      justify-content:space-between;
-
-      margin-top:10px;
-    }
-
-    .stat{
-
-      text-align:center;
-    }
-
-    .stat h3{
-
-      font-size:30px;
-
-      margin-bottom:4px;
-
-      color:#8b7cf6;
-    }
-
-    .stat p{
-
-      color:#7d7d88;
-
-      font-size:14px;
-    }
-
-    /* PROGRESS CIRCLE */
-
-    .progress-wrapper{
-
-      position:relative;
-
-      width:400px;
-      height:400px;
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-    }
-
-    .progress-ring{
-
-      width:100%;
-      height:100%;
-
-      border-radius:50%;
-
-      background:
-      conic-gradient(
-      #8b7cf6 72%,
-      #ece8ff 0
-      );
-
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      box-shadow:
-      0 18px 38px rgba(139,124,246,.15);
-    }
-
-    .progress-inner{
-
-      width:290px;
-      height:290px;
-
-      border-radius:50%;
-
-      background:white;
-
-      display:flex;
-
-      flex-direction:column;
-
-      align-items:center;
-      justify-content:center;
-
-      text-align:center;
-    }
-
-    .progress-inner h2{
-
-      font-size:72px;
-
-      line-height:1;
-    }
-
-    .progress-inner p{
-
-      color:#7d7d88;
-
-      margin-top:10px;
-
-      font-size:18px;
-    }
-
-    /* BOTTOM STRIP */
-
-    .bottom-strip{
-
-      margin-top:34px;
-
-      background:white;
-
-      border-radius:28px;
-
-      padding:22px 30px;
-
-      display:flex;
-
-      justify-content:space-between;
-
-      align-items:center;
-
-      box-shadow:
-      0 10px 24px rgba(0,0,0,.04);
-
-      flex-wrap:wrap;
-
-      gap:16px;
-    }
-
-    .strip-item{
-
-      color:#666;
-
-      font-size:15px;
-    }
-
-    .strip-item strong{
-
-      color:#111;
-    }
-
-    /* FOCUS BUTTON */
-
-    .focus-btn{
-
-      position:fixed;
-
-      top:24px;
-      left:24px;
-
-      border:none;
-
-      background:#111;
-
-      color:white;
-
-      padding:
-      10px 18px;
-
-      border-radius:16px;
-
-      cursor:pointer;
-
-      font-weight:600;
-    }
-
-    /* DARK MODE */
-
-    body.focus{
-
-      background:#0f1117;
-
-      color:#f4f4f5;
-    }
-
-    body.focus .card,
-    body.focus .hero,
-    body.focus .bottom-strip,
-    body.focus .progress-inner,
-    body.focus .top-nav{
-
-      background:#171a21;
-
-      box-shadow:none;
-    }
-
-    body.focus .task{
-
-      background:#1d212b;
-    }
-
-    body.focus .hero{
-
-      background:
-      linear-gradient(
-      135deg,
-      #1b1f2a,
-      #171a21
-      );
-    }
-
-    body.focus p,
-    body.focus small,
-    body.focus .strip-item,
-    body.focus .stat p{
-
-      color:#9ca3af;
-    }
-
-    body.focus .progress-ring{
-
-      background:
-      conic-gradient(
-      #8b7cf6 72%,
-      #2a2f3b 0
-      );
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width:1100px){
-
-      .dashboard{
-
-        grid-template-columns:1fr;
-      }
-
-      .progress-wrapper{
-
-        width:300px;
-        height:300px;
-      }
-
-      .progress-inner{
-
-        width:220px;
-        height:220px;
-      }
-
-      .progress-inner h2{
-
-        font-size:54px;
-      }
-
-    }
-
-    @media(max-width:700px){
-
-      body{
-
-        padding:20px;
-      }
-
-      .hero h1{
-
-        font-size:36px;
-      }
-
-      .bottom-strip{
-
-        flex-direction:column;
-        align-items:flex-start;
-      }
-
-    }
-
-  </style>
 </head>
 
 <body>
 
-  <!-- FOCUS BUTTON -->
+<!-- =========================================
+     FLOATING TOP NAV
+========================================= -->
 
-  <button
-    class="focus-btn"
-    onclick="toggleFocus()"
-  >
-    Focus
-  </button>
+<nav class="top-nav">
 
-  <!-- NAV -->
-
-  <!-- NAV -->
-
-<div class="top-nav">
-
-  <a href="./index.html"
-     class="nav-item active">
-     Home
+  <a href="index.html" class="active">
+    Home
   </a>
 
-  <a href="./weekly-dashboard.html"
-     class="nav-item">
-     Weekly
+  <a href="weekly-dashboard.html">
+    Weekly
   </a>
 
-  <a href="./script-library.html"
-     class="nav-item">
-     Library
+  <a href="scripts.html">
+    Library
   </a>
 
-  <a href="./creator-flow.html"
-     class="nav-item">
-     Creator
+  <a href="calendar.html">
+    Creator
   </a>
 
-</div>
+</nav>
 
-  <!-- HERO -->
+<!-- =========================================
+     FOCUS TOGGLE
+========================================= -->
 
-  <div class="hero">
+<button id="focusToggle">
+  Focus
+</button>
 
-    <small>
-      TODAY'S MAIN FOCUS
-    </small>
+<!-- =========================================
+     MAIN CONTAINER
+========================================= -->
 
-    <h1>
-      Finish 4 scripts before editing
-    </h1>
+<main class="main">
 
-    <p>
-      Focus on execution, not overload.
-    </p>
+  <!-- =========================================
+       HEADER / MORNING CARD
+  ========================================= -->
 
-  </div>
+  <section class="card hero-card">
 
-  <!-- DASHBOARD -->
+    <div class="hero-content">
 
-  <div class="dashboard">
+      <h1 id="greeting">
+        Good Morning
+      </h1>
 
-    <!-- LEFT -->
+      <p class="quote" id="dailyQuote">
+        “Small actions done daily create massive results.”
+      </p>
 
-    <div class="left-column">
-
-      <!-- TASKS -->
-
-      <div class="card">
-
-        <h2 class="section-title">
-          Today's Tasks
-        </h2>
-
-        <div class="task-list">
-
-          <label class="task">
-            <input type="checkbox">
-            <span>
-              Write 2 Geography scripts
-            </span>
-          </label>
-
-          <label class="task">
-            <input type="checkbox">
-            <span>
-              Upload Meer Rana Reel 2
-            </span>
-          </label>
-
-          <label class="task">
-            <input type="checkbox">
-            <span>
-              Research CRUST topic
-            </span>
-          </label>
-
-          <label class="task">
-            <input type="checkbox">
-            <span>
-              Review Zone out History draft
-            </span>
-          </label>
-
-        </div>
-
-      </div>
-
-      <!-- CREATOR FLOW -->
-
-      <div class="card">
-
-        <h2 class="section-title">
-          Creator Queue
-        </h2>
-
-        <div class="task-list">
-
-          <div class="task">
-            <span>
-              Meer Rana → Reel 2 Pending
-            </span>
-          </div>
-
-          <div class="task">
-            <span>
-              Topography → Completed
-            </span>
-          </div>
-
-          <div class="task">
-            <span>
-              CRUST → Weekly Upload Left
-            </span>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- SCRIPT MOMENTUM -->
-
-      <div class="card">
-
-        <h2 class="section-title">
-          Script Momentum
-        </h2>
-
-        <div class="stats">
-
-          <div class="stat">
-            <h3>12</h3>
-            <p>Ready</p>
-          </div>
-
-          <div class="stat">
-            <h3>4</h3>
-            <p>Writing</p>
-          </div>
-
-          <div class="stat">
-            <h3>2</h3>
-            <p>Overdue</p>
-          </div>
-
-        </div>
-
-      </div>
+      <p class="quote secondary-quote">
+        Focus on execution, not overload.
+      </p>
 
     </div>
 
-    <!-- RIGHT -->
+  </section>
 
-    <div class="right-column">
+  <!-- =========================================
+       MAIN GRID
+  ========================================= -->
 
-      <div class="progress-wrapper">
+  <section class="home-grid">
 
-        <div class="progress-ring">
+    <!-- LEFT COLUMN -->
 
-          <div class="progress-inner">
+    <div class="home-stack">
 
-            <h2>
-              72%
-            </h2>
+      <!-- CONSISTENCY -->
 
-            <p>
-              Weekly Execution
+      <div class="card">
+
+        <div class="section-head">
+
+          <h2>
+            Consistency
+          </h2>
+
+          <span class="pill">
+            Momentum
+          </span>
+
+        </div>
+
+        <div class="coins">
+
+          <div class="coin bronze">
+            3
+          </div>
+
+          <div class="coin silver">
+            7
+          </div>
+
+          <div class="coin gold">
+            21
+          </div>
+
+        </div>
+
+        <p class="muted">
+          Coins earned through consistency
+        </p>
+
+      </div>
+
+      <!-- WEEK PROGRESS -->
+
+      <div class="card">
+
+        <div class="section-head">
+
+          <h2>
+            This Week
+          </h2>
+
+          <span class="pill purple-pill">
+            Live
+          </span>
+
+        </div>
+
+        <div class="week-progress">
+
+          <div class="ring" id="weekRing">
+            0%
+          </div>
+
+          <div>
+
+            <h3 class="progress-title">
+              Weekly Progress
+            </h3>
+
+            <p class="muted" id="weekCount">
+              Progress updates automatically
             </p>
 
           </div>
@@ -756,47 +170,246 @@
 
     </div>
 
-  </div>
+    <!-- RIGHT COLUMN -->
 
-  <!-- BOTTOM -->
+    <div class="home-stack">
 
-  <div class="bottom-strip">
+      <!-- TODAY TASKS -->
 
-    <div class="strip-item">
-      <strong>5 days</strong>
-      consistent
+      <div class="card">
+
+        <div class="section-head">
+
+          <h2>
+            Today’s Tasks
+          </h2>
+
+          <span class="pill green-pill">
+            Focus
+          </span>
+
+        </div>
+
+        <ul id="todayTasks"
+            class="clean-list">
+
+          <li class="no-task">
+            No tasks planned today
+          </li>
+
+        </ul>
+
+      </div>
+
+      <!-- PENDING SCRIPTS -->
+
+      <div class="card">
+
+        <div class="section-head">
+
+          <h2>
+            Scripts Pending Today
+          </h2>
+
+          <span class="pill orange-pill">
+            Writing
+          </span>
+
+        </div>
+
+        <ul id="pendingScripts"
+            class="clean-list">
+
+          <li class="no-task">
+            No pending scripts today
+          </li>
+
+        </ul>
+
+      </div>
+
     </div>
 
-    <div class="strip-item">
-      <strong>8 uploads</strong>
-      pending today
-    </div>
+  </section>
 
-    <div class="strip-item">
-      Focus Creator →
-      <strong>CRUST</strong>
-    </div>
+</main>
 
-    <div class="strip-item">
-      <strong>12 scripts</strong>
-      ready this week
-    </div>
+<!-- =========================================
+     ROLE HANDLING
+========================================= -->
 
-  </div>
+<script>
 
-  <!-- JS -->
+(function () {
 
-  <script>
+  if (!localStorage.getItem("role")) {
 
-    function toggleFocus(){
+    localStorage.setItem("role", "admin");
 
-      document.body
-      .classList.toggle("focus");
+  }
 
-    }
+})();
 
-  </script>
+</script>
+
+<!-- =========================================
+     GREETING
+========================================= -->
+
+<script>
+
+(function setGreeting() {
+
+  const hour = new Date().getHours();
+
+  let greeting = "Hello";
+
+  if (hour >= 5 && hour < 12) {
+
+    greeting = "Good Morning";
+
+  }
+
+  else if (hour >= 12 && hour < 17) {
+
+    greeting = "Good Afternoon";
+
+  }
+
+  else {
+
+    greeting = "Good Evening";
+
+  }
+
+  document
+    .getElementById("greeting")
+    .innerText = greeting;
+
+})();
+
+</script>
+
+<!-- =========================================
+     DAILY QUOTES
+========================================= -->
+
+<script>
+
+(function setDailyQuote() {
+
+  const quotes = [
+
+    "Small actions done daily create massive results.",
+
+    "Consistency beats intensity every time.",
+
+    "Win the morning, win the day.",
+
+    "Do the work even when motivation is missing.",
+
+    "Future you is watching today’s choices.",
+
+    "One focused day is better than seven distracted ones.",
+
+    "Discipline is choosing what you want most over what you want now."
+
+  ];
+
+  const today = new Date().toDateString();
+
+  const index = today
+    .split("")
+    .reduce((a, c) => a + c.charCodeAt(0), 0)
+      % quotes.length;
+
+  document
+    .getElementById("dailyQuote")
+    .innerText = `“${quotes[index]}”`;
+
+})();
+
+</script>
+
+<!-- =========================================
+     AUTO FOCUS MODE
+========================================= -->
+
+<script>
+
+(function autoFocusMode() {
+
+  const hour = new Date().getHours();
+
+  const saved =
+    localStorage.getItem("focusMode");
+
+  if (
+    saved === null &&
+    hour >= 5 &&
+    hour < 10
+  ) {
+
+    document.body.classList.add("focus");
+
+  }
+
+  if (saved === "on") {
+
+    document.body.classList.add("focus");
+
+  }
+
+  if (saved === "off") {
+
+    document.body.classList.remove("focus");
+
+  }
+
+})();
+
+document
+  .getElementById("focusToggle")
+  .onclick = () => {
+
+    const isOn =
+      document.body.classList.toggle("focus");
+
+    localStorage.setItem(
+      "focusMode",
+      isOn ? "on" : "off"
+    );
+
+};
+
+</script>
+
+<!-- =========================================
+     SAFE MAIN JS LOADER
+========================================= -->
+
+<script>
+
+(function loadMainJS() {
+
+  const script =
+    document.createElement("script");
+
+  script.src = "js/main.js";
+
+  script.defer = true;
+
+  script.onerror = () =>
+
+    console.warn(
+      "main.js not loaded (path issue or file missing)"
+    );
+
+  document.body.appendChild(script);
+
+})();
+
+</script>
 
 </body>
-
 </html>
