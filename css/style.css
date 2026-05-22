@@ -1096,3 +1096,8 @@ a{
 
   color:#8b93a1;
 }
+.ring-progress{
+
+  transition:
+    stroke-dashoffset 1s ease;
+}
