@@ -949,3 +949,105 @@ a{
   transform:translateX(90px);
 }
 
+/* WEEK CARD */
+
+.week-progress-card{
+
+  padding:28px;
+
+  min-height:260px;
+}
+
+/* TOP */
+
+.week-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:24px;
+}
+
+/* RING */
+
+.week-ring{
+
+  width:120px;
+  height:120px;
+
+  position:relative;
+}
+
+.week-ring svg{
+
+  width:100%;
+  height:100%;
+
+  transform:rotate(-90deg);
+}
+
+/* BG */
+
+.ring-bg{
+
+  fill:none;
+
+  stroke:#ece8ff;
+
+  stroke-width:10;
+}
+
+/* PROGRESS */
+
+.ring-progress{
+
+  fill:none;
+
+  stroke:#8b7cf6;
+
+  stroke-width:10;
+
+  stroke-linecap:round;
+
+  stroke-dasharray:301;
+
+  stroke-dashoffset:114;
+}
+
+/* CENTER */
+
+.ring-center{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:24px;
+
+  font-weight:700;
+}
+
+/* BOTTOM */
+
+.week-bottom strong{
+
+  display:block;
+
+  margin-bottom:8px;
+
+  font-size:22px;
+}
+
+.week-bottom p{
+
+  color:#8b93a1;
+}
