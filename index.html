@@ -136,35 +136,37 @@
 
       <!-- WEEK PROGRESS -->
 
-      <div class="card">
+     <div class="execution-card">
 
-        <div class="section-head">
+  <div class="execution-ring">
 
-          <h2>
-            This Week
-          </h2>
+    <svg viewBox="0 0 220 220">
 
-          <span class="pill purple-pill">
-            Live
-          </span>
+      <!-- background -->
 
-        </div>
+      <circle
+        cx="110"
+        cy="110"
+        r="85"
+        class="ring-bg"
+      />
 
-        <div class="week-progress">
+      <!-- progress -->
 
-          <div class="ring" id="weekRing">
-            0%
-          </div>
+      <circle
+        cx="110"
+        cy="110"
+        r="85"
+        class="ring-progress"
+      />
 
-          <div>
+    </svg>
 
-            <h3 class="progress-title">
-              Weekly Progress
-            </h3>
+    <div class="ring-content">
 
-            <p class="muted" id="weekCount">
-              Progress updates automatically
-            </p>
+      <h1>72%</h1>
+
+      <p>WEEKLY EXECUTION</p>
 
           </div>
 
