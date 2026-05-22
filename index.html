@@ -8,11 +8,7 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <meta name="page" content="home">
-
   <title>Home – Daily Focus</title>
-
-  <link rel="icon" href="data:,">
 
   <link rel="stylesheet" href="css/style.css">
 
@@ -21,7 +17,7 @@
 <body>
 
 <!-- =========================================
-     FLOATING TOP NAV
+     FLOATING NAV
 ========================================= -->
 
 <nav class="top-nav">
@@ -45,7 +41,7 @@
 </nav>
 
 <!-- =========================================
-     FOCUS TOGGLE
+     FOCUS BUTTON
 ========================================= -->
 
 <button id="focusToggle">
@@ -53,48 +49,52 @@
 </button>
 
 <!-- =========================================
-     MAIN CONTAINER
+     MAIN
 ========================================= -->
 
 <main class="main">
 
   <!-- =========================================
-       HEADER / MORNING CARD
+       HERO
   ========================================= -->
 
-  <section class="card hero-card">
-    
-<div class="hero-card">
+  <section class="hero-card">
 
-  <div class="hero-content">
+    <div class="hero-content">
 
-    <h1 class="hero-title">
-      Good Evening
-    </h1>
+      <h1 class="hero-title"
+          id="greeting">
 
-    <p class="hero-quote">
-      “Do the work even when motivation is missing.”
-    </p>
+        Good Evening
 
-    <p class="hero-sub">
-      Focus on execution, not overload.
-    </p>
+      </h1>
 
-  </div>
+      <p class="hero-quote"
+         id="dailyQuote">
 
-</div>
+        “Do the work even when motivation is missing.”
+
+      </p>
+
+      <p class="hero-sub">
+
+        Focus on execution, not overload.
+
+      </p>
+
+    </div>
 
   </section>
 
   <!-- =========================================
-       MAIN GRID
+       DASHBOARD GRID
   ========================================= -->
 
-  <section class="home-grid">
+  <section class="dashboard-grid">
 
     <!-- LEFT COLUMN -->
 
-    <div class="home-stack">
+    <div class="left-column">
 
       <!-- CONSISTENCY -->
 
@@ -134,53 +134,7 @@
 
       </div>
 
-      <!-- WEEK PROGRESS -->
-
-     <div class="execution-card">
-
-  <div class="execution-ring">
-
-    <svg viewBox="0 0 220 220">
-
-      <!-- background -->
-
-      <circle
-        cx="110"
-        cy="110"
-        r="85"
-        class="ring-bg"
-      />
-
-      <!-- progress -->
-
-      <circle
-        cx="110"
-        cy="110"
-        r="85"
-        class="ring-progress"
-      />
-
-    </svg>
-
-    <div class="ring-content">
-
-      <h1>72%</h1>
-
-      <p>WEEKLY EXECUTION</p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- RIGHT COLUMN -->
-
-    <div class="home-stack">
-
-      <!-- TODAY TASKS -->
+      <!-- TASKS -->
 
       <div class="card">
 
@@ -207,7 +161,7 @@
 
       </div>
 
-      <!-- PENDING SCRIPTS -->
+      <!-- SCRIPTS -->
 
       <div class="card">
 
@@ -236,75 +190,53 @@
 
     </div>
 
-  </section>
+    <!-- RIGHT COLUMN -->
 
-</main>
+    <div class="right-column">
 
-  <div class="dashboard-card week-progress-card">
+      <div class="execution-card">
 
-  <div class="week-top">
+        <div class="execution-ring">
 
-    <div>
-      <h2>This Week</h2>
-      <p>Live progress</p>
-    </div>
+          <svg viewBox="0 0 220 220">
 
-    <div class="week-ring">
+            <!-- BG -->
 
-      <svg viewBox="0 0 120 120">
+            <circle
+              cx="110"
+              cy="110"
+              r="85"
+              class="ring-bg"
+            />
 
-        <circle
-          cx="60"
-          cy="60"
-          r="48"
-          class="ring-bg"
-        />
+            <!-- PROGRESS -->
 
-        <circle
-          cx="60"
-          cy="60"
-          r="48"
-          class="ring-progress"
-        />
+            <circle
+              cx="110"
+              cy="110"
+              r="85"
+              class="ring-progress"
+            />
 
-      </svg>
+          </svg>
 
-      <div class="ring-center">
-        62%
+          <div class="ring-content">
+
+            <h1>72%</h1>
+
+            <p>WEEKLY EXECUTION</p>
+
+          </div>
+
+        </div>
+
       </div>
 
     </div>
 
-  </div>
+  </section>
 
-  <div class="week-bottom">
-
-    <strong>Weekly Progress</strong>
-
-    <p>
-      Progress updates automatically
-    </p>
-
-  </div>
-
-</div>
-<!-- =========================================
-     ROLE HANDLING
-========================================= -->
-
-<script>
-
-(function () {
-
-  if (!localStorage.getItem("role")) {
-
-    localStorage.setItem("role", "admin");
-
-  }
-
-})();
-
-</script>
+</main>
 
 <!-- =========================================
      GREETING
@@ -386,7 +318,7 @@
 </script>
 
 <!-- =========================================
-     AUTO FOCUS MODE
+     FOCUS MODE
 ========================================= -->
 
 <script>
@@ -438,32 +370,6 @@ document
 
 </script>
 
-<!-- =========================================
-     SAFE MAIN JS LOADER
-========================================= -->
-
-<script>
-
-(function loadMainJS() {
-
-  const script =
-    document.createElement("script");
-
-  script.src = "js/main.js";
-
-  script.defer = true;
-
-  script.onerror = () =>
-
-    console.warn(
-      "main.js not loaded (path issue or file missing)"
-    );
-
-  document.body.appendChild(script);
-
-})();
-
-</script>
-
 </body>
+
 </html>
