@@ -1101,3 +1101,179 @@ a{
   transition:
     stroke-dashoffset 1s ease;
 }
+
+/* =========================================
+   DASHBOARD GRID
+========================================= */
+
+.dashboard-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:26px;
+
+  margin-top:24px;
+}
+
+/* =========================================
+   LEFT COLUMN
+========================================= */
+
+.left-column{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:22px;
+}
+
+/* =========================================
+   RIGHT COLUMN
+========================================= */
+
+.right-column{
+
+  display:flex;
+}
+
+/* =========================================
+   EXECUTION CARD
+========================================= */
+
+.execution-card{
+
+  background:white;
+
+  border-radius:32px;
+
+  padding:40px;
+
+  width:100%;
+
+  min-height:520px;
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.04);
+}
+
+/* =========================================
+   EXECUTION RING
+========================================= */
+
+.execution-ring{
+
+  width:320px;
+  height:320px;
+
+  position:relative;
+}
+
+/* SVG */
+
+.execution-ring svg{
+
+  width:100%;
+  height:100%;
+
+  transform:rotate(-90deg);
+}
+
+/* BG */
+
+.ring-bg{
+
+  fill:none;
+
+  stroke:#ece7ff;
+
+  stroke-width:28;
+}
+
+/* PROGRESS */
+
+.ring-progress{
+
+  fill:none;
+
+  stroke:#7058ff;
+
+  stroke-width:28;
+
+  stroke-linecap:butt;
+
+  stroke-dasharray:534;
+
+  stroke-dashoffset:149;
+
+  transition:
+    stroke-dashoffset 1s ease;
+}
+
+/* CENTER */
+
+.ring-content{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+  align-items:center;
+}
+
+/* PERCENT */
+
+.ring-content h1{
+
+  font-size:82px;
+
+  font-weight:800;
+
+  color:#7058ff;
+
+  line-height:1;
+}
+
+/* LABEL */
+
+.ring-content p{
+
+  margin-top:12px;
+
+  font-size:18px;
+
+  letter-spacing:2px;
+
+  color:#8b93a1;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:980px){
+
+  .dashboard-grid{
+
+    grid-template-columns:1fr;
+  }
+
+  .execution-card{
+
+    min-height:420px;
+  }
+
+}
