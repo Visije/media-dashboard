@@ -871,15 +871,18 @@ a{
 
   border-radius:32px;
 
-  padding:60px 40px;
-
-  text-align:center;
+  padding:60px 80px;
 
   box-shadow:
     0 10px 30px rgba(0,0,0,.04);
 
   margin-bottom:26px;
+
+  display:flex;
+
+  justify-content:center;
 }
+
 .hero-title{
 
   font-size:58px;
@@ -931,3 +934,14 @@ a{
   top:-120px;
   right:-80px;
 }
+
+.hero-content{
+
+  width:100%;
+  max-width:520px;
+}
+
+.hero-content{
+  transform:translateX(120px);
+}
+
