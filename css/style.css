@@ -880,3 +880,54 @@ a{
 
   margin-bottom:26px;
 }
+.hero-title{
+
+  font-size:58px;
+  font-weight:800;
+
+  margin-bottom:18px;
+
+  color:#171717;
+}
+
+.hero-quote{
+
+  font-size:26px;
+
+  font-style:italic;
+
+  color:#5f6672;
+
+  margin-bottom:14px;
+}
+
+.hero-sub{
+
+  font-size:18px;
+
+  color:#8b93a1;
+}
+.hero-card{
+
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:420px;
+  height:420px;
+
+  background:
+    radial-gradient(
+      rgba(139,124,246,.12),
+      transparent 70%
+    );
+
+  top:-120px;
+  right:-80px;
+}
