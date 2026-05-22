@@ -1277,3 +1277,133 @@ a{
   }
 
 }
+
+/* =========================================
+   FOCUS MODE
+========================================= */
+
+body.focus{
+
+  background:#0f1117;
+
+  color:#f3f4f6;
+
+  transition:
+    background .35s ease,
+    color .35s ease;
+}
+
+/* HERO */
+
+body.focus .hero-card{
+
+  background:#151922;
+
+  box-shadow:none;
+}
+
+/* DASHBOARD CARDS */
+
+body.focus .card,
+body.focus .execution-card{
+
+  background:#151922;
+
+  box-shadow:none;
+
+  border:1px solid #242938;
+}
+
+/* TEXT */
+
+body.focus h1,
+body.focus h2{
+
+  color:#ffffff;
+}
+
+body.focus .hero-quote,
+body.focus .hero-sub,
+body.focus .muted,
+body.focus p,
+body.focus li{
+
+  color:#9ca3af;
+}
+
+/* NAV */
+
+body.focus .top-nav{
+
+  background:#151922;
+
+  border:1px solid #242938;
+}
+
+/* NAV LINKS */
+
+body.focus .top-nav a{
+
+  color:#b8bfcc;
+}
+
+body.focus .top-nav a.active{
+
+  background:#232938;
+
+  color:#8b7cf6;
+}
+
+/* BUTTON */
+
+body.focus #focusToggle{
+
+  background:#151922;
+
+  color:#ffffff;
+
+  border:1px solid #242938;
+}
+
+/* EXECUTION RING */
+
+body.focus .ring-bg{
+
+  stroke:#252b38;
+}
+
+/* TASK LIST */
+
+body.focus .clean-list li{
+
+  color:#c8ccd4;
+}
+
+/* =========================================
+   FOCUS BUTTON
+========================================= */
+
+#focusToggle{
+
+  position:fixed;
+
+  left:20px;
+  top:130px;
+
+  padding:10px 16px;
+
+  border:none;
+
+  border-radius:14px;
+
+  background:white;
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.06);
+
+  cursor:pointer;
+
+  z-index:999;
+
+  font-weight:600;
+}
